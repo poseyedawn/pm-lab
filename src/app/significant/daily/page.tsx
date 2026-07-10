@@ -42,15 +42,25 @@ export default function DailyPage() {
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
+  const handleToggleSound = () => {
+    track('sound_toggled', { on: !daily.soundOn });
+    daily.toggleSound();
+  };
+
   return (
     <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
       <header className="flex items-center justify-between">
         <h1 className="font-extrabold text-brand-deep">Daily #{dayNumber(daily.today)}</h1>
-        <p className="font-extrabold text-gold-text">
-          <span role="img" aria-label={`Streak ${daily.streak}`}>
-            🔥 {daily.streak}{daily.shields > 0 ? ` · 🛡 ${daily.shields}` : ''}
-          </span>
-        </p>
+        <div className="flex flex-col items-end gap-1">
+          <p className="font-extrabold text-gold-text">
+            <span role="img" aria-label={`Streak ${daily.streak}`}>
+              🔥 {daily.streak}{daily.shields > 0 ? ` · 🛡 ${daily.shields}` : ''}
+            </span>
+          </p>
+          <button type="button" onClick={handleToggleSound} className="text-sm font-extrabold text-ink-soft underline">
+            Sound {daily.soundOn ? 'on' : 'off'}
+          </button>
+        </div>
       </header>
 
       {daily.playedToday ? (

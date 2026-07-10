@@ -12,7 +12,7 @@ function PlayInner() {
   const router = useRouter();
   const params = useSearchParams();
   const levelId = Number(params.get('level') ?? '1');
-  const { ready, state, completeLevel } = useCampaign();
+  const { ready, state, completeLevel, toggleSound } = useCampaign();
   const startTracked = useRef(false);
 
   useEffect(() => {
@@ -32,11 +32,21 @@ function PlayInner() {
 
   const combo = 1 + state.campaignStreak;
 
+  const handleToggleSound = () => {
+    track('sound_toggled', { on: !state.soundOn });
+    toggleSound();
+  };
+
   return (
     <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
       <header className="flex items-center justify-between">
         <h1 className="font-extrabold text-brand-deep">Level {levelId}</h1>
-        <ComboFlame combo={combo} />
+        <div className="flex flex-col items-end gap-1">
+          <ComboFlame combo={combo} />
+          <button type="button" onClick={handleToggleSound} className="text-sm font-extrabold text-ink-soft underline">
+            Sound {state.soundOn ? 'on' : 'off'}
+          </button>
+        </div>
       </header>
       <GameRound
         scenario={scenario}

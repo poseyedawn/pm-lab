@@ -59,6 +59,15 @@ export function useDaily() {
     });
   }, []);
 
+  const toggleSound = useCallback(() => {
+    setState((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev, soundOn: !prev.soundOn };
+      saveState(next);
+      return next;
+    });
+  }, []);
+
   return {
     ready: state !== null,
     today,
@@ -69,6 +78,7 @@ export function useDaily() {
     shields: state?.shields ?? 0,
     soundOn: state?.soundOn ?? true,
     complete,
+    toggleSound,
     countdown,
   };
 }
