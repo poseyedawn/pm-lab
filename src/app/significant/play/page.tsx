@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useMemo } from 'react';
+import { Suspense, useEffect, useMemo, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CAMPAIGN_LEVELS, campaignSeed, generateScenario } from '@/lib/engine/scenario';
 import { useCampaign } from '@/hooks/useCampaign';
@@ -13,11 +13,13 @@ function PlayInner() {
   const params = useSearchParams();
   const levelId = Number(params.get('level') ?? '1');
   const { ready, state, completeLevel } = useCampaign();
+  const startTracked = useRef(false);
 
   useEffect(() => {
+    if (startTracked.current) return;
+    startTracked.current = true;
     track('game_start', { mode: 'campaign', level: levelId });
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- fire once per page visit, not on every levelId re-render
-  }, []);
+  }, [levelId]);
 
   const scenario = useMemo(() => {
     const level = CAMPAIGN_LEVELS.find((l) => l.id === levelId) ?? CAMPAIGN_LEVELS[0];
