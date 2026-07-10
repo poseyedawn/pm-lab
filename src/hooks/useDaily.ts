@@ -29,12 +29,16 @@ const fmt = (ms: number): string => {
 export function useDaily() {
   const [state, setState] = useState<SignificantState | null>(null);
   const [countdown, setCountdown] = useState('--:--:--');
-  const today = useMemo(() => localToday(new Date()), []);
+  const [today, setToday] = useState(() => localToday(new Date()));
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage on mount, not a derived-state loop
     setState(loadState());
-    const tick = () => setCountdown(fmt(msToLocalMidnight(new Date())));
+    const tick = () => {
+      setCountdown(fmt(msToLocalMidnight(new Date())));
+      const current = localToday(new Date());
+      setToday((prev) => (prev === current ? prev : current));
+    };
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
@@ -45,17 +49,15 @@ export function useDaily() {
     [today],
   );
 
-  const complete = useCallback(
-    (correct: boolean, xp: number) => {
-      setState((prev) => {
-        if (!prev) return prev;
-        const next = addXp(recordDaily(prev, today, correct), xp);
-        saveState(next);
-        return next;
-      });
-    },
-    [today],
-  );
+  const complete = useCallback((correct: boolean, xp: number) => {
+    const date = localToday(new Date());
+    setState((prev) => {
+      if (!prev) return prev;
+      const next = addXp(recordDaily(prev, date, correct), xp);
+      saveState(next);
+      return next;
+    });
+  }, []);
 
   return {
     ready: state !== null,

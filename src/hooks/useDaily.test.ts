@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vitest';
-import { buildShareText, localToday, msToLocalMidnight } from '@/hooks/useDaily';
+import { act, renderHook } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { buildShareText, localToday, msToLocalMidnight, useDaily } from '@/hooks/useDaily';
 import { dayNumber } from '@/lib/engine/daily';
 
 describe('daily helpers', () => {
@@ -16,5 +17,17 @@ describe('daily helpers', () => {
   it('msToLocalMidnight is positive and under 24h', () => {
     const ms = msToLocalMidnight(new Date(2026, 7, 9, 18, 30));
     expect(ms).toBe(5.5 * 3600 * 1000);
+  });
+});
+
+describe('useDaily midnight rollover', () => {
+  afterEach(() => vi.useRealTimers());
+  it('rolls today forward when the countdown tick crosses midnight', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(2026, 7, 9, 23, 59, 59));
+    const { result } = renderHook(() => useDaily());
+    expect(result.current.today).toBe('2026-08-09');
+    act(() => { vi.advanceTimersByTime(2000); });
+    expect(result.current.today).toBe('2026-08-10');
   });
 });

@@ -32,6 +32,7 @@ export default function DailyPage() {
         </section>
       ) : (
         <GameRound
+          key={daily.scenario.seed}
           scenario={daily.scenario}
           combo={1}
           soundOn={daily.soundOn}
