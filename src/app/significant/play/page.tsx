@@ -22,7 +22,7 @@ function PlayInner() {
 
   if (!ready || !state) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
 
-  const combo = 1 + Object.values(state.campaign).filter((r) => r.correct).length % 3;
+  const combo = 1 + state.campaignStreak;
 
   return (
     <main className="mx-auto flex max-w-md flex-col gap-4 p-6">

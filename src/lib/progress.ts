@@ -15,6 +15,7 @@ export interface SignificantState {
   shields: number;
   xp: number;
   soundOn: boolean;
+  campaignStreak: number;
 }
 
 export const defaultState = (): SignificantState => ({
@@ -26,6 +27,7 @@ export const defaultState = (): SignificantState => ({
   shields: 0,
   xp: 0,
   soundOn: true,
+  campaignStreak: 0,
 });
 
 export const xpForCall = (correct: boolean, combo: number): number =>
@@ -53,6 +55,7 @@ export function recordCampaignResult(
   return {
     ...s,
     campaign: { ...s.campaign, [levelId]: { stars, attempts, correct: prev.correct || correct } },
+    campaignStreak: correct ? s.campaignStreak + 1 : 0,
   };
 }
 

@@ -26,7 +26,7 @@ export default function SignificantHome() {
       </header>
 
       <p className="rounded-2xl bg-win/15 px-4 py-2 text-sm font-extrabold text-win-deep">
-        Baseline calibrated ✓ +50 XP — {totalStars} star{totalStars === 1 ? '' : 's'} collected
+        Baseline calibrated ✓ — {totalStars} star{totalStars === 1 ? '' : 's'} collected
       </p>
 
       {allDone && <IQCard levels={levels} xp={state.xp} />}

@@ -13,6 +13,17 @@ describe('campaign results', () => {
     s = recordCampaignResult(s, 2, false); // never downgrade
     expect(s.campaign[2].stars).toBe(1);
   });
+
+  it('campaignStreak counts consecutive correct results and resets on a miss', () => {
+    let s = defaultState();
+    s = recordCampaignResult(s, 1, true);
+    s = recordCampaignResult(s, 2, true);
+    expect(s.campaignStreak).toBe(2);
+    s = recordCampaignResult(s, 3, false);
+    expect(s.campaignStreak).toBe(0);
+    s = recordCampaignResult(s, 3, true);
+    expect(s.campaignStreak).toBe(1);
+  });
 });
 
 describe('daily streaks', () => {
