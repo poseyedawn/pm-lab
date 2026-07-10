@@ -1,7 +1,7 @@
 'use client';
 
 import { useReducedMotion } from 'framer-motion';
-import type { Scenario } from '@/lib/engine/types';
+import type { Call, Scenario } from '@/lib/engine/types';
 import { useGameRound } from '@/hooks/useGameRound';
 import { ReadoutCard } from '@/components/significant/ReadoutCard';
 import { DecisionButtons } from '@/components/significant/DecisionButtons';
@@ -21,12 +21,11 @@ export function GameRound({ scenario, combo, soundOn, onComplete }: GameRoundPro
   const round = useGameRound(scenario, combo);
   const reducedMotion = useReducedMotion() ?? false;
 
-  const handleCall = (call: Parameters<typeof round.decide>[0]) => {
+  const handleCall = (call: Call) => {
+    const result = round.decide(call);
+    if (!result) return; // duplicate tap — already revealed
     sfx.click(soundOn);
-    round.decide(call);
-    // decide() resolves synchronously into state on next render; recompute here for feedback:
-    const correct = call === scenario.truth.correctCall;
-    if (correct) {
+    if (result.correct) {
       sfx.win(soundOn);
       vibrate(30);
       fireConfetti({ reducedMotion });

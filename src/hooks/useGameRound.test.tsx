@@ -31,4 +31,17 @@ describe('useGameRound', () => {
     expect(result.current.crit).toBe(true);
     expect(result.current.xpEarned).toBe(200);
   });
+  it('decide is idempotent: second call returns null and state is unchanged', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.99);
+    const s = generateScenario(7, 'clean-win');
+    const { result } = renderHook(() => useGameRound(s, 1));
+    let first: unknown;
+    let second: unknown;
+    act(() => { first = result.current.decide('ship'); });
+    act(() => { second = result.current.decide('kill'); });
+    expect(first).toMatchObject({ correct: true });
+    expect(second).toBeNull();
+    expect(result.current.correct).toBe(true);
+    expect(result.current.call).toBe('ship');
+  });
 });
