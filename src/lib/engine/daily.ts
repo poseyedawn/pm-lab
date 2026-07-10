@@ -1,8 +1,8 @@
 import { hashString } from '@/lib/prng';
 import type { ArchetypeId } from '@/lib/engine/types';
 
-/** Puzzle #1 = 2026-08-01 (launch). Earlier dates give numbers <= 0; fine for dev. */
-const EPOCH_UTC = Date.UTC(2026, 7, 1);
+/** Puzzle #1 = 2026-07-09 (launch). Earlier dates give numbers <= 0; fine for dev. */
+const EPOCH_UTC = Date.UTC(2026, 6, 9);
 
 /** Fixed rotation, shuffled so consecutive days always differ. */
 const ROTATION: ArchetypeId[] = [
