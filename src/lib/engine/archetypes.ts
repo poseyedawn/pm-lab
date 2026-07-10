@@ -16,6 +16,9 @@ export interface DraftView {
   daysRun: number;
   daysPlanned: number;
   segments?: SegmentReadout[];
+  /** Day-by-day arms, needed by accept predicates that check per-day shape (e.g. novelty decay). */
+  control?: ArmDay[];
+  variant?: ArmDay[];
 }
 
 export interface ArchetypeBuild {
@@ -84,7 +87,11 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       daysPlanned: 14, daysRun,
       trueLiftPct: 0, correctCall: 'kill', trapName: 'Novelty effect',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.08, 0.2), nPerArmDay: uniformInt(r, 3000, 6000), daysRun, liftOnDay: (d) => early * Math.exp(-d / 2.5) }),
-      accept: (v) => v.observed.relLift > 0.01,
+      accept: (v) => {
+        if (v.observed.relLift <= 0.01 || !v.control || !v.variant) return false;
+        const relDay = (i: number) => v.variant![i].c / v.variant![i].n - v.control![i].c / v.control![i].n;
+        return relDay(0) > relDay(v.daysRun - 1);
+      },
       explain: () => `Look at the chart, not the average: the variant spiked at launch and decayed toward the control every day since. Users noticed the new thing, then stopped caring. The long-run lift converges to ~0%. The aggregate ${'"'}win${'"'} is front-loaded noise.`,
     };
   },
