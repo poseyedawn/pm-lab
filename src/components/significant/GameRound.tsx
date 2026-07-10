@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import type { Call, Scenario } from '@/lib/engine/types';
 import { useGameRound } from '@/hooks/useGameRound';
@@ -21,6 +22,10 @@ interface GameRoundProps {
 export function GameRound({ scenario, combo, soundOn, onComplete }: GameRoundProps) {
   const round = useGameRound(scenario, combo);
   const reducedMotion = useReducedMotion() ?? false;
+  // Guards against a double-tap on "Next" double-granting XP: onComplete
+  // must fire at most once per round, even if the button is tapped twice
+  // before the parent navigates away.
+  const nextCalledRef = useRef(false);
 
   const handleCall = (call: Call) => {
     const result = round.decide(call);
@@ -55,7 +60,11 @@ export function GameRound({ scenario, combo, soundOn, onComplete }: GameRoundPro
           correct={round.correct!}
           xpEarned={round.xpEarned}
           crit={round.crit}
-          onNext={() => onComplete({ correct: round.correct!, xpEarned: round.xpEarned })}
+          onNext={() => {
+            if (nextCalledRef.current) return;
+            nextCalledRef.current = true;
+            onComplete({ correct: round.correct!, xpEarned: round.xpEarned });
+          }}
         />
       )}
     </div>
