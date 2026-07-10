@@ -23,8 +23,8 @@ export function simulateArms(
     const nB = Math.round(dayTotal * allocB);
     const nA = dayTotal - nB;
     const bump = p.bumpOnDay ? p.bumpOnDay(day) : 1;
-    const rateA = Math.min(0.95, p.baseRate * bump);
-    const rateB = Math.min(0.95, p.baseRate * (1 + p.liftOnDay(day)) * bump);
+    const rateA = Math.min(0.95, Math.max(0, p.baseRate * bump));
+    const rateB = Math.min(0.95, Math.max(0, p.baseRate * (1 + p.liftOnDay(day)) * bump));
     control.push({ n: nA, c: binomialDraw(rng, nA, rateA) });
     variant.push({ n: nB, c: binomialDraw(rng, nB, rateB) });
   }
