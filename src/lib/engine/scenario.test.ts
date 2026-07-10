@@ -76,6 +76,22 @@ describe('archetype invariants', () => {
       expect(relDay(0)).toBeGreaterThan(relDay(s.daysRun - 1));
     }
   });
+  it('seasonality: promo-day contamination drives the lift, true call is keep', () => {
+    for (const seed of SEEDS) {
+      const s = generateScenario(seed, 'seasonality');
+      expect(s.observed.relLift).toBeGreaterThan(0.02);
+      expect(s.truth.correctCall).toBe('keep');
+      expect(s.note?.toLowerCase()).toContain('promo');
+    }
+  });
+  it('multiple-comparisons: one flukey metric out of many, true lift 0, kill', () => {
+    for (const seed of SEEDS) {
+      const s = generateScenario(seed, 'multiple-comparisons');
+      expect(s.observed.significant).toBe(true);
+      expect(s.truth.trueLiftPct).toBe(0);
+      expect(s.note).toContain('12 metrics');
+    }
+  });
   it('clean-win ships, clean-loss kills, both run full duration', () => {
     for (const seed of SEEDS) {
       const w = generateScenario(seed, 'clean-win');

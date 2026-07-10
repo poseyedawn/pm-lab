@@ -1,5 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { addXp, defaultState, recordCampaignResult, recordDaily, xpForCall } from '@/lib/progress';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import {
+  addXp, defaultState, loadState, recordCampaignResult, recordDaily, saveState, xpForCall,
+} from '@/lib/progress';
 
 describe('campaign results', () => {
   it('first-try correct → 3 stars; retry correct → 1 star; keeps best', () => {
@@ -59,5 +61,38 @@ describe('xp', () => {
     expect(xpForCall(true, 9)).toBe(300);
     expect(xpForCall(false, 5)).toBe(0);
     expect(addXp(defaultState(), 250).xp).toBe(250);
+  });
+});
+
+describe('defaultState', () => {
+  it('campaignCompleteTracked starts false', () => {
+    expect(defaultState().campaignCompleteTracked).toBe(false);
+  });
+});
+
+describe('storage', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    window.localStorage.clear();
+  });
+
+  it('loadState/saveState round-trip through localStorage', () => {
+    const s = addXp(recordCampaignResult(defaultState(), 1, true), 100);
+    saveState(s);
+    expect(loadState()).toEqual(s);
+  });
+
+  it('falls back to in-memory storage when localStorage throws, so saveState never throws', () => {
+    const proto = Object.getPrototypeOf(window.localStorage) as Storage;
+    vi.spyOn(proto, 'setItem').mockImplementation(() => {
+      throw new Error('QuotaExceededError');
+    });
+    vi.spyOn(proto, 'getItem').mockImplementation(() => {
+      throw new Error('SecurityError');
+    });
+
+    const s = addXp(recordCampaignResult(defaultState(), 1, true), 150);
+    expect(() => saveState(s)).not.toThrow();
+    expect(loadState()).toEqual(s);
   });
 });

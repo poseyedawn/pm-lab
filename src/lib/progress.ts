@@ -80,27 +80,37 @@ export function recordDaily(s: SignificantState, date: string, correct: boolean)
 const KEY = 'pmlab:significant:v1';
 let memoryFallback: string | null = null;
 
-export function loadState(): SignificantState {
+function safeParse(raw: string): SignificantState {
   try {
-    const raw =
-      typeof window !== 'undefined' ? window.localStorage.getItem(KEY) : memoryFallback;
-    if (!raw) return defaultState();
     return { ...defaultState(), ...(JSON.parse(raw) as Partial<SignificantState>) };
   } catch {
     return defaultState();
   }
 }
 
+export function loadState(): SignificantState {
+  try {
+    const raw = (typeof window !== 'undefined' ? window.localStorage.getItem(KEY) : null) ?? memoryFallback;
+    if (!raw) return defaultState();
+    return safeParse(raw);
+  } catch {
+    return memoryFallback ? safeParse(memoryFallback) : defaultState();
+  }
+}
+
 export function saveState(s: SignificantState): void {
   const raw = JSON.stringify(s);
+  // Always keep the in-memory fallback current so a throwing localStorage
+  // (e.g. Safari private mode) still preserves progress for this session.
+  memoryFallback = raw;
   try {
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(KEY, raw);
       // Lab-wide profile shared by all pm-lab games. With one game,
       // lab XP === significant XP; future games merge their XP in here.
       window.localStorage.setItem('pmlab:profile:v1', JSON.stringify({ xp: s.xp }));
-    } else memoryFallback = raw;
+    }
   } catch {
-    memoryFallback = raw;
+    // localStorage threw; memoryFallback already holds the latest state above.
   }
 }
