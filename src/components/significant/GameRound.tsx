@@ -9,6 +9,7 @@ import { RevealPanel } from '@/components/significant/RevealPanel';
 import { fireConfetti } from '@/components/juice/confetti';
 import { sfx } from '@/components/juice/sound';
 import { vibrate } from '@/components/juice/haptics';
+import { track } from '@/lib/analytics';
 
 interface GameRoundProps {
   scenario: Scenario;
@@ -24,6 +25,11 @@ export function GameRound({ scenario, combo, soundOn, onComplete }: GameRoundPro
   const handleCall = (call: Call) => {
     const result = round.decide(call);
     if (!result) return; // duplicate tap — already revealed
+    track('round_complete', {
+      archetype: scenario.archetype,
+      correct: result.correct,
+      mode: window.location.pathname.includes('daily') ? 'daily' : 'campaign',
+    });
     sfx.click(soundOn);
     if (result.correct) {
       sfx.win(soundOn);

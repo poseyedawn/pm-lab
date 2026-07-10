@@ -1,14 +1,32 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useCampaign } from '@/hooks/useCampaign';
 import { LevelPath } from '@/components/significant/LevelPath';
 import { IQCard } from '@/components/significant/IQCard';
 import { CountUp } from '@/components/juice/CountUp';
+import { track } from '@/lib/analytics';
 
 export default function SignificantHome() {
   const { ready, state, levels, totalStars, allDone, toggleSound } = useCampaign();
+  const completeTracked = useRef(false);
+
+  useEffect(() => {
+    if (allDone && !completeTracked.current) {
+      completeTracked.current = true;
+      track('campaign_complete', { stars: totalStars });
+    }
+    // Session-level dedup only (ref, not persisted) — a fresh page load can
+    // re-fire this once more; localStorage-based dedup is not required here.
+  }, [allDone, totalStars]);
+
   if (!ready || !state) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
+
+  const handleToggleSound = () => {
+    track('sound_toggled', { on: !state.soundOn });
+    toggleSound();
+  };
 
   return (
     <main className="mx-auto flex max-w-md flex-col gap-6 p-6">
@@ -19,7 +37,7 @@ export default function SignificantHome() {
         </div>
         <div className="text-right">
           <p className="text-lg font-extrabold"><CountUp value={state.xp} /> XP</p>
-          <button type="button" onClick={toggleSound} className="text-sm font-extrabold text-ink-soft underline">
+          <button type="button" onClick={handleToggleSound} className="text-sm font-extrabold text-ink-soft underline">
             Sound {state.soundOn ? 'on' : 'off'}
           </button>
         </div>

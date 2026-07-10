@@ -5,6 +5,7 @@ import { useReducedMotion } from 'framer-motion';
 import { iqTitle, type LevelStatus } from '@/hooks/useCampaign';
 import { fireConfetti } from '@/components/juice/confetti';
 import { PressButton } from '@/components/juice/PressButton';
+import { track } from '@/lib/analytics';
 
 export function IQCard({ levels, xp }: { levels: LevelStatus[]; xp: number }) {
   // Gating means finishing implies all levels passed eventually — so the score
@@ -31,7 +32,7 @@ export function IQCard({ levels, xp }: { levels: LevelStatus[]; xp: number }) {
       <PressButton
         color="sky"
         className="mt-5 w-full bg-white !text-ink shadow-[0_4px_0_rgba(0,0,0,0.25)]"
-        onClick={() => navigator.clipboard?.writeText(shareText).catch(() => {})}
+        onClick={() => navigator.clipboard?.writeText(shareText).then(() => track('share_clicked', {})).catch(() => {})}
       >
         Copy result to share
       </PressButton>

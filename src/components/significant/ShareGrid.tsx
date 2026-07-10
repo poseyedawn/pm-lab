@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { PressButton } from '@/components/juice/PressButton';
+import { track } from '@/lib/analytics';
 
 export function ShareGrid({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -16,12 +17,13 @@ export function ShareGrid({ text }: { text: string }) {
       className="w-full"
       onClick={() => {
         navigator.clipboard.writeText(text).then(() => {
+          track('share_clicked', {});
           setCopied(true);
           setTimeout(() => setCopied(false), 2000);
         }).catch(() => {});
       }}
     >
-      {copied ? 'Copied!' : 'Share result'}
+      <span aria-live="polite">{copied ? 'Copied!' : 'Share result'}</span>
     </PressButton>
   );
 }

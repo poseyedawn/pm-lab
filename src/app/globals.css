@@ -21,6 +21,7 @@ body { background: var(--color-bg); color: var(--color-ink); }
 
 /* Tactile 3D-pressed button base: pair with a bg + shadow color per variant */
 .btn-3d {
+  @apply focus-visible:outline-4 focus-visible:outline-brand/50;
   border-radius: 1rem;
   font-weight: 800;
   transition: transform 0.06s ease, box-shadow 0.06s ease;
