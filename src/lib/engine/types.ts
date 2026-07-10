@@ -1,0 +1,56 @@
+import type { LiftReadout } from '@/lib/stats';
+
+export type Call = 'ship' | 'kill' | 'keep';
+
+export type ArchetypeId =
+  | 'clean-win'
+  | 'clean-loss'
+  | 'winners-curse'
+  | 'peeking'
+  | 'novelty'
+  | 'underpowered'
+  | 'multiple-comparisons'
+  | 'seasonality'
+  | 'srm'
+  | 'simpson';
+
+export interface ArmDay {
+  n: number; // visitors that day
+  c: number; // conversions that day
+}
+
+export interface Totals {
+  nA: number;
+  cA: number;
+  nB: number;
+  cB: number;
+}
+
+export interface SegmentReadout {
+  name: string;
+  relLift: number; // observed relative lift within the segment
+}
+
+export interface Scenario {
+  seed: number;
+  archetype: ArchetypeId;
+  product: string;
+  hypothesis: string;
+  metricName: string;
+  daysPlanned: number;
+  daysRun: number;
+  control: ArmDay[];
+  variant: ArmDay[];
+  totals: Totals;
+  observed: LiftReadout;
+  /** Contextual detail shown on the readout (e.g. "1 of 12 metrics checked"). */
+  note?: string;
+  /** Only present for the simpson archetype. */
+  segments?: SegmentReadout[];
+  truth: {
+    trueLiftPct: number; // long-run true relative lift, in percent
+    correctCall: Call;
+    explanation: string; // 2-3 sharp sentences, numbers already slotted in
+    trapName: string;    // e.g. "Peeking"
+  };
+}
