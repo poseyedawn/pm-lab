@@ -17,10 +17,10 @@ export function LevelPath({ levels }: { levels: LevelStatus[] }) {
         const node = (
           <div
             className={`flex h-20 w-20 flex-col items-center justify-center rounded-full font-extrabold text-white shadow-lg transition-transform
-              ${lvl.status === 'done' ? 'bg-win' : lvl.status === 'open' ? 'animate-pulse bg-brand' : 'bg-ink/20'}`}
+              ${lvl.status === 'done' ? 'bg-win' : lvl.status === 'open' ? 'animate-pulse bg-brand' : 'bg-ink/70'}`}
           >
             <span className="text-xl">{lvl.id}</span>
-            <span className="flex" aria-label={`${lvl.stars} stars`}>
+            <span className="flex" role="img" aria-label={`${lvl.stars} stars`}>
               <Star filled={lvl.stars >= 1} /><Star filled={lvl.stars >= 3} /><Star filled={lvl.stars >= 3} />
             </span>
           </div>
@@ -28,7 +28,7 @@ export function LevelPath({ levels }: { levels: LevelStatus[] }) {
         return (
           <li key={lvl.id} className={`flex justify-center ${offset}`}>
             {lvl.status === 'locked' ? (
-              <div aria-label={`Level ${lvl.id} locked`}>{node}</div>
+              <div role="img" aria-label={`Level ${lvl.id} locked`}>{node}</div>
             ) : (
               <Link href={`/significant/play?level=${lvl.id}`} aria-label={`Play level ${lvl.id}`} className="active:scale-95">
                 {node}

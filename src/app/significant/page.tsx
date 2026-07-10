@@ -43,14 +43,14 @@ export default function SignificantHome() {
         </div>
       </header>
 
-      <p className="rounded-2xl bg-win/15 px-4 py-2 text-sm font-extrabold text-win-deep">
+      <p className="rounded-2xl bg-win/15 px-4 py-2 text-sm font-extrabold text-win-text">
         Baseline calibrated ✓ — {totalStars} star{totalStars === 1 ? '' : 's'} collected
       </p>
 
       {allDone && <IQCard levels={levels} xp={state.xp} />}
       <LevelPath levels={levels} />
 
-      <Link href="/significant/daily" className="rounded-[var(--radius-card)] bg-gold p-4 text-center font-extrabold text-white shadow-lg active:scale-95">
+      <Link href="/significant/daily" className="rounded-[var(--radius-card)] bg-gold p-4 text-center font-extrabold text-ink shadow-lg active:scale-95">
         Daily experiment {state.dailyStreak > 0 ? `· streak ${state.dailyStreak}` : ''}
       </Link>
       <Link href="/significant/about" className="text-center text-sm font-extrabold text-ink-soft underline">

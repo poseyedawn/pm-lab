@@ -46,8 +46,10 @@ export default function DailyPage() {
     <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
       <header className="flex items-center justify-between">
         <h1 className="font-extrabold text-brand-deep">Daily #{dayNumber(daily.today)}</h1>
-        <p className="font-extrabold text-gold" aria-label={`Streak ${daily.streak}`}>
-          🔥 {daily.streak}{daily.shields > 0 ? ` · 🛡 ${daily.shields}` : ''}
+        <p className="font-extrabold text-gold-text">
+          <span role="img" aria-label={`Streak ${daily.streak}`}>
+            🔥 {daily.streak}{daily.shields > 0 ? ` · 🛡 ${daily.shields}` : ''}
+          </span>
         </p>
       </header>
 

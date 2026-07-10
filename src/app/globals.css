@@ -9,9 +9,11 @@
   --color-brand-deep: #5b21b6;
   --color-win: #22c55e;
   --color-win-deep: #15803d;
+  --color-win-text: #166534;   /* darker green for text on tinted win backgrounds — WCAG AA */
   --color-lose: #f43f5e;
   --color-lose-deep: #be123c;
   --color-gold: #f59e0b;
+  --color-gold-text: #92400e;  /* darker amber for text on light backgrounds — WCAG AA */
   --color-sky: #3b82f6;
   --color-sky-deep: #1d4ed8;
   --radius-card: 1.25rem;
