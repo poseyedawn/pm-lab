@@ -7,15 +7,19 @@ import { fireConfetti } from '@/components/juice/confetti';
 import { PressButton } from '@/components/juice/PressButton';
 import { track } from '@/lib/analytics';
 
-export function IQCard({ levels, xp }: { levels: LevelStatus[]; xp: number }) {
+export function IQCard({
+  levels, xp, celebrate,
+}: { levels: LevelStatus[]; xp: number; celebrate: boolean }) {
   // Gating means finishing implies all levels passed eventually — so the score
   // that differentiates players is FIRST-TRY correct calls (3-star levels).
   const firstTry = levels.filter((l) => l.stars === 3).length;
   const reducedMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
-    fireConfetti({ big: true, reducedMotion });
-  }, [reducedMotion]);
+    // Confetti only on the visit that first completes the campaign — the card
+    // itself still renders on every later visit.
+    if (celebrate) fireConfetti({ big: true, reducedMotion });
+  }, [reducedMotion, celebrate]);
 
   const shareText = `Significant — Experimentation IQ: ${iqTitle(firstTry)} (${firstTry}/10 first try, ${xp} XP)\nCan you beat the traps? ${typeof window !== 'undefined' ? window.location.origin : ''}/significant`;
 

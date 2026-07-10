@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { useCampaign } from '@/hooks/useCampaign';
 import { LevelPath } from '@/components/significant/LevelPath';
@@ -9,17 +9,18 @@ import { CountUp } from '@/components/juice/CountUp';
 import { track } from '@/lib/analytics';
 
 export default function SignificantHome() {
-  const { ready, state, levels, totalStars, allDone, toggleSound } = useCampaign();
-  const completeTracked = useRef(false);
+  const { ready, state, levels, totalStars, allDone, toggleSound, markCampaignCompleteTracked } = useCampaign();
+
+  // Persisted dedup: campaignCompleteTracked lives in SignificantState, so this
+  // fires exactly once across the player's lifetime, not once per session.
+  const celebrate = allDone && !!state && !state.campaignCompleteTracked;
 
   useEffect(() => {
-    if (allDone && !completeTracked.current) {
-      completeTracked.current = true;
+    if (allDone && state && !state.campaignCompleteTracked) {
+      markCampaignCompleteTracked();
       track('campaign_complete', { stars: totalStars });
     }
-    // Session-level dedup only (ref, not persisted) — a fresh page load can
-    // re-fire this once more; localStorage-based dedup is not required here.
-  }, [allDone, totalStars]);
+  }, [allDone, state, totalStars, markCampaignCompleteTracked]);
 
   if (!ready || !state) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
 
@@ -47,7 +48,7 @@ export default function SignificantHome() {
         Baseline calibrated ✓ — {totalStars} star{totalStars === 1 ? '' : 's'} collected
       </p>
 
-      {allDone && <IQCard levels={levels} xp={state.xp} />}
+      {allDone && <IQCard levels={levels} xp={state.xp} celebrate={celebrate} />}
       <LevelPath levels={levels} />
 
       <Link href="/significant/daily" className="rounded-[var(--radius-card)] bg-gold p-4 text-center font-extrabold text-ink shadow-lg active:scale-95">

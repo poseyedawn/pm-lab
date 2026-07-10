@@ -67,6 +67,11 @@ export function useCampaign() {
     [mutate],
   );
 
+  const markCampaignCompleteTracked = useCallback(
+    () => mutate((s) => ({ ...s, campaignCompleteTracked: true })),
+    [mutate],
+  );
+
   const levels = state ? levelStatuses(state) : [];
   return {
     ready: state !== null,
@@ -76,5 +81,6 @@ export function useCampaign() {
     allDone: levels.length > 0 && levels.every((l) => l.status === 'done'),
     completeLevel,
     toggleSound,
+    markCampaignCompleteTracked,
   };
 }

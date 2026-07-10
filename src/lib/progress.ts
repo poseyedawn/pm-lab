@@ -16,6 +16,7 @@ export interface SignificantState {
   xp: number;
   soundOn: boolean;
   campaignStreak: number;
+  campaignCompleteTracked: boolean;
 }
 
 export const defaultState = (): SignificantState => ({
@@ -28,6 +29,7 @@ export const defaultState = (): SignificantState => ({
   xp: 0,
   soundOn: true,
   campaignStreak: 0,
+  campaignCompleteTracked: false,
 });
 
 export const xpForCall = (correct: boolean, combo: number): number =>
