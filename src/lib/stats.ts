@@ -30,10 +30,12 @@ export function liftReadout(cA: number, nA: number, cB: number, nB: number): Lif
   const diff = pB - pA;
   const z = se === 0 ? 0 : diff / se;
   const pValue = Math.min(1, 2 * (1 - phi(Math.abs(z))));
+  // Continuity floor: a zero-conversion control arm must not yield Infinity.
+  const pAFloor = Math.max(pA, 0.5 / nA);
   return {
-    relLift: diff / pA,
-    ciLow: (diff - 1.96 * se) / pA,
-    ciHigh: (diff + 1.96 * se) / pA,
+    relLift: diff / pAFloor,
+    ciLow: (diff - 1.96 * se) / pAFloor,
+    ciHigh: (diff + 1.96 * se) / pAFloor,
     pValue,
     significant: pValue < 0.05,
   };

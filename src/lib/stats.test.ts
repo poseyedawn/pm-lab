@@ -30,6 +30,12 @@ describe('liftReadout', () => {
     expect(r.significant).toBe(false);
     expect(Math.abs(r.relLift)).toBeLessThan(0.001);
   });
+  it('stays finite when the control arm has zero conversions', () => {
+    const r = liftReadout(0, 500, 10, 500);
+    expect(Number.isFinite(r.relLift)).toBe(true);
+    expect(Number.isFinite(r.ciLow)).toBe(true);
+    expect(Number.isFinite(r.ciHigh)).toBe(true);
+  });
 });
 
 describe('srmPValue', () => {
