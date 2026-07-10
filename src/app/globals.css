@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #f4f5fb;
+  --color-surface: #ffffff;
+  --color-ink: #232447;
+  --color-ink-soft: #6b6d94;
+  --color-brand: #7c3aed;        /* Significant's violet */
+  --color-brand-deep: #5b21b6;
+  --color-win: #22c55e;
+  --color-win-deep: #15803d;
+  --color-lose: #f43f5e;
+  --color-lose-deep: #be123c;
+  --color-gold: #f59e0b;
+  --color-sky: #3b82f6;
+  --color-sky-deep: #1d4ed8;
+  --radius-card: 1.25rem;
+}
+
+body { background: var(--color-bg); color: var(--color-ink); }
+
+/* Tactile 3D-pressed button base: pair with a bg + shadow color per variant */
+.btn-3d {
+  border-radius: 1rem;
+  font-weight: 800;
+  transition: transform 0.06s ease, box-shadow 0.06s ease;
+  transform: translateY(0);
+}
+.btn-3d:active { transform: translateY(4px); box-shadow: 0 0 0 0 !important; }
