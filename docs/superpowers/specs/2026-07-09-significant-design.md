@@ -1,7 +1,7 @@
 # Significant — Design Spec
 
-**Date:** 2026-07-09
-**Status:** Approved by Alvin (design conversation, 2026-07-09)
+**Date:** 2026-07-09 (rev 2: engagement layer + vibrant visual identity, same day)
+**Status:** Approved by Alvin (design conversation, 2026-07-09); rev 2 pending review
 **Scope:** The Lab app shell + the first game, "Significant"
 
 ## Context
@@ -27,7 +27,13 @@ with a short PM writeup page.
 
 - A visitor on a phone taps a link from the portfolio and is playing within seconds.
 - A hiring manager who plays recognizes genuine experimentation fluency.
-- Weekend-scale build; zero backend; near-zero running cost.
+- **The product feels rich and shipped** — Duolingo-grade polish, color, and
+  feedback. The intended reaction: "if he built this in his spare time, I want
+  him building real product here."
+- **Engagement psychology is a first-class design layer** (see Engagement
+  layer): the game should hold a session, pull players through the campaign,
+  and give them a reason to return tomorrow.
+- Weekend-scale core build; zero backend; near-zero running cost.
 - Replayable enough to share (daily mode + emoji share grid).
 
 ## Non-goals
@@ -45,11 +51,25 @@ with a short PM writeup page.
   Unreleased games show as "coming soon" cards only once their build starts.
 - **Per-game routes**: `/significant` (game), `/significant/about` (PM writeup:
   why it exists, key design trade-offs, what it demonstrates, how it was built).
-- **Design system**: shared tokens — 8pt spacing grid, max 4 font sizes / 2
-  weights, 60/30/10 color rule with one restrained accent, dark-leaning default
-  theme. Subtle motion only.
+- **Design system — vibrant, Duolingo-grade** (revised in rev 2, overriding the
+  earlier dark/restrained direction): a colorful, saturated palette on a light
+  base (one dominant brand hue per game + supporting bright feedback colors:
+  green = correct, red/orange = wrong, gold = rewards), chunky rounded
+  components, bold friendly type (still max 4 sizes / 2 weights), tactile
+  "pressed" 3D button treatment, playful SVG illustration. Discipline still
+  applies — 8pt grid, one cohesive token set shared across all four games so
+  the Lab reads as a single rich product, not four weekend hacks.
+- **Shared juice library**: a small internal package of feedback primitives
+  used by every game — count-up numbers, confetti/particle bursts, card flip
+  and shake animations, progress-bar fills with overshoot, sound effects
+  (user-toggleable, preference persisted), and haptics via `navigator.vibrate`
+  where supported. Motion respects `prefers-reduced-motion`.
+- **Lab-wide meta-progression**: one localStorage profile aggregates XP and
+  badges across all games. Playing one game visibly starts progress in a
+  larger system — a reason to try the next game.
 - **Analytics**: Vercel Analytics; custom events `game_start`, `round_complete`,
-  `campaign_complete`, `share_clicked` so real usage numbers can be quoted later.
+  `campaign_complete`, `daily_played`, `streak_extended`, `share_clicked`,
+  `sound_toggled` so real usage and retention numbers can be quoted later.
 
 ## Game design: Significant
 
@@ -128,19 +148,73 @@ the game about judgment, not pattern-matching "everything is a trap."
 
 ### Scoring
 
-Correct call = 1 point. No partial credit; no time pressure. Campaign shows
-X/10; daily shows correct/incorrect + streak.
+Correct call = base XP. In-session combo multiplier for consecutive correct
+calls (x2, x3...) shown as a flame/badge that grows — and visibly breaks on a
+wrong call. No time pressure. Campaign shows X/10 plus total XP; daily shows
+correct/incorrect + streak + XP earned.
+
+## Engagement layer
+
+Research-backed mechanics (Duolingo case studies; game-feel/"juice" design
+literature), applied deliberately. Three time horizons:
+
+### 1. In-session: juice (make every tap satisfying)
+
+- Every interaction gets amplified feedback: buttons depress with a thunk,
+  the readout card deals in with a flip, numbers count up rather than appear,
+  correct answers fire a confetti burst + rising chime, wrong answers shake
+  the card + dull thud. XP flies into the score counter.
+- Combo multiplier with escalating visual intensity (glow, flame stages) —
+  variable-ratio dopamine within a session.
+- Occasional random bonus: a "critical insight" 2x XP round appears
+  unpredictably (variable reward schedule).
+- Sound on by default with a prominent, persistent mute toggle; haptic pulse
+  on Android for correct/wrong.
+
+### 2. Through-session: progression pull (finish the campaign)
+
+- Campaign rendered as a **Duolingo-style level path** — a winding map of 10
+  nodes with locked levels visible ahead (Zeigarnik effect: visible unfinished
+  business pulls players forward).
+- **Endowed progress**: a 20-second "calibration" warm-up round auto-completes
+  node 0, so players start with the path already begun.
+- Per-level stars (correct on first try = 3 stars) create a perfection loop
+  for replays.
+- Campaign completion delivers the "Experimentation IQ" card with a tiered,
+  collectible title (e.g. Intern → Growth PM → p-Hacker's Nightmare) and a
+  big celebratory moment (full-screen confetti, animated card reveal).
+
+### 3. Cross-session: return hooks (bring them back)
+
+- **Daily streak with loss aversion**: streak flame counter; after a completed
+  daily, show a countdown to the next puzzle ("next experiment in 14:32:07").
+- **Streak Shield**: earned by a perfect campaign or 7-day streak; auto-spends
+  to protect a missed day (Duolingo's Streak Freeze pattern — protects the
+  at-risk segment instead of punishing them).
+- Wordle-style emoji share grid after each daily = social distribution loop.
+- Lab-wide XP/badge profile gives a reason to come back and try the *other*
+  games.
+
+### The meta-move
+
+`/significant/about` explicitly documents this engagement system — which
+mechanics were used (loss aversion, variable rewards, endowed progress,
+juice), why, and where the ethical line was drawn (no dark patterns: no fake
+scarcity, no guilt copy, sound/motion opt-outs, no data collection). A
+recruiter who enjoyed the game then reads a PM articulating exactly why they
+enjoyed it. The addictiveness itself becomes the demonstrated skill.
 
 ## UX / UI
 
 - **Mobile-first single column**: readout card, then the three decision buttons
   within thumb reach at the bottom. Desktop centers the same column (~28rem).
 - Reveal is an in-place card state change (no route change), with a clear
-  correct/incorrect treatment and a "Next" button.
+  correct/incorrect treatment, juice (confetti/shake), and a "Next" button.
 - Numbers formatted for scanning (lift as %, CI as range, n with thousands separators).
 - Loading: none needed post-hydration (engine is client-side); the app is static.
-- The tone is dry and confident, never cutesy. No emoji in the game UI itself
-  (emoji appear only in the share grid).
+- Tone: playful and colorful in visuals and feedback, smart and precise in the
+  statistical copy. The reveal explanations stay sharp and credible — the
+  Duolingo energy lives in the interaction layer, never in dumbed-down content.
 
 ## Error handling
 
@@ -160,7 +234,9 @@ X/10; daily shows correct/incorrect + streak.
 - **Statistical sanity tests**: across many seeds, peeking scenarios' true lift
   is ~0; underpowered scenarios' true lift is within the declared range, etc.
 - **Component smoke tests** for the round card and reveal states.
-- Manual mobile QA pass (iOS Safari + Android Chrome) before deploy.
+- Manual mobile QA pass (iOS Safari + Android Chrome) before deploy, including
+  sound toggle persistence, haptics, `prefers-reduced-motion`, and juice
+  performance on mid-range devices (animations must stay at 60fps).
 
 ## Tech summary
 
@@ -176,7 +252,12 @@ X/10; daily shows correct/incorrect + streak.
 
 ## Rollout
 
-1. Scaffold Lab shell + design tokens.
-2. Build engine + tests, then round UI, then campaign, then daily + share.
-3. Write `/significant/about` PM writeup.
+1. Scaffold Lab shell + vibrant design tokens + juice library primitives.
+2. Build engine + tests, then round UI with full juice, then campaign path,
+   then daily + streaks + share.
+3. Write `/significant/about` PM writeup (including the engagement-design section).
 4. Deploy to Vercel, link from portfolio site.
+
+Note: the engagement layer widens scope beyond a strict weekend for this first
+game — the juice library and level path are one-time investments the other
+three games inherit.
