@@ -1,5 +1,8 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
+import { DilemmaCard } from '@/components/shipit/DilemmaCard';
+import { ChoiceButtons } from '@/components/shipit/ChoiceButtons';
+import type { Card } from '@/lib/shipit/types';
 
 afterEach(cleanup);
 import { MetersHud } from '@/components/shipit/MetersHud';
@@ -29,5 +32,36 @@ describe('HintDots', () => {
   it('renders one dot per affected meter with an accessible description', () => {
     render(<HintDots effects={{ users: 10, tech: -5 }} />);
     expect(screen.getByLabelText('Affects Users, Tech')).toBeInTheDocument();
+  });
+});
+
+const CARD: Card = {
+  id: 'test-card', speaker: 'Maya, Eng Lead', avatar: '👩‍💻',
+  text: 'The staging environment is down again.',
+  left: { label: 'Fix it now', effects: { tech: 8, business: -4 } },
+  right: { label: 'Ship anyway', effects: { business: 6, tech: -8 } },
+};
+
+describe('DilemmaCard', () => {
+  it('renders speaker, avatar and dilemma text', () => {
+    render(<DilemmaCard card={CARD} onChoose={() => {}} />);
+    expect(screen.getByText('Maya, Eng Lead')).toBeInTheDocument();
+    expect(screen.getByText(/staging environment/)).toBeInTheDocument();
+  });
+});
+
+describe('ChoiceButtons', () => {
+  it('fires onChoose with the right direction and shows hint dots per choice', () => {
+    const calls: string[] = [];
+    render(<ChoiceButtons card={CARD} onChoose={(d) => calls.push(d)} />);
+    fireEvent.click(screen.getByRole('button', { name: /fix it now/i }));
+    fireEvent.click(screen.getByRole('button', { name: /ship anyway/i }));
+    expect(calls).toEqual(['left', 'right']);
+  });
+
+  it('disables both buttons when disabled', () => {
+    render(<ChoiceButtons card={CARD} onChoose={() => {}} disabled />);
+    expect(screen.getByRole('button', { name: /fix it now/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /ship anyway/i })).toBeDisabled();
   });
 });
