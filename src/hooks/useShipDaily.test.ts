@@ -25,6 +25,7 @@ describe('useShipDaily', () => {
     expect(result.current.streak).toBe(1);
     expect(result.current.lastRating).toBe('Exceeds Expectations');
     expect(result.current.bestRatingDaily).toBe('Exceeds Expectations');
+    expect(result.current.xp).toBe(220);
     act(() => result.current.complete('PIP', 50)); // second call same day: no double-record
     expect(result.current.streak).toBe(1);
     expect(result.current.lastRating).toBe('Exceeds Expectations');

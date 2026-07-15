@@ -67,6 +67,7 @@ export function useShipDaily() {
     shields: state?.shields ?? 0,
     soundOn: state?.soundOn ?? true,
     bestRatingDaily: state?.bestRatingDaily ?? null,
+    xp: state?.xp ?? 0,
     complete,
     toggleSound,
     countdown,

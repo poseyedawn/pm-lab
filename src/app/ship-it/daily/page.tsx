@@ -65,6 +65,7 @@ export default function ShipItDaily() {
           seed={daily.seed}
           mode="shipit-daily"
           soundOn={daily.soundOn}
+          totalXp={daily.xp}
           onRunEnd={(review, _run, xp) => {
             setRanThisVisit(true);
             daily.complete(review.rating, xp);
