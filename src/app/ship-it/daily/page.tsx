@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { dayNumber } from '@/lib/engine/daily';
 import { useShipDaily } from '@/hooks/useShipDaily';
@@ -10,6 +10,9 @@ import { track } from '@/lib/analytics';
 export default function ShipItDaily() {
   const daily = useShipDaily();
   const startTracked = useRef(false);
+  // True once the run finished during THIS visit: keep the review card (with
+  // share) on screen instead of instantly swapping to the played-today gate.
+  const [ranThisVisit, setRanThisVisit] = useState(false);
   // Baseline streak value, captured on the first "ready" render — see
   // significant/daily/page.tsx for why this is driven off the re-rendered prop.
   const prevStreakRef = useRef<number | null>(null);
@@ -49,7 +52,7 @@ export default function ShipItDaily() {
         </div>
       </header>
 
-      {daily.playedToday ? (
+      {daily.playedToday && !ranThisVisit ? (
         <section className="flex flex-col gap-4 rounded-[var(--radius-card)] bg-surface p-6 text-center shadow-lg">
           <p className="text-lg font-extrabold">Today&apos;s review is filed: {daily.lastRating}.</p>
           <p className="text-sm text-ink-soft">Next quarter starts in <span className="font-extrabold text-ink">{daily.countdown}</span></p>
@@ -63,6 +66,7 @@ export default function ShipItDaily() {
           mode="shipit-daily"
           soundOn={daily.soundOn}
           onRunEnd={(review, _run, xp) => {
+            setRanThisVisit(true);
             daily.complete(review.rating, xp);
             track('daily_played', { rating: review.rating });
           }}
