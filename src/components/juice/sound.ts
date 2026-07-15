@@ -36,6 +36,7 @@ export const sfx = {
     tone(784, 200, 110);     // G5
   },
   lose: (on: boolean) => on && tone(140, 220, 0, 'square', 0.04),
+  heartbeat: (on: boolean) => on && tone(90, 300, 0, 'sine', 0.02),
   reward: (on: boolean) => {
     if (!on) return;
     tone(523, 100);
