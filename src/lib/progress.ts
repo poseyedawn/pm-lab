@@ -1,4 +1,5 @@
 import { dayNumber } from '@/lib/engine/daily';
+import { syncLabProfile } from '@/lib/labProfile';
 
 export interface CampaignLevelResult {
   stars: 0 | 1 | 3;
@@ -104,13 +105,9 @@ export function saveState(s: SignificantState): void {
   // (e.g. Safari private mode) still preserves progress for this session.
   memoryFallback = raw;
   try {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(KEY, raw);
-      // Lab-wide profile shared by all pm-lab games. With one game,
-      // lab XP === significant XP; future games merge their XP in here.
-      window.localStorage.setItem('pmlab:profile:v1', JSON.stringify({ xp: s.xp }));
-    }
+    if (typeof window !== 'undefined') window.localStorage.setItem(KEY, raw);
   } catch {
     // localStorage threw; memoryFallback already holds the latest state above.
   }
+  syncLabProfile();
 }
