@@ -15,6 +15,12 @@ export default function LabHome() {
         tagline="Would you ship it? An A/B-testing intuition game where the data knows the truth."
         accent="bg-brand"
       />
+      <GameCard
+        href="/ship-it"
+        title="Ship It"
+        tagline="One dilemma at a time. Four meters. Everyone wants something — survive the quarter."
+        accent="bg-sky"
+      />
       <p className="text-center text-sm text-ink-soft">More experiments brewing.</p>
     </main>
   );
