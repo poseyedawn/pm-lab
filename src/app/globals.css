@@ -19,7 +19,42 @@
   --radius-card: 1.25rem;
 }
 
-body { background: var(--color-bg); color: var(--color-ink); }
+html { background: var(--color-bg); }
+body { min-height: 100vh; background: var(--color-bg); color: var(--color-ink); }
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 4px solid color-mix(in srgb, var(--color-brand) 45%, transparent);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 50;
+  transform: translateY(-200%);
+  border-radius: 0.75rem;
+  background: var(--color-ink);
+  color: white;
+  padding: 0.75rem 1rem;
+  font-weight: 800;
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+.settings-toggle {
+  min-width: 3.5rem;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--color-brand) 12%, transparent);
+  color: var(--color-brand-deep);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+}
 
 /* Tactile 3D-pressed button base: pair with a bg + shadow color per variant */
 .btn-3d {
@@ -30,3 +65,23 @@ body { background: var(--color-bg); color: var(--color-ink); }
   transform: translateY(0);
 }
 .btn-3d:active { transform: translateY(4px); box-shadow: 0 0 0 0 !important; }
+
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  scroll-behavior: auto !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="full"]) *,
+  html:not([data-motion="full"]) *::before,
+  html:not([data-motion="full"]) *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

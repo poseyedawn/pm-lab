@@ -1,5 +1,6 @@
 import { GameCard } from '@/components/lab/GameCard';
 import { AnalyticsViewTracker } from '@/components/analytics/AnalyticsViewTracker';
+import { LabProfileSummary } from '@/components/lab/LabProfileSummary';
 
 export default function LabHome() {
   return (
@@ -17,10 +18,8 @@ export default function LabHome() {
         tagline="Would you ship it? An A/B-testing intuition game where the data knows the truth."
         accent="bg-brand"
       />
-      <footer className="flex flex-col gap-2 text-center text-sm text-ink-soft">
-        <p>More experiments brewing.</p>
-        <p>Progress stays in your browser. We use aggregate analytics to improve the games.</p>
-      </footer>
+      <LabProfileSummary variant="card" />
+      <p className="text-center text-sm text-ink-soft">More experiments brewing.</p>
     </main>
   );
 }

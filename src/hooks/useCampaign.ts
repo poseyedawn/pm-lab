@@ -7,6 +7,8 @@ import {
   addXp, completeWarmup, loadState, recordCampaignResult, saveState,
   type SignificantState,
 } from '@/lib/progress';
+import { significantGameProgress } from '@/lib/labProgress';
+import { saveGameProgress } from '@/services/labProfileService';
 
 export interface LevelStatus {
   id: number;
@@ -41,10 +43,13 @@ export function useCampaign() {
   useEffect(() => {
     let s = loadState();
     const entryVisitor = s.warmupDone ? 'returning' : 'first';
+    let lastPlayedAt: string | null = null;
     if (!s.warmupDone) {
       s = addXp(completeWarmup(s), 50); // endowed progress: path starts non-empty
       saveState(s);
+      lastPlayedAt = new Date().toISOString();
     }
+    saveGameProgress(significantGameProgress(s, lastPlayedAt));
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage on mount, not a derived-state loop
     setState(s);
     setVisitor(entryVisitor);
@@ -55,6 +60,7 @@ export function useCampaign() {
       if (!prev) return prev;
       const next = fn(prev);
       saveState(next);
+      saveGameProgress(significantGameProgress(next, new Date().toISOString()));
       return next;
     });
   }, []);
@@ -62,11 +68,6 @@ export function useCampaign() {
   const completeLevel = useCallback(
     (id: number, correct: boolean, xp: number) =>
       mutate((s) => addXp(recordCampaignResult(s, id, correct), xp)),
-    [mutate],
-  );
-
-  const toggleSound = useCallback(
-    () => mutate((s) => ({ ...s, soundOn: !s.soundOn })),
     [mutate],
   );
 
@@ -84,7 +85,6 @@ export function useCampaign() {
     totalStars: levels.reduce((sum, l) => sum + l.stars, 0),
     allDone: levels.length > 0 && levels.every((l) => l.status === 'done'),
     completeLevel,
-    toggleSound,
     markCampaignCompleteTracked,
   };
 }

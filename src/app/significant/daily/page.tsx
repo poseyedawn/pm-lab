@@ -51,25 +51,15 @@ export default function DailyPage() {
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
-  const handleToggleSound = () => {
-    track('settings_changed', { setting: 'sound', enabled: !daily.soundOn });
-    daily.toggleSound();
-  };
-
   return (
     <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
       <header className="flex items-center justify-between">
         <h1 className="font-extrabold text-brand-deep">Daily #{dayNumber(daily.today)}</h1>
-        <div className="flex flex-col items-end gap-1">
-          <p className="font-extrabold text-gold-text">
-            <span role="img" aria-label={`Streak ${daily.streak}`}>
-              🔥 {daily.streak}{daily.shields > 0 ? ` · 🛡 ${daily.shields}` : ''}
-            </span>
-          </p>
-          <button type="button" onClick={handleToggleSound} className="text-sm font-extrabold text-ink-soft underline">
-            Sound {daily.soundOn ? 'on' : 'off'}
-          </button>
-        </div>
+        <p className="font-extrabold text-gold-text">
+          <span role="img" aria-label={`Streak ${daily.streak}`}>
+            🔥 {daily.streak}{daily.shields > 0 ? ` · 🛡 ${daily.shields}` : ''}
+          </span>
+        </p>
       </header>
 
       {daily.playedToday ? (
@@ -86,7 +76,6 @@ export default function DailyPage() {
           key={daily.scenario.seed}
           scenario={daily.scenario}
           combo={1}
-          soundOn={daily.soundOn}
           mode="daily"
           onComplete={({ correct, xpEarned }) => {
             pendingCorrectRef.current = correct;

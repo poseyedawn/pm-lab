@@ -30,4 +30,11 @@ describe('haptics', () => {
   it('never throws without vibration support', () => {
     expect(() => vibrate(30)).not.toThrow();
   });
+
+  it('does not vibrate when the player disabled haptics', () => {
+    const navigatorVibrate = vi.fn();
+    Object.defineProperty(navigator, 'vibrate', { configurable: true, value: navigatorVibrate });
+    vibrate(30, false);
+    expect(navigatorVibrate).not.toHaveBeenCalled();
+  });
 });

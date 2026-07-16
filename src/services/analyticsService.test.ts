@@ -32,6 +32,12 @@ describe('analytics event validation', () => {
     expect(validateAnalyticsEvent({ name: 'campaign_completed', firstTryBand: '7-9', xp: 2400 })).toBe(false);
   });
 
+  it('requires the correct value shape for each setting', () => {
+    expect(validateAnalyticsEvent({ name: 'settings_changed', setting: 'haptics', enabled: false })).toBe(true);
+    expect(validateAnalyticsEvent({ name: 'settings_changed', setting: 'motion', value: 'reduced' })).toBe(true);
+    expect(validateAnalyticsEvent({ name: 'settings_changed', setting: 'motion', enabled: false })).toBe(false);
+  });
+
   it('does not call Vercel when runtime data is invalid', () => {
     track('campaign_level_completed', { level: 999, attempts: 1, stars: 3 });
     expect(vercelTrack).not.toHaveBeenCalled();

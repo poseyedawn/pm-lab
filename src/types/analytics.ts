@@ -1,4 +1,4 @@
-export type GameId = 'significant';
+export type GameId = 'significant' | 'ship-it';
 export type GameMode = 'campaign' | 'daily';
 export type ExperimentCall = 'ship' | 'kill' | 'keep';
 export type ExperimentArchetype =
@@ -40,7 +40,9 @@ export interface AnalyticsEventMap {
   };
   case_study_viewed: { entrySurface: 'significant' | 'direct' | 'portfolio' | 'external' };
   portfolio_returned: { entrySurface: 'lab' | 'significant' | 'case_study' };
-  settings_changed: { setting: 'sound'; enabled: boolean };
+  settings_changed:
+    | { setting: 'sound' | 'haptics'; enabled: boolean }
+    | { setting: 'motion'; value: 'system' | 'reduced' | 'full' };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;

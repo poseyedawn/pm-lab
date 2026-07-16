@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useReducedMotion } from 'framer-motion';
 import { iqTitle, type LevelStatus } from '@/hooks/useCampaign';
 import { fireConfetti } from '@/components/juice/confetti';
 import { ShareControl } from '@/components/significant/ShareControl';
+import { usePreferences } from '@/hooks/lab/usePreferences';
 
 export function IQCard({
   levels, xp, celebrate,
@@ -12,7 +12,7 @@ export function IQCard({
   // Gating means finishing implies all levels passed eventually — so the score
   // that differentiates players is FIRST-TRY correct calls (3-star levels).
   const firstTry = levels.filter((l) => l.stars === 3).length;
-  const reducedMotion = useReducedMotion() ?? false;
+  const { reducedMotion } = usePreferences();
 
   useEffect(() => {
     // Confetti only on the visit that first completes the campaign — the card

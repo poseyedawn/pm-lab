@@ -106,9 +106,6 @@ export function saveState(s: SignificantState): void {
   try {
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(KEY, raw);
-      // Lab-wide profile shared by all pm-lab games. With one game,
-      // lab XP === significant XP; future games merge their XP in here.
-      window.localStorage.setItem('pmlab:profile:v1', JSON.stringify({ xp: s.xp }));
     }
   } catch {
     // localStorage threw; memoryFallback already holds the latest state above.

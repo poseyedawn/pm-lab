@@ -2,7 +2,7 @@ import { track as vercelTrack } from '@vercel/analytics';
 import { z } from 'zod';
 import type { AnalyticsEventName, AnalyticsEventProperties } from '@/types/analytics';
 
-const gameIdSchema = z.literal('significant');
+const gameIdSchema = z.enum(['significant', 'ship-it']);
 const modeSchema = z.enum(['campaign', 'daily']);
 const archetypeSchema = z.enum([
   'clean-win',
@@ -43,7 +43,18 @@ const analyticsEventSchema = z.discriminatedUnion('name', [
   z.object({ name: z.literal('share_failed'), surface: clipboardSurfaceSchema, method: z.literal('clipboard'), reason: z.enum(['unavailable', 'permission', 'unknown']) }).strict(),
   z.object({ name: z.literal('case_study_viewed'), entrySurface: z.enum(['significant', 'direct', 'portfolio', 'external']) }).strict(),
   z.object({ name: z.literal('portfolio_returned'), entrySurface: z.enum(['lab', 'significant', 'case_study']) }).strict(),
-  z.object({ name: z.literal('settings_changed'), setting: z.literal('sound'), enabled: z.boolean() }).strict(),
+  z.object({
+    name: z.literal('settings_changed'),
+    setting: z.enum(['sound', 'haptics', 'motion']),
+    enabled: z.boolean().optional(),
+    value: z.enum(['system', 'reduced', 'full']).optional(),
+  }).strict().superRefine((event, context) => {
+    const isToggle = (event.setting === 'sound' || event.setting === 'haptics')
+      && typeof event.enabled === 'boolean'
+      && event.value === undefined;
+    const isMotion = event.setting === 'motion' && event.value !== undefined && event.enabled === undefined;
+    if (!isToggle && !isMotion) context.addIssue({ code: 'custom', message: 'Setting and value must match' });
+  }),
 ]);
 
 export function validateAnalyticsEvent(value: unknown): boolean {

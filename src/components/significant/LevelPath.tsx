@@ -11,9 +11,11 @@ const Star = ({ filled }: { filled: boolean }) => (
 
 export function LevelPath({ levels }: { levels: LevelStatus[] }) {
   return (
-    <ol className="relative mx-auto flex w-full max-w-xs flex-col gap-6 py-4">
+    <ol className="relative mx-auto flex w-full max-w-52 flex-col gap-6 py-4 sm:max-w-xs">
       {levels.map((lvl, i) => {
-        const offset = i % 2 === 0 ? '-translate-x-10' : 'translate-x-10';
+        const offset = i % 2 === 0
+          ? '-translate-x-6 sm:-translate-x-10'
+          : 'translate-x-6 sm:translate-x-10';
         const node = (
           <div
             className={`flex h-20 w-20 flex-col items-center justify-center rounded-full font-extrabold text-white shadow-lg transition-transform

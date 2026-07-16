@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef } from 'react';
-import { useReducedMotion } from 'framer-motion';
 import type { Call, Scenario } from '@/lib/engine/types';
 import { useGameRound } from '@/hooks/useGameRound';
 import { ReadoutCard } from '@/components/significant/ReadoutCard';
@@ -11,11 +10,11 @@ import { fireConfetti } from '@/components/juice/confetti';
 import { sfx } from '@/components/juice/sound';
 import { vibrate } from '@/components/juice/haptics';
 import { track } from '@/services/analyticsService';
+import { usePreferences } from '@/hooks/lab/usePreferences';
 
 interface GameRoundBaseProps {
   scenario: Scenario;
   combo: number;
-  soundOn: boolean;
   onComplete: (r: { correct: boolean; xpEarned: number }) => void;
 }
 
@@ -24,9 +23,9 @@ type GameRoundProps = GameRoundBaseProps & (
   | { mode: 'daily'; level?: never }
 );
 
-export function GameRound({ scenario, combo, soundOn, mode, level, onComplete }: GameRoundProps) {
+export function GameRound({ scenario, combo, mode, level, onComplete }: GameRoundProps) {
   const round = useGameRound(scenario, combo);
-  const reducedMotion = useReducedMotion() ?? false;
+  const { preferences, reducedMotion } = usePreferences();
   // Guards against a double-tap on "Next" double-granting XP: onComplete
   // must fire at most once per round, even if the button is tapped twice
   // before the parent navigates away.
@@ -41,14 +40,14 @@ export function GameRound({ scenario, combo, soundOn, mode, level, onComplete }:
       track('decision_made', { gameId: 'significant', mode, level: 'daily', call });
     }
     track('reveal_viewed', { gameId: 'significant', mode, correct: result.correct, archetype: scenario.archetype });
-    sfx.click(soundOn);
+    sfx.click(preferences.sound);
     if (result.correct) {
-      sfx.win(soundOn);
-      vibrate(30);
+      sfx.win(preferences.sound);
+      vibrate(30, preferences.haptics);
       fireConfetti({ reducedMotion });
     } else {
-      sfx.lose(soundOn);
-      vibrate([60, 40, 60]);
+      sfx.lose(preferences.sound);
+      vibrate([60, 40, 60], preferences.haptics);
     }
   };
 
