@@ -44,15 +44,18 @@ function PlayInner() {
   }, [levelId, ready]);
 
   if (!ready || !state || !state.warmupDone || !isCanonical || legacyCalibration) {
-    return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
+    return <main className="significant-play" aria-busy="true" />;
   }
 
   const combo = 1 + state.campaignStreak;
 
   return (
-    <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
+    <main className="significant-play mx-auto flex max-w-md flex-col gap-4">
       <header className="flex items-center justify-between">
-        <h1 className="font-extrabold text-brand-deep">Level {levelId}</h1>
+        <div>
+          <p className="text-[0.625rem] font-extrabold uppercase tracking-[0.12em] text-coral-deep">Campaign case</p>
+          <h1 className="significant-section-title text-lg text-ink">Level {levelId}</h1>
+        </div>
         <ComboFlame combo={combo} />
       </header>
       <GameRound

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ArrowRight } from '@phosphor-icons/react';
 import type { Call, Scenario } from '@/lib/engine/types';
 
@@ -24,29 +25,33 @@ export function CalibrationReveal({
   baselineXp,
   onContinue,
 }: CalibrationRevealProps) {
+  const rightCall = CALL_LABELS[scenario.truth.correctCall];
+
   return (
-    <section className="calibration-reveal mt-2 rounded-2xl bg-ink p-4 text-white shadow-lg" role="status" aria-live="polite">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-lg font-extrabold">{correct ? 'You found the signal.' : 'Now you know the signal.'}</p>
-          <p className="mt-1 text-sm leading-5 text-white/85">
-            You said {CALL_LABELS[call]}. {correct ? 'Correct' : `The right call is ${CALL_LABELS[scenario.truth.correctCall]}`} — the full interval stays above zero.
-          </p>
-        </div>
-        <span className="shrink-0 rounded-full bg-win px-2.5 py-1 text-xs font-extrabold text-ink">Clean win</span>
+    <section role="status" aria-live="polite" className="flex w-full flex-col items-center">
+      <Image
+        src={correct ? '/significant/correct-medal.webp' : '/significant/learning-medal.webp'}
+        alt=""
+        width={720}
+        height={720}
+        sizes="240px"
+        className="significant-result-art"
+      />
+      <p className="significant-result-kicker">Calibration complete</p>
+      <h1 className="significant-result-title">
+        {correct ? 'You found the signal.' : 'Signal decoded.'}
+      </h1>
+      <p className="significant-result-copy">
+        You called <strong>{CALL_LABELS[call]}</strong>. {correct ? 'Correct — ' : `The right call was ${rightCall} — `}
+        the whole range stays above zero.
+      </p>
+      <div className="significant-result-score">
+        <span>{correct ? 'Clean signal' : 'New insight'}</span>
+        <span>{earnedBaseline ? `+${baselineXp} baseline XP` : 'Calibration replayed'}</span>
       </div>
-      <div className="mt-3 flex items-center justify-between gap-3">
-        <p className="font-extrabold text-white">
-          {earnedBaseline ? `+${baselineXp} baseline XP` : 'Calibration replayed'}
-        </p>
-        <button
-          type="button"
-          onClick={onContinue}
-          className="inline-flex min-h-11 items-center gap-1 rounded-xl bg-white px-3 text-sm font-extrabold text-ink shadow-[0_3px_0_rgba(0,0,0,0.25)] active:translate-y-0.5 active:shadow-none"
-        >
-          Campaign <ArrowRight size={17} weight="bold" aria-hidden />
-        </button>
-      </div>
+      <button type="button" onClick={onContinue} className="significant-sun-button">
+        Enter the campaign <ArrowRight size={20} weight="bold" aria-hidden />
+      </button>
     </section>
   );
 }

@@ -1,44 +1,54 @@
 'use client';
 
 import Link from 'next/link';
+import { LockSimple, Star } from '@phosphor-icons/react';
 import type { LevelStatus } from '@/hooks/useCampaign';
-
-const Star = ({ filled }: { filled: boolean }) => (
-  <svg viewBox="0 0 20 20" className={`h-4 w-4 ${filled ? 'fill-gold' : 'fill-ink/15'}`} aria-hidden>
-    <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.8l-5.3 2.8 1-5.8L1.5 7.7l5.9-.9z" />
-  </svg>
-);
 
 export function LevelPath({ levels }: { levels: LevelStatus[] }) {
   return (
-    <ol className="relative mx-auto flex w-full max-w-52 flex-col gap-6 py-4 sm:max-w-xs">
-      {levels.map((lvl, i) => {
-        const offset = i % 2 === 0
-          ? '-translate-x-6 sm:-translate-x-10'
-          : 'translate-x-6 sm:translate-x-10';
-        const node = (
-          <div
-            className={`flex h-20 w-20 flex-col items-center justify-center rounded-full font-extrabold text-white shadow-lg transition-transform
-              ${lvl.status === 'done' ? 'bg-win' : lvl.status === 'open' ? 'animate-pulse bg-brand' : 'bg-ink/70'}`}
-          >
-            <span className="text-xl">{lvl.id}</span>
-            <span className="flex" role="img" aria-label={`${lvl.stars} stars`}>
-              <Star filled={lvl.stars >= 1} /><Star filled={lvl.stars >= 3} /><Star filled={lvl.stars >= 3} />
+    <section className="significant-card rounded-[var(--radius-card)] p-4">
+      <div className="mb-3 flex items-end justify-between gap-3">
+        <div>
+          <p className="text-[0.625rem] font-extrabold uppercase tracking-[0.12em] text-coral-deep">Campaign path</p>
+          <h2 className="font-extrabold text-ink">Ten product calls</h2>
+        </div>
+        <p className="text-xs font-extrabold text-ink-soft">1–3 stars each</p>
+      </div>
+      <ol className="significant-progress-grid">
+        {levels.map((level) => {
+          const nodeClass = level.status === 'done'
+            ? 'bg-win text-white'
+            : level.status === 'open'
+              ? 'bg-brand text-white'
+              : 'bg-[#eee5ef] text-ink-soft';
+          const content = (
+            <span className={`significant-level-node ${nodeClass}`}>
+              {level.status === 'locked' ? (
+                <LockSimple size={18} weight="fill" aria-hidden />
+              ) : (
+                <span className="flex flex-col items-center">
+                  <strong>{level.id}</strong>
+                  <span className="mt-0.5 flex" aria-hidden>
+                    {[1, 2, 3].map((star) => (
+                      <Star key={star} size={10} weight={level.stars >= star ? 'fill' : 'regular'} />
+                    ))}
+                  </span>
+                </span>
+              )}
             </span>
-          </div>
-        );
-        return (
-          <li key={lvl.id} className={`flex justify-center ${offset}`}>
-            {lvl.status === 'locked' ? (
-              <div role="img" aria-label={`Level ${lvl.id} locked`}>{node}</div>
-            ) : (
-              <Link href={`/significant/play?level=${lvl.id}`} aria-label={`Play level ${lvl.id}`} className="active:scale-95">
-                {node}
-              </Link>
-            )}
-          </li>
-        );
-      })}
-    </ol>
+          );
+
+          return (
+            <li key={level.id}>
+              {level.status === 'locked' ? (
+                <span role="img" aria-label={`Level ${level.id} locked`}>{content}</span>
+              ) : (
+                <Link href={`/significant/play?level=${level.id}`} aria-label={`Play level ${level.id}`}>{content}</Link>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </section>
   );
 }

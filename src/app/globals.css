@@ -1,12 +1,17 @@
 @import "tailwindcss";
+@import "./significant.css";
 
 @theme {
   --color-bg: #f4f5fb;
   --color-surface: #ffffff;
-  --color-ink: #232447;
-  --color-ink-soft: #6b6d94;
-  --color-brand: #7c3aed;        /* Significant's violet */
-  --color-brand-deep: #5b21b6;
+  --color-ink: #31143d;
+  --color-ink-soft: #775b7f;
+  --color-brand: #8b45e6;
+  --color-brand-deep: #6025a8;
+  --color-coral: #f04469;
+  --color-coral-deep: #bf214f;
+  --color-cyan: #31cbd0;
+  --color-sun: #ffdb24;
   --color-win: #22c55e;
   --color-win-deep: #15803d;
   --color-win-text: #166534;   /* darker green for text on tinted win backgrounds — WCAG AA */
@@ -19,65 +24,44 @@
   --radius-card: 1.25rem;
 }
 
-html { background: #eaecf5; }
-body { min-height: 100vh; background: #eaecf5; color: var(--color-ink); }
+html { background: #e9edf7; }
+body {
+  min-height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #e9edf7;
+  color: var(--color-ink);
+}
 
 .lab-frame {
-  width: min(100%, 390px);
+  position: relative;
+  width: min(100vw, 390px);
+  height: min(100dvh, 844px);
+  min-height: 0;
   margin-inline: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--color-bg);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 6%, transparent);
 }
 
-.lab-frame:has(.calibration-screen) > footer { display: none; }
+.lab-frame:has(.significant-entry) > header,
+.lab-frame:has(.significant-entry) > footer,
+.lab-frame:has([data-game="significant"]) > header,
+.lab-frame:has([data-game="significant"]) > footer { display: none; }
+
+.lab-frame:has(.significant-entry) #main-content,
+.lab-frame:has(.significant-entry) #main-content > main {
+  height: 100%;
+  min-height: 0;
+}
 
 .font-hand { font-family: var(--font-hand), cursive; }
+.font-display { font-family: var(--font-display), sans-serif; }
 
 .landing-evidence-chart svg { height: 5.5rem; }
 .calibration-chart svg { height: auto; }
-
-@media (max-height: 700px) {
-  .calibration-screen { padding-top: 0.5rem; padding-bottom: 0; }
-  .calibration-title { margin-top: 0.25rem; font-size: 1.375rem; line-height: 1.5rem; }
-  .calibration-coach { margin-top: 0.5rem; }
-  .calibration-coach > p { display: none; }
-  .calibration-divider { margin-top: 0.5rem; padding-top: 0.5rem; }
-  .calibration-hypothesis { margin-top: 0.125rem; font-size: 0.8125rem; line-height: 1rem; }
-  .calibration-evidence { margin-top: 0.5rem; padding: 0.5rem; }
-  .calibration-chart { margin-top: 0; }
-  .calibration-chart svg { height: 2.25rem; }
-  .calibration-stats { margin-top: 0.25rem; padding-top: 0.25rem; }
-  .calibration-sample { display: none; }
-  .calibration-note,
-  .calibration-actions { display: none; }
-  .calibration-decisions { margin-top: 0.5rem; }
-  .calibration-decision { min-height: 4.25rem; padding-block: 0.25rem; }
-  .calibration-decision-detail { display: none; }
-  .calibration-actions { margin-top: 0.25rem; }
-  .calibration-reveal { margin-top: 0.5rem; padding: 0.75rem; }
-}
-
-@media (max-height: 700px) {
-  .lab-landing { padding-top: 0.5rem; }
-  .lab-landing-title { margin-top: 0.5rem; font-size: 1.5rem; line-height: 1.75rem; }
-  .lab-landing-promise { margin-top: 0.25rem; font-size: 0.75rem; line-height: 1rem; }
-  .lab-landing-evidence { margin-top: 0.5rem; padding: 0.5rem; }
-  .lab-landing-evidence .landing-evidence-label { display: none; }
-  .lab-landing-evidence .landing-evidence-hypothesis { margin-top: 0; font-size: 0.8125rem; line-height: 1rem; }
-  .lab-landing-evidence .landing-evidence-stats { margin-top: 0.5rem; padding-top: 0.5rem; }
-  .lab-landing-evidence .landing-evidence-legend { display: flex; gap: 1rem; margin-top: 0.25rem; }
-  .lab-landing-evidence .landing-evidence-chart { margin-top: 0.25rem; }
-  .lab-landing-evidence .landing-evidence-chart svg { height: 2rem; }
-  .lab-landing-evidence .landing-evidence-footer { display: none; }
-  .lab-landing-decisions { margin-top: 0.5rem; }
-  .lab-landing-decisions .landing-decisions-legend { font-size: 1.125rem; line-height: 1.25rem; }
-  .lab-landing-decisions .landing-decision-button { min-height: 4rem; }
-  .lab-landing-decisions .decision-detail { display: none; }
-  .lab-landing-primary { margin-top: 0.5rem; }
-  .lab-landing-cues { gap: 0.25rem; margin-top: 0.25rem; font-size: 0.625rem; }
-  .lab-landing-cues svg { width: 0.875rem; height: 0.875rem; }
-  .lab-landing-signature { display: none; }
-}
 
 a:focus-visible,
 button:focus-visible,

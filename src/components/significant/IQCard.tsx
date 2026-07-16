@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Image from 'next/image';
 import { iqTitle, type LevelStatus } from '@/hooks/useCampaign';
 import { fireConfetti } from '@/components/juice/confetti';
 import { ShareControl } from '@/components/significant/ShareControl';
@@ -23,13 +24,14 @@ export function IQCard({
   const shareText = `Significant — Experimentation IQ: ${iqTitle(firstTry)} (${firstTry}/10 first try, ${xp} XP)\nCan you beat the traps? ${typeof window !== 'undefined' ? window.location.origin : ''}/significant`;
 
   return (
-    <section className="rounded-[var(--radius-card)] bg-brand p-6 text-center text-white shadow-xl">
-      <p className="text-sm font-extrabold uppercase tracking-wide opacity-80">Experimentation IQ</p>
-      <h2 className="mt-2 text-3xl font-extrabold">{iqTitle(firstTry)}</h2>
-      <p className="mt-1 text-lg">{firstTry}/10 on the first try · {xp} XP</p>
+    <section className="significant-card rounded-[var(--radius-card)] p-5 text-center">
+      <Image src="/significant/correct-medal.webp" alt="" width={720} height={720} sizes="144px" className="mx-auto h-36 w-36 rounded-3xl mix-blend-multiply" />
+      <p className="text-sm font-extrabold uppercase tracking-wide text-coral-deep">Experimentation IQ</p>
+      <h2 className="significant-section-title mt-2 text-2xl text-ink">{iqTitle(firstTry)}</h2>
+      <p className="mt-1 text-base text-ink-soft">{firstTry}/10 on the first try · {xp} XP</p>
       <div className="mt-4 flex justify-center gap-2">
         {levels.map((l) => (
-          <span key={l.id} className={`h-3 w-3 rounded-full ${l.stars === 3 ? 'bg-gold' : l.stars > 0 ? 'bg-white' : 'bg-white/30'}`} aria-hidden />
+          <span key={l.id} className={`h-3 w-3 rounded-full ${l.stars === 3 ? 'bg-gold' : l.stars > 0 ? 'bg-cyan' : 'bg-ink/10'}`} aria-hidden />
         ))}
       </div>
       <ShareControl
@@ -37,7 +39,7 @@ export function IQCard({
         surface="profile"
         label="Copy result to share"
         color="sky"
-        className="mt-5 w-full bg-white !text-ink shadow-[0_4px_0_rgba(0,0,0,0.25)]"
+        className="mt-5 w-full"
       />
     </section>
   );

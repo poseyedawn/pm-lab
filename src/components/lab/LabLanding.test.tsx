@@ -25,14 +25,13 @@ beforeEach(() => {
 });
 
 describe('Lab landing', () => {
-  it('starts a first-time visitor in calibration and preserves a preview call', () => {
+  it('starts a first-time visitor from the full-screen field-test entry', () => {
     render(<LabLanding scenario={scenario} />);
 
-    const cta = screen.getByRole('link', { name: /make your first call/i });
+    expect(screen.getByRole('heading', { name: 'Significant' })).toBeInTheDocument();
+    expect(screen.getByText('Preparing your first experiment…')).toBeInTheDocument();
+    const cta = screen.getByRole('link', { name: /start the field test/i });
     expect(cta).toHaveAttribute('href', '/significant/calibration');
-
-    fireEvent.click(screen.getByRole('button', { name: /kill/i }));
-    expect(cta).toHaveAttribute('href', '/significant/calibration?call=kill');
 
     cta.addEventListener('click', (event) => event.preventDefault());
     fireEvent.click(cta);
@@ -50,11 +49,10 @@ describe('Lab landing', () => {
 
     render(<LabLanding scenario={scenario} />);
 
-    expect(screen.getByRole('link', { name: /continue level 3/i }))
+    expect(screen.getByRole('link', { name: /resume level 3/i }))
       .toHaveAttribute('href', '/significant/play?level=3');
-    expect(screen.queryByRole('button', { name: /kill/i })).not.toBeInTheDocument();
-    expect(screen.getByText(/2 of 10 cases complete · 350 XP/i)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /restart calibration/i }))
+    expect(screen.getByText(/2 cases complete · 350 XP/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /replay calibration/i }))
       .toHaveAttribute('href', '/significant/calibration?replay=1');
   });
 });

@@ -1,0 +1,108 @@
+{
+  "entryMetrics": {
+    "bodyScrollWidth": 390,
+    "frame": {
+      "width": 390,
+      "height": 844,
+      "scrollHeight": 844
+    },
+    "cta": {
+      "top": 741.5,
+      "bottom": 799.5,
+      "height": 58
+    }
+  },
+  "entryTargetMetrics": [
+    {
+      "name": "Turn sound off",
+      "width": 44,
+      "height": 44
+    },
+    {
+      "name": "Reduce motion",
+      "width": 44,
+      "height": 44
+    },
+    {
+      "name": "Start the field test",
+      "width": 350,
+      "height": 58
+    }
+  ],
+  "motionPreference": "reduced",
+  "routeMetrics": {
+    "bodyScrollWidth": 390,
+    "viewportWidth": 390,
+    "viewportHeight": 844,
+    "frameWidth": 390
+  },
+  "desktopMetrics": {
+    "x": 525,
+    "width": 390,
+    "height": 844
+  },
+  "shortMetrics": {
+    "bodyScrollWidth": 320,
+    "frameWidth": 320,
+    "frameHeight": 568,
+    "frameScrollHeight": 568
+  },
+  "consoleErrors": [],
+  "captures": [
+    {
+      "name": "entry-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/entry-390x844.png",
+      "url": "http://127.0.0.1:3104/"
+    },
+    {
+      "name": "entry-keyboard-focus-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/entry-keyboard-focus-390x844.png",
+      "url": "http://127.0.0.1:3104/"
+    },
+    {
+      "name": "calibration-deciding-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/calibration-deciding-390x844.png",
+      "url": "http://127.0.0.1:3104/significant/calibration"
+    },
+    {
+      "name": "calibration-reveal-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/calibration-reveal-390x844.png",
+      "url": "http://127.0.0.1:3104/significant/calibration"
+    },
+    {
+      "name": "campaign-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/campaign-390x844.png",
+      "url": "http://127.0.0.1:3104/significant?calibrated=1"
+    },
+    {
+      "name": "campaign-settings-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/campaign-settings-390x844.png",
+      "url": "http://127.0.0.1:3104/significant?calibrated=1"
+    },
+    {
+      "name": "campaign-case-deciding-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/campaign-case-deciding-390x844.png",
+      "url": "http://127.0.0.1:3104/significant/play?level=1"
+    },
+    {
+      "name": "campaign-case-reveal-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/campaign-case-reveal-390x844.png",
+      "url": "http://127.0.0.1:3104/significant/play?level=1"
+    },
+    {
+      "name": "daily-deciding-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/daily-deciding-390x844.png",
+      "url": "http://127.0.0.1:3104/significant/daily"
+    },
+    {
+      "name": "daily-reveal-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/daily-reveal-390x844.png",
+      "url": "http://127.0.0.1:3104/significant/daily"
+    },
+    {
+      "name": "about-390x844",
+      "path": "/Users/Alvin/Al the Builder/portfolio-projects/pm-lab-slice-4/docs/qa/assets/2026-07-16-slice-4/about-390x844.png",
+      "url": "http://127.0.0.1:3104/significant/about"
+    }
+  ]
+}

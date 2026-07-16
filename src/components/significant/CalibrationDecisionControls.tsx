@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, Clock, Minus, Pause } from '@phosphor-icons/react';
+import { Check, Clock, Pause, X } from '@phosphor-icons/react';
 import type { Call } from '@/lib/engine/types';
 
 interface CalibrationDecisionControlsProps {
@@ -11,8 +11,8 @@ interface CalibrationDecisionControlsProps {
 
 const CALLS = [
   { id: 'ship', label: 'Ship', detail: 'Launch it to everyone', icon: Check, color: 'bg-win-deep' },
-  { id: 'kill', label: 'Kill', detail: 'Not enough evidence', icon: Minus, color: 'bg-lose-deep' },
-  { id: 'keep', label: 'Keep Running', detail: 'More data could change it', icon: Pause, color: 'bg-ink/80' },
+  { id: 'kill', label: 'Kill', detail: 'Not enough evidence', icon: X, color: 'bg-coral' },
+  { id: 'keep', label: 'Keep Running', detail: 'More data could change it', icon: Pause, color: 'bg-cyan text-ink' },
 ] satisfies Array<{
   id: Call;
   label: string;
@@ -37,13 +37,13 @@ export function CalibrationDecisionControls({
               type="button"
               onClick={() => onCall(id)}
               aria-label={`${label}: ${detail}`}
-              className={`calibration-decision min-h-[5.25rem] rounded-2xl px-1.5 py-1 text-center text-white shadow-[0_4px_0_rgba(0,0,0,0.28)] transition-transform active:translate-y-1 active:shadow-none ${color}`}
+              className={`calibration-decision min-h-[5.25rem] rounded-2xl px-1.5 py-1 text-center text-white transition-transform ${color}`}
             >
-              <span className="mx-auto flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink">
+              <span className="mx-auto flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink shadow-sm">
                 <Icon size={17} weight="bold" aria-hidden />
               </span>
               <span className="mt-1 block text-sm font-extrabold leading-4">{label}</span>
-              <span className="calibration-decision-detail mt-1 block text-xs leading-3 text-white/90">{detail}</span>
+              <span className="calibration-decision-detail mt-1 block text-xs leading-3 opacity-90">{detail}</span>
             </button>
           ))}
         </div>

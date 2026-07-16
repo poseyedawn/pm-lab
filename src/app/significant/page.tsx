@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowRight } from '@phosphor-icons/react';
+import { ArrowRight, CalendarDots, Info } from '@phosphor-icons/react';
 import { useCampaign } from '@/hooks/useCampaign';
 import { LevelPath } from '@/components/significant/LevelPath';
 import { IQCard } from '@/components/significant/IQCard';
@@ -40,19 +40,20 @@ export default function SignificantHome() {
   }, [allDone, state, levels, markCampaignCompleteTracked]);
 
   if (!ready || !state || visitor !== 'returning') {
-    return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
+    return <main className="significant-campaign" aria-busy="true" />;
   }
 
   const nextLevel = levels.find((level) => level.status === 'open');
 
   return (
-    <main className="mx-auto flex max-w-md flex-col gap-6 p-6">
+    <main className="significant-campaign mx-auto flex max-w-md flex-col gap-5">
       <header>
-        <h1 className="text-2xl font-extrabold text-brand-deep">Significant</h1>
-        <p className="text-sm text-ink-soft">Ship, kill, or keep running?</p>
+        <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-coral-deep">Your field notebook</p>
+        <h1 className="significant-section-title mt-1 text-2xl text-ink">Significant</h1>
+        <p className="mt-1 text-sm text-ink-soft">Find the signal. Make the call.</p>
       </header>
 
-      <p className="rounded-2xl bg-win/15 px-4 py-2 text-sm font-extrabold text-win-text">
+      <p className="rounded-2xl bg-[#e8fff1] px-4 py-3 text-sm font-extrabold text-win-text shadow-[0_4px_0_rgba(34,197,94,0.16)]">
         Calibration complete — {totalStars} campaign star{totalStars === 1 ? '' : 's'} collected
       </p>
 
@@ -60,10 +61,10 @@ export default function SignificantHome() {
       {!allDone && nextLevel && (
         <Link
           href={`/significant/play?level=${nextLevel.id}`}
-          className="flex min-h-16 items-center justify-between gap-3 rounded-[var(--radius-card)] bg-brand-deep px-5 py-4 text-white shadow-lg shadow-brand/20 active:scale-[0.98]"
+          className="significant-sun-button flex min-h-16 items-center justify-between gap-3 px-5 py-4"
         >
           <span>
-            <span className="block text-xs font-extrabold uppercase tracking-wide text-white/75">Continue campaign</span>
+            <span className="block text-xs font-extrabold uppercase tracking-wide text-ink/65">Continue campaign</span>
             <span className="mt-1 block font-extrabold">Case {nextLevel.id} · {nextLevel.id === 1 ? 'Confirm a clean win' : 'Practice the next signal'}</span>
           </span>
           <ArrowRight size={22} weight="bold" aria-hidden />
@@ -71,11 +72,12 @@ export default function SignificantHome() {
       )}
       <LevelPath levels={levels} />
 
-      <Link href="/significant/daily" className="rounded-[var(--radius-card)] bg-gold p-4 text-center font-extrabold text-ink shadow-lg active:scale-95">
+      <Link href="/significant/daily" className="flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-cyan px-4 text-center font-extrabold text-ink shadow-[0_5px_0_#209da5] active:translate-y-1 active:shadow-none">
+        <CalendarDots size={22} weight="fill" aria-hidden />
         Daily experiment {state.dailyStreak > 0 ? `· streak ${state.dailyStreak}` : ''}
       </Link>
-      <Link href="/significant/about?from=significant" className="text-center text-sm font-extrabold text-ink-soft underline">
-        How this game was designed
+      <Link href="/significant/about?from=significant" className="flex min-h-11 items-center justify-center gap-2 text-center text-sm font-extrabold text-ink-soft underline underline-offset-4">
+        <Info size={19} weight="fill" aria-hidden /> How this game was designed
       </Link>
     </main>
   );

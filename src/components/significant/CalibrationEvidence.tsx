@@ -16,8 +16,8 @@ export function CalibrationEvidence({ scenario, coaching, revealed }: Calibratio
 
   return (
     <>
-      <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-brand-deep">
-        Significant · Field test 01
+      <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-coral-deep">
+        Round 1 · Calibration
       </p>
       <h1 className="calibration-title mt-3 text-2xl font-extrabold leading-7 text-ink">
         You&apos;re the PM in ship review.
@@ -26,15 +26,15 @@ export function CalibrationEvidence({ scenario, coaching, revealed }: Calibratio
       {coaching && (
         <div className="calibration-coach mt-3">
           <div className="flex items-center gap-4" aria-label="Calibration step 1 of 3">
-            <p className="shrink-0 text-sm font-extrabold text-brand-deep">
+            <p className="shrink-0 text-sm font-extrabold text-coral-deep">
               Calibration <span className="text-ink-soft">· 1 of 3</span>
             </p>
             <div className="flex flex-1 items-center" aria-hidden>
-              <span className="h-3 w-3 rounded-full bg-brand" />
+              <span className="h-3 w-3 rounded-full bg-coral" />
               <span className="h-px flex-1 bg-ink/20" />
-              <span className="h-3 w-3 rounded-full border-2 border-ink/25 bg-bg" />
+              <span className="h-3 w-3 rounded-full border-2 border-ink/25 bg-surface" />
               <span className="h-px flex-1 bg-ink/20" />
-              <span className="h-3 w-3 rounded-full border-2 border-ink/25 bg-bg" />
+              <span className="h-3 w-3 rounded-full border-2 border-ink/25 bg-surface" />
             </div>
           </div>
           <p className="mt-2 text-sm leading-5 text-ink-soft">
@@ -45,15 +45,15 @@ export function CalibrationEvidence({ scenario, coaching, revealed }: Calibratio
         </div>
       )}
 
-      <div className="calibration-divider mt-8 border-t border-dashed border-brand/25 pt-4">
-        <p className="text-[0.6875rem] font-extrabold uppercase tracking-wide text-ink-soft">Hypothesis</p>
+      <div className="calibration-divider mt-5 border-t border-dashed pt-3">
+        <p className="text-[0.6875rem] font-extrabold uppercase tracking-wide text-coral-deep">Hypothesis</p>
         <h2 className="calibration-hypothesis mt-1 text-base font-extrabold leading-5 text-ink">
           {scenario.hypothesis}
         </h2>
       </div>
 
       <article
-        className="calibration-evidence mt-5 rounded-[var(--radius-card)] bg-surface px-5 py-4 shadow-lg shadow-ink/10"
+        className="calibration-evidence mt-3"
         data-seed={scenario.seed}
         aria-describedby="calibration-chart-summary"
       >

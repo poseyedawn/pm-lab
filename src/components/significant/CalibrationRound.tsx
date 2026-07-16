@@ -28,21 +28,9 @@ export function CalibrationRound({ scenario, initialCall, onContinue }: Calibrat
     return <main className="calibration-screen px-5 py-4" aria-busy="true" />;
   }
 
-  return (
-    <main className="calibration-screen px-5 pb-0 pt-4 min-[360px]:px-7">
-      <CalibrationEvidence
-        scenario={scenario}
-        coaching={calibration.coaching}
-        revealed={calibration.phase === 'revealed'}
-      />
-
-      {calibration.phase === 'deciding' ? (
-        <CalibrationDecisionControls
-          coaching={calibration.coaching}
-          onCall={calibration.decide}
-          onToggleCoaching={() => calibration.setCoaching(!calibration.coaching)}
-        />
-      ) : (
+  if (calibration.phase === 'revealed') {
+    return (
+      <main className="significant-result">
         <CalibrationReveal
           scenario={scenario}
           call={calibration.call!}
@@ -51,7 +39,23 @@ export function CalibrationRound({ scenario, initialCall, onContinue }: Calibrat
           baselineXp={calibration.baselineXp}
           onContinue={handleContinue}
         />
-      )}
+      </main>
+    );
+  }
+
+  return (
+    <main className="calibration-screen px-5 pb-0 pt-4 min-[360px]:px-7">
+      <CalibrationEvidence
+        scenario={scenario}
+        coaching={calibration.coaching}
+        revealed={false}
+      />
+
+      <CalibrationDecisionControls
+        coaching={calibration.coaching}
+        onCall={calibration.decide}
+        onToggleCoaching={() => calibration.setCoaching(!calibration.coaching)}
+      />
     </main>
   );
 }

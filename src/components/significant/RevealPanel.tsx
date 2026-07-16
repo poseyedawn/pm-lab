@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
+import { ArrowRight } from '@phosphor-icons/react';
 import type { Call, Scenario } from '@/lib/engine/types';
 import { CountUp } from '@/components/juice/CountUp';
-import { PressButton } from '@/components/juice/PressButton';
 
 const CALL_LABEL: Record<Call, string> = { ship: 'Ship', kill: 'Kill', keep: 'Keep Running' };
 
@@ -17,21 +18,28 @@ interface RevealPanelProps {
 
 export function RevealPanel({ scenario: s, call, correct, xpEarned, crit, onNext }: RevealPanelProps) {
   return (
-    <section className={`rounded-[var(--radius-card)] p-6 text-white shadow-lg ${correct ? 'bg-win-deep' : 'bg-lose-deep'}`}>
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl font-extrabold">{correct ? 'Correct call!' : 'Not this time'}</h3>
-        <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-extrabold">{s.truth.trapName}</span>
-      </div>
-      <p className="mt-1 text-sm opacity-90">
-        You said {CALL_LABEL[call]} · the right call was {CALL_LABEL[s.truth.correctCall]} · true lift {s.truth.trueLiftPct >= 0 ? '+' : ''}{s.truth.trueLiftPct.toFixed(1)}%
+    <section className="significant-result min-h-[650px] rounded-[28px]" role="status" aria-live="polite">
+      <Image
+        src={correct ? '/significant/correct-medal.webp' : '/significant/learning-medal.webp'}
+        alt=""
+        width={720}
+        height={720}
+        sizes="220px"
+        className="significant-result-art"
+      />
+      <p className="significant-result-kicker">{s.truth.trapName}</p>
+      <h2 className="significant-result-title">{correct ? 'You found the signal.' : 'Signal decoded.'}</h2>
+      <p className="significant-result-copy">
+        You said <strong>{CALL_LABEL[call]}</strong>. The right call was <strong>{CALL_LABEL[s.truth.correctCall]}</strong>.
+        {' '}{s.truth.explanation}
       </p>
-      <p className="mt-3 leading-relaxed">{s.truth.explanation}</p>
-      <div className="mt-4 flex items-center justify-between">
-        <p className="text-lg font-extrabold" aria-live="polite">
-          +<CountUp value={xpEarned} /> XP{crit && <span className="ml-2 rounded-full bg-gold px-2 py-0.5 text-xs text-ink">CRITICAL INSIGHT ×2</span>}
-        </p>
-        <PressButton color="brand" onClick={onNext} className="bg-white !text-ink shadow-[0_4px_0_rgba(0,0,0,0.25)]">Next</PressButton>
+      <div className="significant-result-score">
+        <span>+<CountUp value={xpEarned} /> XP</span>
+        {crit && <span>Critical insight ×2</span>}
       </div>
+      <button type="button" onClick={onNext} className="significant-sun-button">
+        Next experiment <ArrowRight size={20} weight="bold" aria-hidden />
+      </button>
     </section>
   );
 }

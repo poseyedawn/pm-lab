@@ -2,6 +2,7 @@
 
 import type React from 'react';
 import Link from 'next/link';
+import { GearSix } from '@phosphor-icons/react';
 import { usePreferences } from '@/hooks/lab/usePreferences';
 import { track } from '@/services/analyticsService';
 import { parseMotionPreference } from '@/services/preferencesService';
@@ -35,8 +36,11 @@ export function GameSettings({ gameId }: GameSettingsProps) {
 
   return (
     <details className="relative">
-      <summary className="cursor-pointer rounded-xl px-3 py-2 text-sm font-extrabold text-ink-soft">Settings</summary>
-      <div className="absolute right-0 z-20 mt-2 w-64 rounded-2xl border border-ink/10 bg-surface p-4 shadow-xl">
+      <summary className="game-settings-trigger cursor-pointer" aria-label="Settings">
+        <GearSix size={20} weight="fill" aria-hidden />
+        <span className="sr-only">Settings</span>
+      </summary>
+      <div className="game-settings-popover absolute right-0 z-20 mt-2 w-64 rounded-2xl border border-ink/10 bg-surface p-4 shadow-xl">
         <div className="flex items-center justify-between gap-4">
           <span className="text-sm font-extrabold">Sound</span>
           <button type="button" role="switch" aria-label="Sound" aria-checked={preferences.sound} onClick={handleSound} className="settings-toggle">

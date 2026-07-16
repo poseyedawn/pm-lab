@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Fire, ShieldCheck } from '@phosphor-icons/react';
 import { dayNumber } from '@/lib/engine/daily';
 import { buildShareText, useDaily } from '@/hooks/useDaily';
 import { GameRound } from '@/components/significant/GameRound';
@@ -56,23 +57,25 @@ export default function DailyPage() {
     prevStreakRef.current = daily.streak;
   }, [daily.ready, daily.streak]);
 
-  if (!daily.ready || !daily.calibrated) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
+  if (!daily.ready || !daily.calibrated) return <main className="significant-daily" aria-busy="true" />;
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
   return (
-    <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
+    <main className="significant-daily mx-auto flex max-w-md flex-col gap-4">
       <header className="flex items-center justify-between">
-        <h1 className="font-extrabold text-brand-deep">Daily #{dayNumber(daily.today)}</h1>
-        <p className="font-extrabold text-gold-text">
-          <span role="img" aria-label={`Streak ${daily.streak}`}>
-            🔥 {daily.streak}{daily.shields > 0 ? ` · 🛡 ${daily.shields}` : ''}
-          </span>
+        <div>
+          <p className="text-[0.625rem] font-extrabold uppercase tracking-[0.12em] text-coral-deep">One fresh signal</p>
+          <h1 className="significant-section-title text-lg text-ink">Daily #{dayNumber(daily.today)}</h1>
+        </div>
+        <p className="flex items-center gap-2 font-extrabold text-gold-text" aria-label={`Streak ${daily.streak}${daily.shields > 0 ? `, ${daily.shields} shields` : ''}`}>
+          <span className="inline-flex items-center gap-1"><Fire size={20} weight="fill" aria-hidden />{daily.streak}</span>
+          {daily.shields > 0 && <span className="inline-flex items-center gap-1"><ShieldCheck size={20} weight="fill" aria-hidden />{daily.shields}</span>}
         </p>
       </header>
 
       {daily.playedToday ? (
-        <section className="flex flex-col gap-4 rounded-[var(--radius-card)] bg-surface p-6 text-center shadow-lg">
+        <section className="significant-card flex flex-col gap-4 rounded-[var(--radius-card)] p-6 text-center">
           <p className="text-lg font-extrabold">
             {daily.lastCorrect ? 'Nailed it. See you tomorrow.' : 'Missed it — tomorrow is a new experiment.'}
           </p>

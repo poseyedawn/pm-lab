@@ -6,7 +6,7 @@ const featuredScenario = generateScenario(campaignSeed(1, 1), 'clean-win');
 
 export default function LabHome() {
   return (
-    <main>
+    <main className="h-full">
       <AnalyticsViewTracker surface="lab" />
       <LabLanding scenario={featuredScenario} />
     </main>
