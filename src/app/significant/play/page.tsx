@@ -3,23 +3,31 @@
 import { Suspense, useEffect, useMemo, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CAMPAIGN_LEVELS, campaignSeed, generateScenario } from '@/lib/engine/scenario';
+import { resolveCampaignLevel } from '@/lib/engine/level';
 import { useCampaign } from '@/hooks/useCampaign';
 import { GameRound } from '@/components/significant/GameRound';
 import { ComboFlame } from '@/components/significant/ComboFlame';
-import { track } from '@/lib/analytics';
+import { track } from '@/services/analyticsService';
 
 function PlayInner() {
   const router = useRouter();
   const params = useSearchParams();
-  const levelId = Number(params.get('level') ?? '1');
+  const { levelId, isCanonical } = resolveCampaignLevel(params.get('level'));
   const { ready, state, completeLevel, toggleSound } = useCampaign();
-  const startTracked = useRef(false);
+  const redirectStartedRef = useRef(false);
 
   useEffect(() => {
-    if (startTracked.current) return;
-    startTracked.current = true;
-    track('game_start', { mode: 'campaign', level: levelId });
-  }, [levelId]);
+    if (isCanonical || redirectStartedRef.current) return;
+    redirectStartedRef.current = true;
+    router.replace('/significant/play?level=1');
+  }, [isCanonical, router]);
+
+  const calibrationTrackedRef = useRef(false);
+  useEffect(() => {
+    if (!ready || !state || levelId !== 1 || Object.keys(state.campaign).length > 0 || calibrationTrackedRef.current) return;
+    calibrationTrackedRef.current = true;
+    track('calibration_started', { gameId: 'significant' });
+  }, [levelId, ready, state]);
 
   const scenario = useMemo(() => {
     const level = CAMPAIGN_LEVELS.find((l) => l.id === levelId) ?? CAMPAIGN_LEVELS[0];
@@ -33,7 +41,7 @@ function PlayInner() {
   const combo = 1 + state.campaignStreak;
 
   const handleToggleSound = () => {
-    track('sound_toggled', { on: !state.soundOn });
+    track('settings_changed', { setting: 'sound', enabled: !state.soundOn });
     toggleSound();
   };
 
@@ -52,8 +60,15 @@ function PlayInner() {
         scenario={scenario}
         combo={combo}
         soundOn={state.soundOn}
+        mode="campaign"
+        level={levelId}
         onComplete={({ correct, xpEarned }) => {
+          const previous = state.campaign[levelId];
+          const attempts = (previous?.attempts ?? 0) + 1;
+          const earnedStars: 0 | 1 | 3 = correct ? (attempts === 1 ? 3 : 1) : 0;
+          const stars = Math.max(previous?.stars ?? 0, earnedStars) as 0 | 1 | 3;
           completeLevel(levelId, correct, xpEarned);
+          if (correct) track('campaign_level_completed', { level: levelId, attempts, stars });
           router.push('/significant');
         }}
       />

@@ -10,16 +10,21 @@ import { RevealPanel } from '@/components/significant/RevealPanel';
 import { fireConfetti } from '@/components/juice/confetti';
 import { sfx } from '@/components/juice/sound';
 import { vibrate } from '@/components/juice/haptics';
-import { track } from '@/lib/analytics';
+import { track } from '@/services/analyticsService';
 
-interface GameRoundProps {
+interface GameRoundBaseProps {
   scenario: Scenario;
   combo: number;
   soundOn: boolean;
   onComplete: (r: { correct: boolean; xpEarned: number }) => void;
 }
 
-export function GameRound({ scenario, combo, soundOn, onComplete }: GameRoundProps) {
+type GameRoundProps = GameRoundBaseProps & (
+  | { mode: 'campaign'; level: number }
+  | { mode: 'daily'; level?: never }
+);
+
+export function GameRound({ scenario, combo, soundOn, mode, level, onComplete }: GameRoundProps) {
   const round = useGameRound(scenario, combo);
   const reducedMotion = useReducedMotion() ?? false;
   // Guards against a double-tap on "Next" double-granting XP: onComplete
@@ -30,11 +35,12 @@ export function GameRound({ scenario, combo, soundOn, onComplete }: GameRoundPro
   const handleCall = (call: Call) => {
     const result = round.decide(call);
     if (!result) return; // duplicate tap — already revealed
-    track('round_complete', {
-      archetype: scenario.archetype,
-      correct: result.correct,
-      mode: window.location.pathname.includes('daily') ? 'daily' : 'campaign',
-    });
+    if (mode === 'campaign') {
+      track('decision_made', { gameId: 'significant', mode, level, call });
+    } else {
+      track('decision_made', { gameId: 'significant', mode, level: 'daily', call });
+    }
+    track('reveal_viewed', { gameId: 'significant', mode, correct: result.correct, archetype: scenario.archetype });
     sfx.click(soundOn);
     if (result.correct) {
       sfx.win(soundOn);
@@ -63,6 +69,11 @@ export function GameRound({ scenario, combo, soundOn, onComplete }: GameRoundPro
           onNext={() => {
             if (nextCalledRef.current) return;
             nextCalledRef.current = true;
+            track('round_continued', {
+              gameId: 'significant',
+              mode,
+              nextAction: mode === 'daily' ? 'daily_result' : 'campaign_path',
+            });
             onComplete({ correct: round.correct!, xpEarned: round.xpEarned });
           }}
         />

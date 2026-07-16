@@ -1,15 +1,22 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useCampaign } from '@/hooks/useCampaign';
 import { LevelPath } from '@/components/significant/LevelPath';
 import { IQCard } from '@/components/significant/IQCard';
 import { CountUp } from '@/components/juice/CountUp';
-import { track } from '@/lib/analytics';
+import { firstTryBand, track } from '@/services/analyticsService';
 
 export default function SignificantHome() {
-  const { ready, state, levels, totalStars, allDone, toggleSound, markCampaignCompleteTracked } = useCampaign();
+  const { ready, visitor, state, levels, totalStars, allDone, toggleSound, markCampaignCompleteTracked } = useCampaign();
+  const introTrackedRef = useRef(false);
+
+  useEffect(() => {
+    if (!ready || !visitor || introTrackedRef.current) return;
+    introTrackedRef.current = true;
+    track('game_intro_viewed', { gameId: 'significant', visitor });
+  }, [ready, visitor]);
 
   // Persisted dedup: campaignCompleteTracked lives in SignificantState, so this
   // fires exactly once across the player's lifetime, not once per session.
@@ -18,14 +25,15 @@ export default function SignificantHome() {
   useEffect(() => {
     if (allDone && state && !state.campaignCompleteTracked) {
       markCampaignCompleteTracked();
-      track('campaign_complete', { stars: totalStars });
+      const firstTry = levels.filter((level) => level.stars === 3).length;
+      track('campaign_completed', { firstTryBand: firstTryBand(firstTry) });
     }
-  }, [allDone, state, totalStars, markCampaignCompleteTracked]);
+  }, [allDone, state, levels, markCampaignCompleteTracked]);
 
   if (!ready || !state) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
 
   const handleToggleSound = () => {
-    track('sound_toggled', { on: !state.soundOn });
+    track('settings_changed', { setting: 'sound', enabled: !state.soundOn });
     toggleSound();
   };
 
@@ -54,7 +62,7 @@ export default function SignificantHome() {
       <Link href="/significant/daily" className="rounded-[var(--radius-card)] bg-gold p-4 text-center font-extrabold text-ink shadow-lg active:scale-95">
         Daily experiment {state.dailyStreak > 0 ? `· streak ${state.dailyStreak}` : ''}
       </Link>
-      <Link href="/significant/about" className="text-center text-sm font-extrabold text-ink-soft underline">
+      <Link href="/significant/about?from=significant" className="text-center text-sm font-extrabold text-ink-soft underline">
         How this game was designed
       </Link>
     </main>

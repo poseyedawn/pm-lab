@@ -36,15 +36,18 @@ export const iqTitle = (correctCount: number): string =>
 
 export function useCampaign() {
   const [state, setState] = useState<SignificantState | null>(null);
+  const [visitor, setVisitor] = useState<'first' | 'returning' | null>(null);
 
   useEffect(() => {
     let s = loadState();
+    const entryVisitor = s.warmupDone ? 'returning' : 'first';
     if (!s.warmupDone) {
       s = addXp(completeWarmup(s), 50); // endowed progress: path starts non-empty
       saveState(s);
     }
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage on mount, not a derived-state loop
     setState(s);
+    setVisitor(entryVisitor);
   }, []);
 
   const mutate = useCallback((fn: (s: SignificantState) => SignificantState) => {
@@ -75,6 +78,7 @@ export function useCampaign() {
   const levels = state ? levelStatuses(state) : [];
   return {
     ready: state !== null,
+    visitor,
     state: state ?? null,
     levels,
     totalStars: levels.reduce((sum, l) => sum + l.stars, 0),

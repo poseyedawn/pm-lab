@@ -6,11 +6,12 @@ import { dayNumber } from '@/lib/engine/daily';
 import { buildShareText, useDaily } from '@/hooks/useDaily';
 import { GameRound } from '@/components/significant/GameRound';
 import { ShareGrid } from '@/components/significant/ShareGrid';
-import { track } from '@/lib/analytics';
+import { streakBand, track } from '@/services/analyticsService';
 
 export default function DailyPage() {
   const daily = useDaily();
-  const startTracked = useRef(false);
+  const viewTrackedRef = useRef(false);
+  const pendingCorrectRef = useRef<boolean | null>(null);
   // Baseline streak value, captured on the first "ready" render — null until then.
   // We compare against this (not against a value read via loadState() right after
   // daily.complete()) because React's setState updater — where saveState() actually
@@ -20,11 +21,19 @@ export default function DailyPage() {
   const prevStreakRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (daily.ready && !daily.playedToday && !startTracked.current) {
-      startTracked.current = true;
-      track('game_start', { mode: 'daily' });
-    }
+    if (!daily.ready || viewTrackedRef.current) return;
+    viewTrackedRef.current = true;
+    track('daily_viewed', { state: daily.playedToday ? 'completed' : 'unplayed' });
   }, [daily.ready, daily.playedToday]);
+
+  useEffect(() => {
+    if (!daily.playedToday || pendingCorrectRef.current === null) return;
+    track('daily_completed', {
+      correct: pendingCorrectRef.current,
+      streakBand: streakBand(daily.streak),
+    });
+    pendingCorrectRef.current = null;
+  }, [daily.playedToday, daily.streak]);
 
   useEffect(() => {
     if (!daily.ready) return;
@@ -33,7 +42,7 @@ export default function DailyPage() {
       return;
     }
     if (daily.streak > prevStreakRef.current) {
-      track('streak_extended', { streak: daily.streak });
+      track('daily_streak_extended', { streakBand: streakBand(daily.streak) });
     }
     prevStreakRef.current = daily.streak;
   }, [daily.ready, daily.streak]);
@@ -43,7 +52,7 @@ export default function DailyPage() {
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
   const handleToggleSound = () => {
-    track('sound_toggled', { on: !daily.soundOn });
+    track('settings_changed', { setting: 'sound', enabled: !daily.soundOn });
     daily.toggleSound();
   };
 
@@ -78,9 +87,10 @@ export default function DailyPage() {
           scenario={daily.scenario}
           combo={1}
           soundOn={daily.soundOn}
+          mode="daily"
           onComplete={({ correct, xpEarned }) => {
+            pendingCorrectRef.current = correct;
             daily.complete(correct, xpEarned);
-            track('daily_played', { correct });
           }}
         />
       )}

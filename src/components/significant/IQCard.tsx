@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { iqTitle, type LevelStatus } from '@/hooks/useCampaign';
 import { fireConfetti } from '@/components/juice/confetti';
-import { PressButton } from '@/components/juice/PressButton';
-import { track } from '@/lib/analytics';
+import { ShareControl } from '@/components/significant/ShareControl';
 
 export function IQCard({
   levels, xp, celebrate,
@@ -33,13 +32,13 @@ export function IQCard({
           <span key={l.id} className={`h-3 w-3 rounded-full ${l.stars === 3 ? 'bg-gold' : l.stars > 0 ? 'bg-white' : 'bg-white/30'}`} aria-hidden />
         ))}
       </div>
-      <PressButton
+      <ShareControl
+        text={shareText}
+        surface="profile"
+        label="Copy result to share"
         color="sky"
         className="mt-5 w-full bg-white !text-ink shadow-[0_4px_0_rgba(0,0,0,0.25)]"
-        onClick={() => navigator.clipboard?.writeText(shareText).then(() => track('share_clicked', {})).catch(() => {})}
-      >
-        Copy result to share
-      </PressButton>
+      />
     </section>
   );
 }
