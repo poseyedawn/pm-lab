@@ -7,7 +7,7 @@ interface LabShellProps {
 
 export function LabShell({ children }: LabShellProps) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="lab-frame flex min-h-screen flex-col">
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <PreferenceRuntime />
       <LabHeader />

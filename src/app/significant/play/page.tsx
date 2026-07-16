@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CAMPAIGN_LEVELS, campaignSeed, generateScenario } from '@/lib/engine/scenario';
-import { resolveCampaignLevel } from '@/lib/engine/level';
+import { resolveCall, resolveCampaignLevel } from '@/lib/engine/level';
 import { useCampaign } from '@/hooks/useCampaign';
 import { GameRound } from '@/components/significant/GameRound';
 import { ComboFlame } from '@/components/significant/ComboFlame';
@@ -39,6 +39,9 @@ function PlayInner() {
   if (!ready || !state) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
 
   const combo = 1 + state.campaignStreak;
+  const initialCall = params.get('calibration') === '1' && Object.keys(state.campaign).length === 0
+    ? resolveCall(params.get('call'))
+    : null;
 
   return (
     <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
@@ -49,6 +52,7 @@ function PlayInner() {
       <GameRound
         scenario={scenario}
         combo={combo}
+        initialCall={initialCall}
         mode="campaign"
         level={levelId}
         onComplete={({ correct, xpEarned }) => {

@@ -1,0 +1,552 @@
+{
+  "checks": [
+    {
+      "name": "metadata title identifies Product Lab",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "first-visit promise is visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390px landing has no horizontal overflow",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390px landing fills the mobile viewport",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "primary CTA is visible above the 390x844 fold",
+      "passed": true,
+      "detail": "{\"x\":28,\"y\":737,\"width\":334,\"height\":44,\"bottom\":781}"
+    },
+    {
+      "name": "visible 390px controls meet the 44px target size",
+      "passed": true,
+      "detail": "[{\"name\":\"Alvin's Product Lab home\",\"tag\":\"a\",\"width\":115,\"height\":44,\"top\":4,\"bottom\":48},{\"name\":\"Portfolio (opens in a new tab)\",\"tag\":\"a\",\"width\":79,\"height\":44,\"top\":4,\"bottom\":48},{\"name\":\"ShipLaunch it to everyone\",\"tag\":\"button\",\"width\":106,\"height\":88,\"top\":637,\"bottom\":725},{\"name\":\"KillNot enough evidence\",\"tag\":\"button\",\"width\":106,\"height\":88,\"top\":637,\"bottom\":725},{\"name\":\"Keep RunningMore data could change it\",\"tag\":\"button\",\"width\":106,\"height\":88,\"top\":637,\"bottom\":725},{\"name\":\"Make your first call\",\"tag\":\"a\",\"width\":334,\"height\":44,\"top\":737,\"bottom\":781}]"
+    },
+    {
+      "name": "Portfolio link points to the live portfolio",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Portfolio opens without discarding the active game",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ship exposes selected state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ship selection is exclusive",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Kill exposes selected state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Kill selection is exclusive",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Keep Running exposes selected state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Keep Running selection is exclusive",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "selected landing call is carried in the CTA URL",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "landing call opens the matching reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "reveal continues to the campaign path",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "visitor can defer the landing decision",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "deferred landing does not auto-reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returning landing hides the stale first-case decisions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returning CTA targets the first incomplete level",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returning progress is visible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart calibration meets the 44px target size",
+      "passed": true,
+      "detail": "{\"x\":232.75,\"y\":683,\"width\":106.609375,\"height\":44}"
+    },
+    {
+      "name": "returning CTA opens level 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart calibration returns to a deciding state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop keeps the mobile app at 390px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop centers the locked mobile app",
+      "passed": true,
+      "detail": "{\"x\":525,\"y\":0,\"width\":390,\"height\":1181,\"bottom\":1181}"
+    },
+    {
+      "name": "320px landing has no horizontal overflow",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "primary CTA is visible above the 320x568 fold",
+      "passed": true,
+      "detail": "{\"x\":20,\"y\":473,\"width\":280,\"height\":44,\"bottom\":517}"
+    },
+    {
+      "name": "visible 320px controls meet the 44px target size",
+      "passed": true,
+      "detail": "[{\"name\":\"Alvin's Product Lab home\",\"tag\":\"a\",\"width\":115,\"height\":44,\"top\":4,\"bottom\":48},{\"name\":\"Portfolio (opens in a new tab)\",\"tag\":\"a\",\"width\":79,\"height\":44,\"top\":4,\"bottom\":48},{\"name\":\"ShipLaunch it to everyone\",\"tag\":\"button\",\"width\":88,\"height\":72,\"top\":393,\"bottom\":465},{\"name\":\"KillNot enough evidence\",\"tag\":\"button\",\"width\":88,\"height\":72,\"top\":393,\"bottom\":465},{\"name\":\"Keep RunningMore data could change it\",\"tag\":\"button\",\"width\":88,\"height\":72,\"top\":393,\"bottom\":465},{\"name\":\"Make your first call\",\"tag\":\"a\",\"width\":280,\"height\":44,\"top\":473,\"bottom\":517}]"
+    },
+    {
+      "name": "malformed call query is ignored safely",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "malformed call query does not reveal a result",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "decision controls are keyboard reachable",
+      "passed": true,
+      "detail": "[\"Skip to main content\",\"Alvin's Product Lab home\",\"Portfolio (opens in a new tab)\",\"ShipLaunch it to everyone\",\"KillNot enough evidence\",\"Keep RunningMore data could change it\",\"Make your first call\"]"
+    },
+    {
+      "name": "primary CTA is keyboard reachable",
+      "passed": true,
+      "detail": "[\"Skip to main content\",\"Alvin's Product Lab home\",\"Portfolio (opens in a new tab)\",\"ShipLaunch it to everyone\",\"KillNot enough evidence\",\"Keep RunningMore data could change it\",\"Make your first call\"]"
+    }
+  ],
+  "diagnostics": [],
+  "metrics": {
+    "firstVisit390": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "clientWidth": 390,
+        "clientHeight": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 1181
+      },
+      "regions": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 1181,
+          "bottom": 1181
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 53,
+          "bottom": 53
+        },
+        "title": {
+          "x": 28,
+          "y": 101,
+          "width": 334,
+          "height": 64,
+          "bottom": 165
+        },
+        "evidence": {
+          "x": 28,
+          "y": 225,
+          "width": 278,
+          "height": 372,
+          "bottom": 597
+        },
+        "decisions": {
+          "x": 28,
+          "y": 609,
+          "width": 334,
+          "height": 116,
+          "bottom": 725
+        },
+        "primaryCta": {
+          "x": 28,
+          "y": 737,
+          "width": 334,
+          "height": 44,
+          "bottom": 781
+        }
+      },
+      "controls": [
+        {
+          "name": "Skip to main content",
+          "tag": "a",
+          "width": 189,
+          "height": 48,
+          "top": -80,
+          "bottom": -32
+        },
+        {
+          "name": "Alvin's Product Lab home",
+          "tag": "a",
+          "width": 115,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "Portfolio (opens in a new tab)",
+          "tag": "a",
+          "width": 79,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "ShipLaunch it to everyone",
+          "tag": "button",
+          "width": 106,
+          "height": 88,
+          "top": 637,
+          "bottom": 725
+        },
+        {
+          "name": "KillNot enough evidence",
+          "tag": "button",
+          "width": 106,
+          "height": 88,
+          "top": 637,
+          "bottom": 725
+        },
+        {
+          "name": "Keep RunningMore data could change it",
+          "tag": "button",
+          "width": 106,
+          "height": 88,
+          "top": 637,
+          "bottom": 725
+        },
+        {
+          "name": "Make your first call",
+          "tag": "a",
+          "width": 334,
+          "height": 44,
+          "top": 737,
+          "bottom": 781
+        },
+        {
+          "name": "SignificantA/B-testing judgment · 10 casesPlay",
+          "tag": "a",
+          "width": 334,
+          "height": 69,
+          "top": 932,
+          "bottom": 1001
+        }
+      ]
+    },
+    "desktop1440": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "document": {
+        "clientWidth": 1440,
+        "clientHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1181
+      },
+      "regions": {
+        "frame": {
+          "x": 525,
+          "y": 0,
+          "width": 390,
+          "height": 1181,
+          "bottom": 1181
+        },
+        "header": {
+          "x": 525,
+          "y": 0,
+          "width": 390,
+          "height": 53,
+          "bottom": 53
+        },
+        "title": {
+          "x": 553,
+          "y": 101,
+          "width": 334,
+          "height": 64,
+          "bottom": 165
+        },
+        "evidence": {
+          "x": 553,
+          "y": 225,
+          "width": 278,
+          "height": 372,
+          "bottom": 597
+        },
+        "decisions": {
+          "x": 553,
+          "y": 609,
+          "width": 334,
+          "height": 116,
+          "bottom": 725
+        },
+        "primaryCta": {
+          "x": 553,
+          "y": 737,
+          "width": 334,
+          "height": 44,
+          "bottom": 781
+        }
+      },
+      "controls": [
+        {
+          "name": "Skip to main content",
+          "tag": "a",
+          "width": 189,
+          "height": 48,
+          "top": -80,
+          "bottom": -32
+        },
+        {
+          "name": "Alvin's Product Lab home",
+          "tag": "a",
+          "width": 115,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "Portfolio (opens in a new tab)",
+          "tag": "a",
+          "width": 79,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "ShipLaunch it to everyone",
+          "tag": "button",
+          "width": 106,
+          "height": 88,
+          "top": 637,
+          "bottom": 725
+        },
+        {
+          "name": "KillNot enough evidence",
+          "tag": "button",
+          "width": 106,
+          "height": 88,
+          "top": 637,
+          "bottom": 725
+        },
+        {
+          "name": "Keep RunningMore data could change it",
+          "tag": "button",
+          "width": 106,
+          "height": 88,
+          "top": 637,
+          "bottom": 725
+        },
+        {
+          "name": "Make your first call",
+          "tag": "a",
+          "width": 334,
+          "height": 44,
+          "top": 737,
+          "bottom": 781
+        },
+        {
+          "name": "SignificantA/B-testing judgment · 10 casesPlay",
+          "tag": "a",
+          "width": 334,
+          "height": 69,
+          "top": 932,
+          "bottom": 1001
+        }
+      ]
+    },
+    "minimum320": {
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "document": {
+        "clientWidth": 320,
+        "clientHeight": 568,
+        "scrollWidth": 320,
+        "scrollHeight": 899
+      },
+      "regions": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 899,
+          "bottom": 899
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 53,
+          "bottom": 53
+        },
+        "title": {
+          "x": 20,
+          "y": 85,
+          "width": 280,
+          "height": 56,
+          "bottom": 141
+        },
+        "evidence": {
+          "x": 20,
+          "y": 185,
+          "width": 280,
+          "height": 172,
+          "bottom": 357
+        },
+        "decisions": {
+          "x": 20,
+          "y": 365,
+          "width": 280,
+          "height": 100,
+          "bottom": 465
+        },
+        "primaryCta": {
+          "x": 20,
+          "y": 473,
+          "width": 280,
+          "height": 44,
+          "bottom": 517
+        }
+      },
+      "controls": [
+        {
+          "name": "Skip to main content",
+          "tag": "a",
+          "width": 189,
+          "height": 48,
+          "top": -80,
+          "bottom": -32
+        },
+        {
+          "name": "Alvin's Product Lab home",
+          "tag": "a",
+          "width": 115,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "Portfolio (opens in a new tab)",
+          "tag": "a",
+          "width": 79,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "ShipLaunch it to everyone",
+          "tag": "button",
+          "width": 88,
+          "height": 72,
+          "top": 393,
+          "bottom": 465
+        },
+        {
+          "name": "KillNot enough evidence",
+          "tag": "button",
+          "width": 88,
+          "height": 72,
+          "top": 393,
+          "bottom": 465
+        },
+        {
+          "name": "Keep RunningMore data could change it",
+          "tag": "button",
+          "width": 88,
+          "height": 72,
+          "top": 393,
+          "bottom": 465
+        },
+        {
+          "name": "Make your first call",
+          "tag": "a",
+          "width": 280,
+          "height": 44,
+          "top": 473,
+          "bottom": 517
+        },
+        {
+          "name": "SignificantA/B-testing judgment · 10 casesPlay",
+          "tag": "a",
+          "width": 280,
+          "height": 69,
+          "top": 630,
+          "bottom": 699
+        }
+      ]
+    },
+    "keyboardFocusOrder": [
+      "Skip to main content",
+      "Alvin's Product Lab home",
+      "Portfolio (opens in a new tab)",
+      "ShipLaunch it to everyone",
+      "KillNot enough evidence",
+      "Keep RunningMore data could change it",
+      "Make your first call"
+    ]
+  }
+}

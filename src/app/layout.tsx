@@ -1,22 +1,29 @@
 import type { Metadata } from 'next';
-import { Nunito } from 'next/font/google';
+import { Caveat, Nunito } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import { LabShell } from '@/components/lab/LabShell';
 import './globals.css';
 
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '800'] });
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-hand',
+  weight: ['500', '600'],
+});
 
 export const metadata: Metadata = {
-  title: "Alvin's Lab",
-  description: 'Small games about product craft, built with AI.',
+  title: "Alvin's Product Lab",
+  description: 'Mobile-first games that make product judgment visible.',
 };
+
+const shouldLoadVercelAnalytics = process.env.VERCEL === '1';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={nunito.className}>
+      <body className={`${nunito.className} ${caveat.variable}`}>
         <LabShell>{children}</LabShell>
-        <Analytics />
+        {shouldLoadVercelAnalytics && <Analytics />}
       </body>
     </html>
   );

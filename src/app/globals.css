@@ -19,8 +19,41 @@
   --radius-card: 1.25rem;
 }
 
-html { background: var(--color-bg); }
-body { min-height: 100vh; background: var(--color-bg); color: var(--color-ink); }
+html { background: #eaecf5; }
+body { min-height: 100vh; background: #eaecf5; color: var(--color-ink); }
+
+.lab-frame {
+  width: min(100%, 390px);
+  margin-inline: auto;
+  background: var(--color-bg);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 6%, transparent);
+}
+
+.font-hand { font-family: var(--font-hand), cursive; }
+
+.landing-evidence-chart svg { height: 5.5rem; }
+
+@media (max-height: 700px) {
+  .lab-landing { padding-top: 0.5rem; }
+  .lab-landing-title { margin-top: 0.5rem; font-size: 1.5rem; line-height: 1.75rem; }
+  .lab-landing-promise { margin-top: 0.25rem; font-size: 0.75rem; line-height: 1rem; }
+  .lab-landing-evidence { margin-top: 0.5rem; padding: 0.5rem; }
+  .lab-landing-evidence .landing-evidence-label { display: none; }
+  .lab-landing-evidence .landing-evidence-hypothesis { margin-top: 0; font-size: 0.8125rem; line-height: 1rem; }
+  .lab-landing-evidence .landing-evidence-stats { margin-top: 0.5rem; padding-top: 0.5rem; }
+  .lab-landing-evidence .landing-evidence-legend { display: flex; gap: 1rem; margin-top: 0.25rem; }
+  .lab-landing-evidence .landing-evidence-chart { margin-top: 0.25rem; }
+  .lab-landing-evidence .landing-evidence-chart svg { height: 2rem; }
+  .lab-landing-evidence .landing-evidence-footer { display: none; }
+  .lab-landing-decisions { margin-top: 0.5rem; }
+  .lab-landing-decisions .landing-decisions-legend { font-size: 1.125rem; line-height: 1.25rem; }
+  .lab-landing-decisions .landing-decision-button { min-height: 4rem; }
+  .lab-landing-decisions .decision-detail { display: none; }
+  .lab-landing-primary { margin-top: 0.5rem; }
+  .lab-landing-cues { gap: 0.25rem; margin-top: 0.25rem; font-size: 0.625rem; }
+  .lab-landing-cues svg { width: 0.875rem; height: 0.875rem; }
+  .lab-landing-signature { display: none; }
+}
 
 a:focus-visible,
 button:focus-visible,

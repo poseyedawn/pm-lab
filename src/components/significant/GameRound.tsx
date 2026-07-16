@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import type { Call, Scenario } from '@/lib/engine/types';
 import { useGameRound } from '@/hooks/useGameRound';
 import { ReadoutCard } from '@/components/significant/ReadoutCard';
@@ -15,6 +15,7 @@ import { usePreferences } from '@/hooks/lab/usePreferences';
 interface GameRoundBaseProps {
   scenario: Scenario;
   combo: number;
+  initialCall?: Call | null;
   onComplete: (r: { correct: boolean; xpEarned: number }) => void;
 }
 
@@ -23,13 +24,30 @@ type GameRoundProps = GameRoundBaseProps & (
   | { mode: 'daily'; level?: never }
 );
 
-export function GameRound({ scenario, combo, mode, level, onComplete }: GameRoundProps) {
-  const round = useGameRound(scenario, combo);
+export function GameRound({ scenario, combo, initialCall = null, mode, level, onComplete }: GameRoundProps) {
+  const round = useGameRound(scenario, combo, initialCall);
   const { preferences, reducedMotion } = usePreferences();
   // Guards against a double-tap on "Next" double-granting XP: onComplete
   // must fire at most once per round, even if the button is tapped twice
   // before the parent navigates away.
   const nextCalledRef = useRef(false);
+  const initialCallTrackedRef = useRef(false);
+
+  useEffect(() => {
+    if (!initialCall || initialCallTrackedRef.current || round.phase !== 'revealed') return;
+    initialCallTrackedRef.current = true;
+    if (mode === 'campaign') {
+      track('decision_made', { gameId: 'significant', mode, level, call: initialCall });
+    } else {
+      track('decision_made', { gameId: 'significant', mode, level: 'daily', call: initialCall });
+    }
+    track('reveal_viewed', {
+      gameId: 'significant',
+      mode,
+      correct: round.correct!,
+      archetype: scenario.archetype,
+    });
+  }, [initialCall, level, mode, round.correct, round.phase, scenario.archetype]);
 
   const handleCall = (call: Call) => {
     const result = round.decide(call);

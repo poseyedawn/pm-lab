@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { ArrowSquareOut } from '@phosphor-icons/react';
 import { track } from '@/services/analyticsService';
 
 export function PortfolioReturnLink() {
@@ -12,10 +13,14 @@ export function PortfolioReturnLink() {
   return (
     <a
       href="https://alvn.io"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Portfolio (opens in a new tab)"
       onClick={() => track('portfolio_returned', { entrySurface })}
-      className="text-sm font-extrabold text-ink-soft underline decoration-2 underline-offset-4"
+      className="inline-flex min-h-11 items-center gap-1 text-sm font-extrabold text-brand-deep underline decoration-2 underline-offset-4"
     >
-      Alvin&apos;s portfolio
+      Portfolio
+      <ArrowSquareOut size={16} weight="bold" aria-hidden />
     </a>
   );
 }
