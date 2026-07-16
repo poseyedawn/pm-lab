@@ -1,101 +1,108 @@
-# Slice 2 design QA
+# Slice 3 design QA
 
-- **Source visual truth:** `/Users/Alvin/.codex/generated_images/019f6652-7ba0-73f3-946d-b60caabafd9f/exec-6b179acf-c512-485a-b985-24b1d73de97e.png`
-- **Normalized source:** `docs/qa/assets/2026-07-15-slice-2/source-option-2-390x844.png`
-- **Implementation route:** `/`
-- **Implementation screenshot:** `docs/qa/assets/2026-07-15-slice-2/implementation-first-visit-390x844.png`
+- **Source visual truth:** `/Users/Alvin/.codex/generated_images/019f6652-7ba0-73f3-946d-b60caabafd9f/exec-2262ea3d-52c2-4280-99e7-9e7fd1ae3b48.png`
+- **Normalized source:** `docs/qa/assets/2026-07-15-slice-3/source-option-1-390x844.png`
+- **Implementation route:** `/significant/calibration`
+- **Implementation screenshot:** `docs/qa/assets/2026-07-15-slice-3/implementation-calibration-deciding-390x844.png`
 - **Viewport:** 390 × 844 CSS pixels at device scale factor 1
-- **State:** first visit, empty Lab profile, no selected call
+- **State:** first visit, empty Lab profile, no preselected call
 - **Runtime:** local production build in Google Chrome through the approved Playwright fallback
 
 ## QA inventory
 
 | Claim or control | Functional check | Evidence |
 |---|---|---|
-| Mobile-first presentation remains locked on desktop | Open `/` at 1440 × 900 and measure `.lab-frame` | `implementation-desktop-locked-1440x900.png`; frame is centered at x=525 and remains 390px wide |
-| Option 2 is the first-visit landing | Clear Lab storage and open `/` at 390 × 844 | `comparison-full-390x844.png` |
-| Primary evidence and CTA are usable above the fold | Inspect bounds for the evidence card, decisions, CTA, cues, and signature | CTA ends at y=781; final viewport screenshot shows the full first-visit composition |
-| Decision cards are real controls | Tap Ship, Kill, and Keep Running; verify exclusive `aria-pressed` state | All three state transitions passed; `implementation-first-visit-selected-390x844.png` |
-| The first landing call becomes the calibration decision | Select Ship, follow the CTA, and verify the matching reveal | URL retained `call=ship`; reveal showed “You said Ship”; `implementation-calibration-reveal-390x844.png` |
-| A first visitor can defer the decision | Follow the CTA without selecting a call | Game opened in its deciding state; `implementation-calibration-deciding-390x844.png` |
-| Returning progress is respected | Stage two completed cases, reload `/`, and follow Continue | Decisions were removed, progress read 2/10 and 350 XP, CTA opened level 3; `implementation-returning-390x844.png` |
-| Navigation remains functional | Exercise Product Lab, restart calibration, and Portfolio destinations | Product Lab and restart routes passed; Portfolio resolves to `https://alvn.io` in a new tab |
-| Accessibility basics remain intact | Keyboard through controls and inspect names, focus, tap targets, and overflow | All visible controls are at least 44px; `implementation-keyboard-focus-390x844.png` |
-| Runtime is clean | Observe page errors, console errors, and failed requests across the critical flow | `verification.json` contains an empty diagnostics array |
-
-Exploratory checks also passed: malformed `call` input is ignored without revealing a result, and the 320 × 568 layout keeps the CTA above the fold without horizontal overflow.
+| Option 1 is the dedicated first-run calibration | Clear storage, enter from the Lab CTA, and inspect the dedicated route | `comparison-full-390x844.png`; URL is `/significant/calibration` |
+| Calibration starts from honest zero progress | Read the shared Lab header before and after a real call | Header begins at 0 XP, then moves to 50 XP after the reveal |
+| The complete decision composition fits the mobile viewport | Measure the evidence card, decision controls, coaching action, and document | 390 × 844 document is exactly 390 × 844; decisions end at y=788 and Skip coaching ends at y=840 |
+| Decision cards are real controls | Activate Ship, Kill, and Keep Running in fresh sessions | All three matching reveal checks passed |
+| The evidence teaches without spoiling the call | Inspect the handwritten prompt before reveal, then the highlighted CI after reveal | `comparison-coaching-and-decisions.png`; `implementation-calibration-reveal-390x844.png` |
+| The baseline is earned and idempotent | Inspect Significant storage after first completion and after replay | First completion stores 50 XP with an empty campaign; replay remains at 50 XP |
+| Landing decisions carry forward | Select Ship on `/`, follow the CTA, and inspect the reveal | URL retains `call=ship`; reveal says “You said Ship” |
+| Cold and legacy routes respect the calibration gate | Open home, play, daily, and the old calibration query directly | All redirect and validated-call preservation checks passed |
+| Campaign progress remains honest | Continue from reveal into the campaign | Case 1 remains next; banner reports 0 campaign stars |
+| Mobile-first lock remains intact on desktop | Open at 1440 × 900 and measure `.lab-frame` | `implementation-calibration-desktop-locked-1440x900.png`; frame is centered at x=525 and remains 390px wide |
+| Short mobile adaptation remains usable | Open at 320 × 568 and measure overflow and controls | Document is exactly 320 × 568; visible controls are at least 44px |
+| Accessibility basics remain intact | Inspect names, chart summary, focus order, focus styling, and target sizes | `implementation-calibration-keyboard-focus-390x844.png`; all checks passed |
+| Runtime is clean | Observe console errors, page errors, and failed requests across the full flow | `verification.json` contains an empty diagnostics array |
 
 ## Full-view comparison evidence
 
-`docs/qa/assets/2026-07-15-slice-2/comparison-full-390x844.png` places the normalized source and the final browser capture in one image at the same viewport and state.
+`docs/qa/assets/2026-07-15-slice-3/comparison-full-390x844.png` places the normalized selected source and final production-browser capture together at the same 390 × 844 viewport and deciding state.
 
-The implementation preserves the source hierarchy and composition: compact Product Lab header, two-line promise, annotated evidence card, handwritten decision prompt, three semantic calls, primary CTA, trust cues, and Alvin signature. The full first-visit experience fits in the intended mobile frame. The actual hypothesis and numbers intentionally come from the game’s deterministic simulation rather than copying the illustrative mock data.
+The implementation preserves the source composition: compact Product Lab header, field-test label, one-line ship-review title, three-step calibration rail, evidence instruction, hypothesis, full-width white evidence card, dual-series chart, observed lift and confidence interval, handwritten coaching note, three edge-to-edge semantic calls, and the timed coaching action. The selected direction contains no portrait or required raster asset, so no substitute person or avatar appears.
 
 ## Focused-region comparison evidence
 
-- `docs/qa/assets/2026-07-15-slice-2/comparison-evidence-card.png` compares hypothesis hierarchy, lift/CI treatment, legend, chart, confidence bands, sample/duration context, radius, shadow, and annotation placement.
-- `docs/qa/assets/2026-07-15-slice-2/comparison-decisions-and-cta.png` compares the handwritten prompt, decision-card proportions, Phosphor icons, state colors, CTA, trust cues, and signature.
+- `docs/qa/assets/2026-07-15-slice-3/comparison-evidence-card.png` compares the hypothesis hierarchy, chart scale, confidence bands, legend, lift/CI treatment, sample context, radius, and shadow.
+- `docs/qa/assets/2026-07-15-slice-3/comparison-coaching-and-decisions.png` compares the handwritten note, arrow placement, decision-control proportions, Phosphor icons, colors, labels, and coaching action.
 
 ## Findings
 
 No actionable P0, P1, or P2 findings remain.
 
-- [P3] The final chart shape differs from the illustrative source because it renders the actual deterministic scenario rather than a traced visual.
-  - **Location:** landing evidence card.
-  - **Evidence:** both versions use two series and confidence bands; the implementation’s daily values are more angular and its labels are Day 1/7/14.
-  - **Impact:** none on task comprehension; the visible statistics, legend, axes, and data provenance remain coherent.
-  - **Disposition:** accepted. Replacing the real series with source-shaped decorative data would weaken product truthfulness.
+- [P3] The deterministic game series is not pixel-identical to the illustrative source chart.
+  - **Location:** evidence card chart.
+  - **Evidence:** both versions show the same two-series, confidence-band, 14-day visual model; the implementation renders the actual clean-win scenario values.
+  - **Impact:** none on comprehension or fidelity of the evidence hierarchy.
+  - **Disposition:** accepted. Tracing decorative source data would make the displayed statistics internally inconsistent.
+- [P3] The source annotation states the correct answer before the player chooses; the implementation keeps the same handwritten treatment but asks the player to test whether the interval clears zero.
+  - **Location:** coaching note between evidence and decisions.
+  - **Impact:** preserves the calibration challenge instead of spoiling it.
+  - **Disposition:** accepted as a necessary interaction-level copy correction.
 
 ## Required fidelity surfaces
 
 | Surface | Final evaluation |
 |---|---|
-| Fonts and typography | Nunito preserves the rounded product voice; Caveat provides the selected handwritten annotations and signature. Heading scale, wrapping, weight, and line height match the normalized source hierarchy. |
-| Spacing and layout rhythm | Header is 53px; title begins at y=101; evidence card spans y=225–597; decisions y=609–725; CTA y=737–781. The full core composition fits at 390 × 844 and adapts at 320 × 568. |
-| Colors and visual tokens | Existing ink, violet, green, rose, neutral, and surface tokens map closely to the selected palette. Contrast and focus states remain clear. |
-| Image quality and asset fidelity | The selected direction contains no portrait or required raster imagery. Phosphor supplies the visible UI icons; the chart is generated from real scenario data with binomial confidence bands. No placeholder avatar, fake portrait, emoji, or decorative substitute remains. |
-| Copy and content | The hero promise, field-test framing, call labels, CTA, trust cues, and signature preserve the selected direction. Hypothesis, metric, sample size, duration, and chart values intentionally reflect the real game scenario. |
+| Fonts and typography | Existing Nunito and Caveat preserve the rounded product voice and selected handwritten treatment. The title remains on one line at 390px, matching the source hierarchy. |
+| Spacing and layout rhythm | Header is 53px; evidence spans y=315–604; decisions span y=704–788; the 44px coaching action ends at y=840. The full composition fits without horizontal or vertical overflow. |
+| Colors and visual tokens | Existing ink, violet, green, rose, neutral, and surface tokens closely match the selected palette while retaining accessible contrast and visible focus. |
+| Image quality and asset fidelity | The selected direction requires no portrait. Phosphor supplies the visible interface icons, and the chart renders real deterministic data with binomial confidence bands instead of a placeholder image. |
+| Copy and content | Field-test framing, calibration rail, hypothesis, call labels, and timing cue preserve the source. The note is intentionally non-spoiling, and the reveal explains the decisive signal. |
 
 ## Primary interactions verified
 
-- Ship, Kill, and Keep Running select exclusively and expose `aria-pressed`.
-- A selected first-visit call is validated, carried into calibration, and opens the matching reveal.
-- A visitor can continue without preselecting and decide inside the game.
-- Returning visitors continue at the first incomplete level and cannot submit the first-case preview against a later scenario.
-- Restart calibration returns to a deciding level-one state.
-- Product Lab, Significant, Portfolio, CTA, and restart navigation were verified.
-- Keyboard focus reaches all visible controls with a visible outline.
-- The 390px and 320px viewports have no horizontal overflow; visible controls meet the 44px minimum.
-- The desktop viewport keeps a centered 390px mobile surface instead of reflowing into a desktop layout.
+- A cold landing begins at 0 XP and opens a normal deciding calibration when no call was selected.
+- Ship, Kill, and Keep Running each produce the matching reveal.
+- A validated landing call is carried into the dedicated route and resolves once.
+- Malformed call input is ignored safely and leaves all three decisions available.
+- The evidence remains visible during feedback, and the decisive confidence interval receives a visible highlight.
+- First completion grants 50 baseline XP without awarding campaign stars or completing Case 1.
+- Campaign handoff exposes Case 1 as the next action and reports zero collected campaign stars.
+- Settings exposes Replay calibration; replay gives feedback but cannot award another baseline.
+- Skip coaching removes the optional teaching layer, and Show coaching restores it.
+- Cold Significant home, campaign play, and daily entry all redirect to calibration.
+- The legacy calibration query canonicalizes to the dedicated route and preserves a valid call.
+- Keyboard focus reaches every primary action with a visible outline.
+- 390px and 320px viewports have no horizontal overflow; visible controls meet the 44px minimum.
+- A 1440px desktop viewport keeps a centered 390px mobile surface.
 - Browser diagnostics recorded zero console errors, page errors, or failed requests.
 
 ## Comparison history
 
-- **Pass 0 — blocked:** `implementation-first-visit-390x844-pass0.png`
-  - Finding: [P1] CTA began at y=955 and the trust/signature region was outside the 844px viewport.
-  - Fix: reduced header, headline, promise, evidence-card, and decision-control density while preserving the source hierarchy.
-- **Pass 1 — blocked:** `implementation-first-visit-390x844-pass1.png`
-  - Post-fix evidence: CTA moved to y=791, but the trust cues and signature remained cropped.
-  - Fix: matched the source card height more closely by correcting hypothesis wrapping, stat typography, chart height, and decision-card proportions.
-- **Pass 2 — blocked:** `implementation-first-visit-390x844-pass2.png`
-  - Post-fix evidence: CTA moved to y=737; [P2] the signature edge was still clipped and the 320 × 568 CTA ended at y=713.
-  - Fix: introduced a deliberate short-viewport composition, retained real evidence, kept 44px controls, and tightened CTA/cue/signature rhythm.
-- **Pass 3 — blocked:** `implementation-first-visit-390x844-pass3.png`
-  - Post-fix evidence: both viewport-fit checks passed; focused review found [P2] the main annotation sat too low, restart calibration lacked a 44px target, and Portfolio discarded the active game tab.
-  - Fix: moved the annotation beside the promise/card shoulder, enlarged restart’s target, and opened Portfolio in a safe new tab.
-- **Pass 4 — passed with P3 polish:** `implementation-first-visit-390x844-pass4.png`
-  - Post-fix evidence: no P0/P1/P2 findings remained. The chart still looked sparse relative to the source.
-  - Polish: added real confidence bands, guide lines, and day labels without changing scenario data.
-- **Pass 5 — final:** `implementation-first-visit-390x844.png`
-  - Post-fix evidence: full and focused comparisons show the selected composition, real-data chart treatment, complete interaction states, and accessible viewport fit. No actionable P0/P1/P2 findings remain.
+- **Pass 0 — blocked:** `implementation-calibration-deciding-390x844-pass0.png`
+  - Finding: [P1] the source title wrapped, the evidence card and handwritten note were too compressed, and the global footer pushed the composition below the viewport.
+  - Fix: hid the generic footer during focused calibration, matched the one-line title, and rebuilt the card/note rhythm from measured source proportions.
+- **Pass 1 — blocked:** `implementation-calibration-deciding-390x844-pass1.png`
+  - Post-fix evidence: title and control width matched, but the evidence card remained short and the reveal overflowed.
+  - Fix: moved sample context into the observed-lift column, expanded real chart treatment, and shortened the reveal copy without removing evidence.
+- **Pass 2 — blocked:** `implementation-calibration-deciding-390x844-pass2.png`
+  - Post-fix evidence: both deciding and reveal states fit, but the chart letterboxed inside the card and the coaching/decision region sat too high.
+  - Fix: restored the chart’s natural aspect ratio, narrowed the handwritten note, and aligned the controls to the source’s lower edge.
+- **Pass 3 — blocked:** `implementation-calibration-deciding-390x844-pass3.png`
+  - Post-fix evidence: source alignment was strong, but production measurement found 12px of 390px overflow and 48px at 320 × 568.
+  - Fix: reduced only internal card spacing, removed redundant bottom padding, and simplified optional coaching on short-height screens while preserving the core evidence and decisions.
+- **Pass 4 — final:** `implementation-calibration-deciding-390x844.png`
+  - Post-fix evidence: source and implementation align across the full and focused comparisons; 46/46 rendered checks pass with zero diagnostics and no actionable P0/P1/P2 findings.
 
 ## Implementation checklist
 
-1. [x] Render the selected first-visit composition at 390 × 844.
-2. [x] Keep the mobile surface locked to 390px on desktop.
-3. [x] Preserve real scenario data and connect the landing call to the reveal.
-4. [x] Add returning-player continuation and restart behavior.
-5. [x] Verify keyboard, tap targets, minimum viewport, malformed input, and runtime diagnostics.
-6. [x] Compare source and implementation together, fix every P0/P1/P2 issue, and preserve the comparison history.
+1. [x] Render mobile Option 1 as a dedicated first-run calibration at 390 × 844.
+2. [x] Start first visitors at 0 XP and award the 50 XP baseline only after a real call.
+3. [x] Preserve actual campaign state, real scenario data, and a truthful Case 1 handoff.
+4. [x] Add skip, replay, validated-call, malformed-call, and legacy-route behavior.
+5. [x] Verify keyboard, target sizes, 320px adaptation, desktop lock, and runtime diagnostics.
+6. [x] Compare source and implementation together, fix every P0/P1/P2 issue, and preserve comparison history.
 
 final result: passed

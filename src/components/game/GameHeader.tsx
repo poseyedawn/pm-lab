@@ -26,7 +26,7 @@ export function GameHeader({ gameId, theme }: GameHeaderProps) {
         </div>
         <div className="flex items-center gap-3">
           <LabProfileSummary variant="compact" gameId={gameId} />
-          <GameSettings />
+          <GameSettings gameId={gameId} />
         </div>
       </div>
     </header>

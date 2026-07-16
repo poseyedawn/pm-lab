@@ -15,19 +15,26 @@ function PlayInner() {
   const { levelId, isCanonical } = resolveCampaignLevel(params.get('level'));
   const { ready, state, completeLevel } = useCampaign();
   const redirectStartedRef = useRef(false);
+  const legacyCalibration = params.get('calibration') === '1';
 
   useEffect(() => {
-    if (isCanonical || redirectStartedRef.current) return;
+    if (redirectStartedRef.current) return;
+    if (legacyCalibration) {
+      redirectStartedRef.current = true;
+      const call = resolveCall(params.get('call'));
+      router.replace(`/significant/calibration${call ? `?call=${call}` : ''}`);
+      return;
+    }
+    if (!ready || !state) return;
+    if (!state.warmupDone) {
+      redirectStartedRef.current = true;
+      router.replace('/significant/calibration');
+      return;
+    }
+    if (isCanonical) return;
     redirectStartedRef.current = true;
     router.replace('/significant/play?level=1');
-  }, [isCanonical, router]);
-
-  const calibrationTrackedRef = useRef(false);
-  useEffect(() => {
-    if (!ready || !state || levelId !== 1 || Object.keys(state.campaign).length > 0 || calibrationTrackedRef.current) return;
-    calibrationTrackedRef.current = true;
-    track('calibration_started', { gameId: 'significant' });
-  }, [levelId, ready, state]);
+  }, [isCanonical, legacyCalibration, params, ready, router, state]);
 
   const scenario = useMemo(() => {
     const level = CAMPAIGN_LEVELS.find((l) => l.id === levelId) ?? CAMPAIGN_LEVELS[0];
@@ -36,12 +43,11 @@ function PlayInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- regenerate only per page load, not per state change
   }, [levelId, ready]);
 
-  if (!ready || !state) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
+  if (!ready || !state || !state.warmupDone || !isCanonical || legacyCalibration) {
+    return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
+  }
 
   const combo = 1 + state.campaignStreak;
-  const initialCall = params.get('calibration') === '1' && Object.keys(state.campaign).length === 0
-    ? resolveCall(params.get('call'))
-    : null;
 
   return (
     <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
@@ -52,7 +58,6 @@ function PlayInner() {
       <GameRound
         scenario={scenario}
         combo={combo}
-        initialCall={initialCall}
         mode="campaign"
         level={levelId}
         onComplete={({ correct, xpEarned }) => {

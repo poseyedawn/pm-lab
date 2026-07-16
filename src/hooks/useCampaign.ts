@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CAMPAIGN_LEVELS } from '@/lib/engine/scenario';
 import type { ArchetypeId } from '@/lib/engine/types';
 import {
-  addXp, completeWarmup, loadState, recordCampaignResult, saveState,
+  addXp, completeCalibration as completeCalibrationState, loadState, recordCampaignResult, saveState,
   type SignificantState,
 } from '@/lib/progress';
 import { significantGameProgress } from '@/lib/labProgress';
@@ -39,35 +39,36 @@ export const iqTitle = (correctCount: number): string =>
 export function useCampaign() {
   const [state, setState] = useState<SignificantState | null>(null);
   const [visitor, setVisitor] = useState<'first' | 'returning' | null>(null);
+  const stateRef = useRef<SignificantState | null>(null);
 
   useEffect(() => {
-    let s = loadState();
+    const s = loadState();
     const entryVisitor = s.warmupDone ? 'returning' : 'first';
-    let lastPlayedAt: string | null = null;
-    if (!s.warmupDone) {
-      s = addXp(completeWarmup(s), 50); // endowed progress: path starts non-empty
-      saveState(s);
-      lastPlayedAt = new Date().toISOString();
-    }
-    saveGameProgress(significantGameProgress(s, lastPlayedAt));
+    stateRef.current = s;
+    saveGameProgress(significantGameProgress(s, null));
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage on mount, not a derived-state loop
     setState(s);
     setVisitor(entryVisitor);
   }, []);
 
   const mutate = useCallback((fn: (s: SignificantState) => SignificantState) => {
-    setState((prev) => {
-      if (!prev) return prev;
-      const next = fn(prev);
-      saveState(next);
-      saveGameProgress(significantGameProgress(next, new Date().toISOString()));
-      return next;
-    });
+    const prev = stateRef.current;
+    if (!prev) return;
+    const next = fn(prev);
+    stateRef.current = next;
+    saveState(next);
+    saveGameProgress(significantGameProgress(next, new Date().toISOString()));
+    setState(next);
   }, []);
 
   const completeLevel = useCallback(
     (id: number, correct: boolean, xp: number) =>
       mutate((s) => addXp(recordCampaignResult(s, id, correct), xp)),
+    [mutate],
+  );
+
+  const completeCalibration = useCallback(
+    () => mutate(completeCalibrationState),
     [mutate],
   );
 
@@ -84,6 +85,7 @@ export function useCampaign() {
     levels,
     totalStars: levels.reduce((sum, l) => sum + l.stars, 0),
     allDone: levels.length > 0 && levels.every((l) => l.status === 'done'),
+    completeCalibration,
     completeLevel,
     markCampaignCompleteTracked,
   };

@@ -151,7 +151,7 @@ export function LabLanding({ scenario }: LabLandingProps) {
       {ready && isReturning && (
         <p className="mt-2 text-center text-xs text-ink-soft">
           {completedCases} of 10 cases complete · {totalXp} XP ·{' '}
-          <Link href="/significant/play?level=1&calibration=1" className="inline-flex min-h-11 items-center font-extrabold underline underline-offset-4">
+          <Link href="/significant/calibration?replay=1" className="inline-flex min-h-11 items-center font-extrabold underline underline-offset-4">
             Restart calibration
           </Link>
         </p>

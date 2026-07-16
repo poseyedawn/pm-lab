@@ -1,5 +1,5 @@
 export type GameId = 'significant' | 'ship-it';
-export type GameMode = 'campaign' | 'daily';
+export type GameMode = 'calibration' | 'campaign' | 'daily';
 export type ExperimentCall = 'ship' | 'kill' | 'keep';
 export type ExperimentArchetype =
   | 'clean-win'
@@ -22,6 +22,7 @@ export interface AnalyticsEventMap {
   game_intro_viewed: { gameId: GameId; visitor: 'first' | 'returning' };
   calibration_started: { gameId: GameId };
   decision_made:
+    | { gameId: GameId; mode: 'calibration'; level: 'calibration'; call: ExperimentCall }
     | { gameId: GameId; mode: 'campaign'; level: number; call: ExperimentCall }
     | { gameId: GameId; mode: 'daily'; level: 'daily'; call: ExperimentCall };
   reveal_viewed: { gameId: GameId; mode: GameMode; correct: boolean; archetype: ExperimentArchetype };

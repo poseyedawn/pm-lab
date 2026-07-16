@@ -64,6 +64,7 @@ export function useDaily() {
 
   return {
     ready: state !== null,
+    calibrated: state?.warmupDone ?? false,
     today,
     scenario,
     playedToday: state?.lastDailyDate === today,

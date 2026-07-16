@@ -3,7 +3,7 @@ import { z } from 'zod';
 import type { AnalyticsEventName, AnalyticsEventProperties } from '@/types/analytics';
 
 const gameIdSchema = z.enum(['significant', 'ship-it']);
-const modeSchema = z.enum(['campaign', 'daily']);
+const modeSchema = z.enum(['calibration', 'campaign', 'daily']);
 const archetypeSchema = z.enum([
   'clean-win',
   'clean-loss',
@@ -24,12 +24,15 @@ const analyticsEventSchema = z.discriminatedUnion('name', [
   z.object({ name: z.literal('game_selected'), gameId: gameIdSchema, placement: z.literal('lab_primary') }).strict(),
   z.object({ name: z.literal('game_intro_viewed'), gameId: gameIdSchema, visitor: z.enum(['first', 'returning']) }).strict(),
   z.object({ name: z.literal('calibration_started'), gameId: gameIdSchema }).strict(),
-  z.object({ name: z.literal('decision_made'), gameId: gameIdSchema, mode: modeSchema, level: z.union([z.number().int().min(1).max(10), z.literal('daily')]), call: z.enum(['ship', 'kill', 'keep']) })
+  z.object({ name: z.literal('decision_made'), gameId: gameIdSchema, mode: modeSchema, level: z.union([z.number().int().min(1).max(10), z.literal('calibration'), z.literal('daily')]), call: z.enum(['ship', 'kill', 'keep']) })
     .strict()
     .superRefine((event, context) => {
+      const hasCalibrationLevel = event.mode === 'calibration' && event.level === 'calibration';
       const hasCampaignLevel = event.mode === 'campaign' && typeof event.level === 'number';
       const hasDailyLevel = event.mode === 'daily' && event.level === 'daily';
-      if (!hasCampaignLevel && !hasDailyLevel) context.addIssue({ code: 'custom', message: 'Mode and level must match' });
+      if (!hasCalibrationLevel && !hasCampaignLevel && !hasDailyLevel) {
+        context.addIssue({ code: 'custom', message: 'Mode and level must match' });
+      }
     }),
   z.object({ name: z.literal('reveal_viewed'), gameId: gameIdSchema, mode: modeSchema, correct: z.boolean(), archetype: archetypeSchema }).strict(),
   z.object({ name: z.literal('round_continued'), gameId: gameIdSchema, mode: modeSchema, nextAction: z.enum(['campaign_path', 'daily_result']) }).strict(),

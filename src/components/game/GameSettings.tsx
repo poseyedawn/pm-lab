@@ -1,11 +1,17 @@
 'use client';
 
 import type React from 'react';
+import Link from 'next/link';
 import { usePreferences } from '@/hooks/lab/usePreferences';
 import { track } from '@/services/analyticsService';
 import { parseMotionPreference } from '@/services/preferencesService';
+import type { GameId } from '@/types/lab';
 
-export function GameSettings() {
+interface GameSettingsProps {
+  gameId?: GameId;
+}
+
+export function GameSettings({ gameId }: GameSettingsProps) {
   const { preferences, updatePreference } = usePreferences();
 
   const handleSound = () => {
@@ -51,6 +57,14 @@ export function GameSettings() {
             <option value="full">Full</option>
           </select>
         </label>
+        {gameId === 'significant' && (
+          <Link
+            href="/significant/calibration?replay=1"
+            className="mt-4 flex min-h-11 items-center border-t border-ink/10 pt-3 text-sm font-extrabold text-brand-deep underline decoration-2 underline-offset-4"
+          >
+            Replay calibration
+          </Link>
+        )}
       </div>
     </details>
   );

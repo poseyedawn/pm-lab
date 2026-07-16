@@ -29,10 +29,10 @@ describe('Lab landing', () => {
     render(<LabLanding scenario={scenario} />);
 
     const cta = screen.getByRole('link', { name: /make your first call/i });
-    expect(cta).toHaveAttribute('href', '/significant/play?level=1&calibration=1');
+    expect(cta).toHaveAttribute('href', '/significant/calibration');
 
     fireEvent.click(screen.getByRole('button', { name: /kill/i }));
-    expect(cta).toHaveAttribute('href', '/significant/play?level=1&calibration=1&call=kill');
+    expect(cta).toHaveAttribute('href', '/significant/calibration?call=kill');
 
     cta.addEventListener('click', (event) => event.preventDefault());
     fireEvent.click(cta);
@@ -55,6 +55,6 @@ describe('Lab landing', () => {
     expect(screen.queryByRole('button', { name: /kill/i })).not.toBeInTheDocument();
     expect(screen.getByText(/2 of 10 cases complete · 350 XP/i)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /restart calibration/i }))
-      .toHaveAttribute('href', '/significant/play?level=1&calibration=1');
+      .toHaveAttribute('href', '/significant/calibration?replay=1');
   });
 });

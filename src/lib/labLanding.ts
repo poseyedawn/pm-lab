@@ -21,8 +21,12 @@ export function labLandingProgress(state: SignificantState): LabLandingProgress 
 }
 
 export function labLandingHref(progress: LabLandingProgress, call: Call | null): string {
-  const params = new URLSearchParams({ level: String(progress.nextLevel) });
-  if (!progress.isReturning) params.set('calibration', '1');
-  if (!progress.isReturning && call) params.set('call', call);
-  return `/significant/play?${params.toString()}`;
+  if (!progress.isReturning) {
+    const params = new URLSearchParams();
+    if (call) params.set('call', call);
+    const query = params.toString();
+    return `/significant/calibration${query ? `?${query}` : ''}`;
+  }
+
+  return `/significant/play?level=${progress.nextLevel}`;
 }

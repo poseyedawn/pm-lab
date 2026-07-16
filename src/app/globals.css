@@ -29,9 +29,33 @@ body { min-height: 100vh; background: #eaecf5; color: var(--color-ink); }
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 6%, transparent);
 }
 
+.lab-frame:has(.calibration-screen) > footer { display: none; }
+
 .font-hand { font-family: var(--font-hand), cursive; }
 
 .landing-evidence-chart svg { height: 5.5rem; }
+.calibration-chart svg { height: auto; }
+
+@media (max-height: 700px) {
+  .calibration-screen { padding-top: 0.5rem; padding-bottom: 0; }
+  .calibration-title { margin-top: 0.25rem; font-size: 1.375rem; line-height: 1.5rem; }
+  .calibration-coach { margin-top: 0.5rem; }
+  .calibration-coach > p { display: none; }
+  .calibration-divider { margin-top: 0.5rem; padding-top: 0.5rem; }
+  .calibration-hypothesis { margin-top: 0.125rem; font-size: 0.8125rem; line-height: 1rem; }
+  .calibration-evidence { margin-top: 0.5rem; padding: 0.5rem; }
+  .calibration-chart { margin-top: 0; }
+  .calibration-chart svg { height: 2.25rem; }
+  .calibration-stats { margin-top: 0.25rem; padding-top: 0.25rem; }
+  .calibration-sample { display: none; }
+  .calibration-note,
+  .calibration-actions { display: none; }
+  .calibration-decisions { margin-top: 0.5rem; }
+  .calibration-decision { min-height: 4.25rem; padding-block: 0.25rem; }
+  .calibration-decision-detail { display: none; }
+  .calibration-actions { margin-top: 0.25rem; }
+  .calibration-reveal { margin-top: 0.5rem; padding: 0.75rem; }
+}
 
 @media (max-height: 700px) {
   .lab-landing { padding-top: 0.5rem; }

@@ -23,6 +23,20 @@ describe('analytics event validation', () => {
       level: 4,
       call: 'keep',
     })).toBe(true);
+    expect(validateAnalyticsEvent({
+      name: 'decision_made',
+      gameId: 'significant',
+      mode: 'calibration',
+      level: 'calibration',
+      call: 'ship',
+    })).toBe(true);
+    expect(validateAnalyticsEvent({
+      name: 'decision_made',
+      gameId: 'significant',
+      mode: 'campaign',
+      level: 'calibration',
+      call: 'ship',
+    })).toBe(false);
   });
 
   it('rejects unknown events, unknown properties, and sensitive content fields', () => {

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { dayNumber } from '@/lib/engine/daily';
 import { buildShareText, useDaily } from '@/hooks/useDaily';
 import { GameRound } from '@/components/significant/GameRound';
@@ -9,6 +10,7 @@ import { ShareGrid } from '@/components/significant/ShareGrid';
 import { streakBand, track } from '@/services/analyticsService';
 
 export default function DailyPage() {
+  const router = useRouter();
   const daily = useDaily();
   const viewTrackedRef = useRef(false);
   const pendingCorrectRef = useRef<boolean | null>(null);
@@ -19,12 +21,19 @@ export default function DailyPage() {
   // handler; driving the comparison off the re-rendered `daily.streak` prop is
   // deterministic regardless of batching.
   const prevStreakRef = useRef<number | null>(null);
+  const calibrationRedirectRef = useRef(false);
 
   useEffect(() => {
-    if (!daily.ready || viewTrackedRef.current) return;
+    if (!daily.ready || daily.calibrated || calibrationRedirectRef.current) return;
+    calibrationRedirectRef.current = true;
+    router.replace('/significant/calibration');
+  }, [daily.calibrated, daily.ready, router]);
+
+  useEffect(() => {
+    if (!daily.ready || !daily.calibrated || viewTrackedRef.current) return;
     viewTrackedRef.current = true;
     track('daily_viewed', { state: daily.playedToday ? 'completed' : 'unplayed' });
-  }, [daily.ready, daily.playedToday]);
+  }, [daily.calibrated, daily.ready, daily.playedToday]);
 
   useEffect(() => {
     if (!daily.playedToday || pendingCorrectRef.current === null) return;
@@ -47,7 +56,7 @@ export default function DailyPage() {
     prevStreakRef.current = daily.streak;
   }, [daily.ready, daily.streak]);
 
-  if (!daily.ready) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
+  if (!daily.ready || !daily.calibrated) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 

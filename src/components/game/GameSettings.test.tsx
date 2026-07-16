@@ -53,4 +53,12 @@ describe('GameSettings', () => {
     await waitFor(() => expect(document.documentElement.dataset.motion).toBe('full'));
     expect(track).toHaveBeenCalledWith('settings_changed', { setting: 'motion', value: 'full' });
   });
+
+  it('offers a safe, non-awarding calibration replay for Significant', () => {
+    render(<GameSettings gameId="significant" />);
+    fireEvent.click(screen.getByText('Settings'));
+
+    expect(screen.getByRole('link', { name: 'Replay calibration' }))
+      .toHaveAttribute('href', '/significant/calibration?replay=1');
+  });
 });

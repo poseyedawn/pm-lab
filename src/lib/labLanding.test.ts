@@ -7,7 +7,8 @@ describe('Lab landing progress', () => {
     const progress = labLandingProgress(defaultState());
 
     expect(progress).toEqual({ completedCases: 0, isReturning: false, nextLevel: 1 });
-    expect(labLandingHref(progress, 'ship')).toBe('/significant/play?level=1&calibration=1&call=ship');
+    expect(labLandingHref(progress, 'ship')).toBe('/significant/calibration?call=ship');
+    expect(labLandingHref(progress, null)).toBe('/significant/calibration');
   });
 
   it('continues returning visitors at the first incomplete level', () => {
