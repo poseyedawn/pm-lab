@@ -5,7 +5,7 @@ export function vibrate(pattern: number | number[], enabled = true): void {
     try {
       navigator.vibrate(pattern);
     } catch {
-      /* unsupported — ignore */
+      /* Unsupported, so ignore it. */
     }
   }
 }

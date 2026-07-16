@@ -4,6 +4,8 @@
 @theme {
   --color-bg: #f4f5fb;
   --color-surface: #ffffff;
+  --color-card-pastel: #fff0f3;
+  --color-card-pastel-strong: #ffe2e8;
   --color-ink: #31143d;
   --color-ink-soft: #775b7f;
   --color-brand: #8b45e6;
@@ -14,11 +16,11 @@
   --color-sun: #ffdb24;
   --color-win: #22c55e;
   --color-win-deep: #15803d;
-  --color-win-text: #166534;   /* darker green for text on tinted win backgrounds — WCAG AA */
+  --color-win-text: #166534;   /* darker green for text on tinted win backgrounds, WCAG AA */
   --color-lose: #f43f5e;
   --color-lose-deep: #be123c;
   --color-gold: #f59e0b;
-  --color-gold-text: #92400e;  /* darker amber for text on light backgrounds — WCAG AA */
+  --color-gold-text: #92400e;  /* darker amber for text on light backgrounds, WCAG AA */
   --color-sky: #3b82f6;
   --color-sky-deep: #1d4ed8;
   --radius-card: 1.25rem;
@@ -41,9 +43,17 @@ body {
   min-height: 0;
   margin-inline: auto;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overscroll-behavior: contain;
   background: var(--color-bg);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 6%, transparent);
+}
+
+.lab-frame::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .lab-frame:has(.significant-entry) > header,

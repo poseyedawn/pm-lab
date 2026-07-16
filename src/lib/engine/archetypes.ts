@@ -54,7 +54,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       trueLiftPct: lift * 100, correctCall: 'kill', trapName: 'Clean loss',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.2), nPerArmDay: uniformInt(r, 3000, 8000), daysRun: 14, liftOnDay: () => lift }),
       accept: (v) => v.observed.relLift < 0,
-      explain: () => `No trap — just a feature that didn't work. The variant genuinely hurt the metric (true lift ${pct(lift)}). Killing cleanly and writing up the learning is the win here.`,
+      explain: () => `No trick here. The feature hurt the metric, with a true lift of ${pct(lift)}. Kill it and document what the team learned.`,
     };
   },
 
@@ -64,7 +64,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       trueLiftPct: 0, correctCall: 'kill', trapName: "Winner's curse",
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.04, 0.08), nPerArmDay: uniformInt(r, 150, 300), daysRun: 3, liftOnDay: () => 0 }),
       accept: (v) => v.observed.significant && v.observed.relLift > 0.25,
-      explain: (v) => `A ${pct(v.observed.relLift)} lift on ${(v.totals.nA + v.totals.nB).toLocaleString()} users is a red flag, not a jackpot. At tiny sample sizes only huge random swings reach significance — so significant results are systematically inflated. True lift: 0%.`,
+      explain: (v) => `A ${pct(v.observed.relLift)} lift on ${(v.totals.nA + v.totals.nB).toLocaleString()} users is a red flag. With a tiny sample, only extreme swings reach significance. That makes the apparent effect look larger than it is. True lift: 0%.`,
     };
   },
 
@@ -76,7 +76,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       note: 'Planned duration: 14 days.',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.15), nPerArmDay: uniformInt(r, 1500, 3000), daysRun, liftOnDay: () => 0 }),
       accept: (v) => v.observed.significant,
-      explain: (v) => `You're looking at day ${v.daysRun} of a 14-day test. Checking early and stopping on significance inflates false positives severely — an A/A test peeked at daily crosses p<0.05 at some point more than 25% of the time. True lift: 0%. Let it run.`,
+      explain: (v) => `This is day ${v.daysRun} of a 14-day test. Stopping as soon as p falls below 0.05 raises the risk of a false positive. An A/A test checked daily can cross that threshold more than 25% of the time. True lift: 0%. Let it run.`,
     };
   },
 
@@ -103,7 +103,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       trueLiftPct: lift * 100, correctCall: 'keep', trapName: 'Underpowered',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.03, 0.06), nPerArmDay: uniformInt(r, 300, 600), daysRun: 14, liftOnDay: () => lift }),
       accept: (v) => !v.observed.significant,
-      explain: (v) => `The CI (${pct(v.observed.ciLow)} to ${pct(v.observed.ciHigh)}) spans everything from "mildly harmful" to "clearly worth shipping" — this test can't tell them apart at this traffic level. There IS a real ${pct(lift)} effect here. Extend the test or raise the traffic allocation; don't guess.`,
+      explain: (v) => `The confidence interval (${pct(v.observed.ciLow)} to ${pct(v.observed.ciHigh)}) covers both harm and a worthwhile gain. At this traffic level, the test cannot separate them. The true effect is ${pct(lift)}. Run the test longer or send it more traffic.`,
     };
   },
 
@@ -114,7 +114,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       note: 'This is the only significant result among 12 metrics the team checked.',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.15), nPerArmDay: uniformInt(r, 2000, 4000), daysRun: 14, liftOnDay: () => 0 }),
       accept: (v) => v.observed.significant,
-      explain: () => `Check 12 metrics at p<0.05 and you expect ~0.6 false positives per experiment — nearly a coin flip that SOMETHING lights up. One significant metric out of twelve, with no pre-registered hypothesis, is exactly what noise looks like. True lift: 0%.`,
+      explain: () => `Testing 12 metrics at p<0.05 creates about 0.6 false positives per experiment. One significant metric without a preregistered hypothesis looks like noise. True lift: 0%.`,
     };
   },
 
@@ -127,7 +127,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       note: `Marketing ran a promo email on day ${promoDay + 1} that deep-linked into the variant flow.`,
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.15), nPerArmDay: uniformInt(r, 2000, 4000), daysRun, liftOnDay: (d) => (d === promoDay ? 0.35 : 0) }),
       accept: (v) => v.observed.relLift > 0.02,
-      explain: () => `The entire lift is concentrated on one day — the day marketing pointed a promo at the variant. That's contamination, not causation. Strip that day and the arms are indistinguishable. Fix the exposure and rerun.`,
+      explain: () => `The lift appears on the same day marketing sent a promotion to the variant. That is contamination, not causation. Remove that day and the arms look the same. Fix the exposure and rerun the test.`,
     };
   },
 
@@ -138,7 +138,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       trueLiftPct: 0, correctCall: 'keep', trapName: 'Sample ratio mismatch',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.15), nPerArmDay: uniformInt(r, 3000, 6000), daysRun: 14, liftOnDay: () => lift, allocationB: 0.46 }),
       accept: (v) => srmPValue(v.totals.nA, v.totals.nB) < 0.001,
-      explain: (v) => `The split is ${((v.totals.nA / (v.totals.nA + v.totals.nB)) * 100).toFixed(1)}/${((v.totals.nB / (v.totals.nA + v.totals.nB)) * 100).toFixed(1)} on a 50/50 assignment — at this sample size that's a p<0.001 deviation. Something upstream (a crash, a redirect, a bot filter) is selectively dropping users, which biases every number on this readout. Diagnose the assignment bug and rerun; the lift is unreadable until you do.`,
+      explain: (v) => `A 50/50 test produced a ${((v.totals.nA / (v.totals.nA + v.totals.nB)) * 100).toFixed(1)}/${((v.totals.nB / (v.totals.nA + v.totals.nB)) * 100).toFixed(1)} split. At this sample size, that is a p<0.001 deviation. Something upstream is selectively dropping users and biasing the readout. Diagnose the assignment bug, then rerun the test.`,
     };
   },
 
@@ -172,7 +172,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
         return { control, variant, totals, segments };
       },
       accept: (v) => v.observed.relLift > 0.05 && (v.segments ?? []).every((s) => s.relLift < 0),
-      explain: (v) => `Aggregate says ${pct(v.observed.relLift)}; both segments say the variant is WORSE. The variant changed the user mix (more power users saw it), and the mix shift masquerades as a lift. Within every group of real users, the feature loses. That's Simpson's paradox — and a kill.`,
+      explain: (v) => `The aggregate is ${pct(v.observed.relLift)}, but both segments show a loss. The variant changed the user mix, so the composition made the total look positive. Within each real user group, the feature loses. That is Simpson's paradox. Kill it.`,
     };
   },
 };

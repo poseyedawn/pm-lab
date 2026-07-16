@@ -51,7 +51,7 @@ export function GameRound({ scenario, combo, initialCall = null, mode, level, on
 
   const handleCall = (call: Call) => {
     const result = round.decide(call);
-    if (!result) return; // duplicate tap — already revealed
+    if (!result) return; // A duplicate tap has already revealed the result.
     if (mode === 'campaign') {
       track('decision_made', { gameId: 'significant', mode, level, call });
     } else {
@@ -83,6 +83,11 @@ export function GameRound({ scenario, combo, initialCall = null, mode, level, on
           correct={round.correct!}
           xpEarned={round.xpEarned}
           crit={round.crit}
+          nextLabel={mode === 'daily'
+            ? "See today's result"
+            : round.correct
+              ? 'Next experiment'
+              : 'Try this case again'}
           onNext={() => {
             if (nextCalledRef.current) return;
             nextCalledRef.current = true;

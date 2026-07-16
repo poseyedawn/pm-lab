@@ -1,0 +1,19 @@
+{
+  "calibrationCardColor": "rgba(255, 240, 243, 0.96)",
+  "campaignCardColor": "rgba(255, 240, 243, 0.96)",
+  "aboutCardColor": "rgba(255, 240, 243, 0.94)",
+  "calibrationWrongCanvasCount": 0,
+  "campaignWrongCanvasCount": 0,
+  "correctCanvasCount": 1,
+  "wrongHasZeroXp": 0,
+  "frameMetrics": {
+    "width": 390,
+    "scrollWidth": 390,
+    "height": 844,
+    "scrollHeight": 1107,
+    "overflowY": "auto",
+    "scrollbarWidth": "none"
+  },
+  "emDashFindings": [],
+  "consoleErrors": []
+}

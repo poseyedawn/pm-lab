@@ -25,13 +25,13 @@ export default function AboutPage() {
         <h2 className="text-lg font-extrabold">Key trade-offs</h2>
         <p className="mt-2 text-sm text-ink-soft">
           Scenarios come from ten hand-designed trap archetypes with seeded random parameters. Two archetypes
-          are clean wins and losses so the winning strategy stays thoughtful judgment—not reflexive cynicism.
+          are clean wins and losses. This keeps the game focused on judgment instead of reflexive cynicism.
           Progress lives locally in your browser without an account.
         </p>
       </section>
 
       <section>
-        <h2 className="text-lg font-extrabold">The engagement system—and its limits</h2>
+        <h2 className="text-lg font-extrabold">The engagement system and its limits</h2>
         <p className="mt-2 text-sm text-ink-soft">
           The game uses streaks, variable rewards, amplified feedback, and a daily puzzle. It also draws a line:
           no fake scarcity, no guilt copy, and no notifications. Sound and motion respect your preferences, and

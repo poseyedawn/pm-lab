@@ -15,10 +15,10 @@ export default function DailyPage() {
   const daily = useDaily();
   const viewTrackedRef = useRef(false);
   const pendingCorrectRef = useRef<boolean | null>(null);
-  // Baseline streak value, captured on the first "ready" render — null until then.
+  // Baseline streak value, captured on the first ready render. It stays null until then.
   // We compare against this (not against a value read via loadState() right after
-  // daily.complete()) because React's setState updater — where saveState() actually
-  // runs — is not guaranteed to have flushed synchronously by the next line of the
+  // daily.complete()) because React's setState updater, where saveState() actually
+  // runs, is not guaranteed to have flushed synchronously by the next line of the
   // handler; driving the comparison off the re-rendered `daily.streak` prop is
   // deterministic regardless of batching.
   const prevStreakRef = useRef<number | null>(null);
@@ -77,7 +77,7 @@ export default function DailyPage() {
       {daily.playedToday ? (
         <section className="significant-card flex flex-col gap-4 rounded-[var(--radius-card)] p-6 text-center">
           <p className="text-lg font-extrabold">
-            {daily.lastCorrect ? 'Nailed it. See you tomorrow.' : 'Missed it — tomorrow is a new experiment.'}
+            {daily.lastCorrect ? 'Nailed it. See you tomorrow.' : 'Not this one. A new experiment arrives tomorrow.'}
           </p>
           <p className="text-sm text-ink-soft">Next experiment in <span className="font-extrabold text-ink">{daily.countdown}</span></p>
           <ShareGrid text={buildShareText(daily.today, daily.lastCorrect ?? false, daily.streak, origin)} />

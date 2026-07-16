@@ -30,7 +30,10 @@ export function CalibrationRound({ scenario, initialCall, onContinue }: Calibrat
 
   if (calibration.phase === 'revealed') {
     return (
-      <main className="significant-result">
+      <main
+        className={`significant-result ${calibration.correct ? 'significant-result-correct' : 'significant-result-review'}`}
+        data-outcome={calibration.correct ? 'correct' : 'review'}
+      >
         <CalibrationReveal
           scenario={scenario}
           call={calibration.call!}

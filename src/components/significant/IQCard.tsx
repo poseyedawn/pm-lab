@@ -10,18 +10,18 @@ import { usePreferences } from '@/hooks/lab/usePreferences';
 export function IQCard({
   levels, xp, celebrate,
 }: { levels: LevelStatus[]; xp: number; celebrate: boolean }) {
-  // Gating means finishing implies all levels passed eventually — so the score
+  // Gating means finishing implies all levels passed eventually, so the score
   // that differentiates players is FIRST-TRY correct calls (3-star levels).
   const firstTry = levels.filter((l) => l.stars === 3).length;
   const { reducedMotion } = usePreferences();
 
   useEffect(() => {
-    // Confetti only on the visit that first completes the campaign — the card
+    // Confetti runs only on the visit that first completes the campaign. The card
     // itself still renders on every later visit.
     if (celebrate) fireConfetti({ big: true, reducedMotion });
   }, [reducedMotion, celebrate]);
 
-  const shareText = `Significant — Experimentation IQ: ${iqTitle(firstTry)} (${firstTry}/10 first try, ${xp} XP)\nCan you beat the traps? ${typeof window !== 'undefined' ? window.location.origin : ''}/significant`;
+  const shareText = `Significant: Experimentation IQ ${iqTitle(firstTry)} (${firstTry}/10 first try, ${xp} XP)\nCan you beat the traps? ${typeof window !== 'undefined' ? window.location.origin : ''}/significant`;
 
   return (
     <section className="significant-card rounded-[var(--radius-card)] p-5 text-center">

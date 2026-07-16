@@ -12,7 +12,7 @@ export function LevelPath({ levels }: { levels: LevelStatus[] }) {
           <p className="text-[0.625rem] font-extrabold uppercase tracking-[0.12em] text-coral-deep">Campaign path</p>
           <h2 className="font-extrabold text-ink">Ten product calls</h2>
         </div>
-        <p className="text-xs font-extrabold text-ink-soft">1–3 stars each</p>
+        <p className="text-xs font-extrabold text-ink-soft">1 to 3 stars each</p>
       </div>
       <ol className="significant-progress-grid">
         {levels.map((level) => {

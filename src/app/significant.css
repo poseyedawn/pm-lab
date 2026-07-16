@@ -12,6 +12,7 @@
   z-index: -1;
   object-fit: cover;
   object-position: center;
+  pointer-events: none;
   animation: significant-world-breathe 8s ease-in-out infinite alternate;
 }
 
@@ -232,7 +233,7 @@
 .game-header-home,
 .game-settings-trigger {
   border-color: rgb(240 68 105 / 24%);
-  background: #ffffff;
+  background: var(--color-card-pastel);
   color: var(--color-coral-deep);
   box-shadow: 0 3px 0 rgb(111 52 105 / 14%);
 }
@@ -246,7 +247,7 @@
 
 .game-settings-popover {
   border: 2px solid rgb(240 68 105 / 16%);
-  background: #fffafa;
+  background: var(--color-card-pastel);
   color: var(--color-ink);
 }
 
@@ -254,7 +255,7 @@
 .calibration-evidence,
 .significant-world .rounded-\[var\(--radius-card\)\].bg-surface {
   border: 2px solid rgb(240 68 105 / 12%);
-  background: rgb(255 255 255 / 94%);
+  background: rgb(255 240 243 / 96%);
   box-shadow: 0 8px 0 rgb(216 170 184 / 18%), 0 16px 28px rgb(105 42 83 / 8%);
 }
 
@@ -306,6 +307,21 @@
   mix-blend-mode: multiply;
 }
 
+.significant-result-art-review {
+  width: min(50vw, 192px);
+  border-radius: 24px;
+  mix-blend-mode: normal;
+}
+
+.significant-result-review {
+  justify-content: flex-start;
+  border: 2px solid rgb(139 69 230 / 16%);
+  background: #f4edff;
+  box-shadow: 0 8px 0 rgb(96 37 168 / 12%), 0 16px 28px rgb(75 39 108 / 10%);
+}
+
+.significant-result-review .significant-result-kicker { color: var(--color-brand-deep); }
+
 .significant-result-kicker {
   margin-top: 8px;
   color: var(--color-coral-deep);
@@ -331,6 +347,73 @@
   line-height: 1.4;
 }
 
+.significant-result-comparison {
+  display: grid;
+  width: 100%;
+  max-width: 20rem;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.significant-result-comparison div {
+  min-height: 68px;
+  border: 2px solid rgb(96 37 168 / 12%);
+  border-radius: 16px;
+  background: #eadfff;
+  padding: 8px;
+}
+
+.significant-result-comparison span,
+.significant-result-comparison strong { display: block; }
+
+.significant-result-comparison span {
+  color: var(--color-ink-soft);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.significant-result-comparison strong {
+  margin-top: 4px;
+  color: var(--color-ink);
+  font-size: 0.875rem;
+}
+
+.significant-result-explanation {
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 12px;
+  border-radius: 18px;
+  background: #e8fafa;
+  padding: 12px;
+  text-align: left;
+}
+
+.significant-result-explanation p:first-child {
+  color: var(--color-brand-deep);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.significant-result-explanation p:last-child {
+  margin-top: 4px;
+  color: var(--color-ink-soft);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.significant-result-practice-note {
+  margin-top: 12px;
+  color: var(--color-ink-soft);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
 .significant-result-score {
   display: flex;
   margin-top: 12px;
@@ -340,7 +423,7 @@
 
 .significant-result-score span {
   border-radius: 999px;
-  background: #ffffff;
+  background: var(--color-card-pastel);
   padding: 8px 12px;
   color: var(--color-ink);
   font-size: 0.75rem;
@@ -351,6 +434,31 @@
 .significant-result .significant-sun-button {
   width: 100%;
   margin-top: 20px;
+}
+
+.significant-review-button {
+  display: flex;
+  width: 100%;
+  min-height: 58px;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid rgb(255 255 255 / 70%);
+  border-radius: 20px;
+  background: var(--color-brand);
+  color: #ffffff;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+  box-shadow: 0 7px 0 var(--color-brand-deep), 0 14px 24px rgb(75 39 108 / 18%);
+  transition: transform 80ms ease, box-shadow 80ms ease;
+}
+
+.significant-review-button:active {
+  transform: translateY(6px);
+  box-shadow: 0 1px 0 var(--color-brand-deep), 0 8px 14px rgb(75 39 108 / 14%);
 }
 
 .significant-readout {
@@ -416,7 +524,7 @@
 
 .significant-about section {
   border-radius: 22px;
-  background: rgb(255 255 255 / 90%);
+  background: rgb(255 240 243 / 94%);
   padding: 16px;
   box-shadow: 0 6px 0 rgb(216 170 184 / 18%);
 }

@@ -63,10 +63,33 @@ describe('CalibrationRound', () => {
 
     render(<CalibrationRound scenario={scenario} initialCall="ship" onContinue={onContinue} />);
 
-    expect(screen.getByText(/whole range stays above zero/i)).toBeInTheDocument();
+    expect(screen.getByText(/whole confidence interval stays above zero/i)).toBeInTheDocument();
     expect(screen.getByText('+50 baseline XP')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /campaign/i }));
     expect(continueToCampaign).toHaveBeenCalledTimes(1);
     expect(onContinue).toHaveBeenCalledTimes(1);
+  });
+
+  it('turns a missed calibration call into specific practice feedback', () => {
+    mockedUseCalibration.mockReturnValue({
+      ready: true,
+      coaching: true,
+      setCoaching,
+      phase: 'revealed',
+      call: 'kill',
+      correct: false,
+      earnedBaseline: true,
+      baselineXp: 50,
+      decide,
+      continueToCampaign,
+    });
+
+    render(<CalibrationRound scenario={scenario} initialCall="kill" onContinue={vi.fn()} />);
+
+    expect(screen.getByRole('heading', { name: 'That call missed the signal.' })).toBeInTheDocument();
+    expect(screen.getByText('Your call')).toBeInTheDocument();
+    expect(screen.getByText('Better call')).toBeInTheDocument();
+    expect(screen.getByText(/whole confidence interval stays above zero/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /practice in the campaign/i })).toBeInTheDocument();
   });
 });

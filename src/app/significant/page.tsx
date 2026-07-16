@@ -54,7 +54,7 @@ export default function SignificantHome() {
       </header>
 
       <p className="rounded-2xl bg-[#e8fff1] px-4 py-3 text-sm font-extrabold text-win-text shadow-[0_4px_0_rgba(34,197,94,0.16)]">
-        Calibration complete — {totalStars} campaign star{totalStars === 1 ? '' : 's'} collected
+        Calibration complete. {totalStars} campaign star{totalStars === 1 ? '' : 's'} collected
       </p>
 
       {allDone && <IQCard levels={levels} xp={state.xp} celebrate={celebrate} />}
