@@ -96,6 +96,7 @@ src/
 │       ├── cases.test.ts
 │       ├── engine.ts
 │       ├── engine.test.ts
+│       ├── replay.ts
 │       ├── scoring.ts
 │       ├── scoring.test.ts
 │       ├── analytics.ts
@@ -165,12 +166,12 @@ Implement the types in the approved specification with these additions:
 export interface CaseResolution {
   caseId: string;
   action: ExceptionAction;
-  selectedCorrectionId?: string;
-  escalationReasonId?: string;
+  detailId?: string;
   evidenceViewedIds: string[];
   resolvedAtTick: number;
   capacityCost: number;
   outcome: DecisionOutcome;
+  learningDestination: LearningDestination;
 }
 
 export type RunEvent =
@@ -205,14 +206,15 @@ export interface ScoreBreakdown {
 
 ```ts
 startExceptionRun(seed, mode, cases): ExceptionRunState
-selectCase(state, caseId): ExceptionRunState
-viewEvidence(state, caseId, evidenceId): ExceptionRunState
-resolveCase(state, decision, cases): ExceptionRunState
+selectCase(state, caseId): EngineResult
+viewEvidence(state, caseId, evidenceId): EngineResult
+resolveCase(state, decision, cases): EngineResult
+endShift(state, cases): EngineResult
 advanceAfterResolution(state, cases): ExceptionRunState
 completeShiftIfNeeded(state, cases): ExceptionRunState
 availableCases(state, cases): ExceptionCase[]
 scoreRun(state, cases): ScoreBreakdown
-replayRun(seed, history, cases): ExceptionRunState
+replayRun(seed, history, cases): EngineResult
 ```
 
 Functions must not call `Date.now()`, `Math.random()`, browser APIs, analytics, storage, or React.
@@ -233,6 +235,7 @@ Functions must not call `Date.now()`, `Math.random()`, browser APIs, analytics, 
 - On shift completion, tick moves to the next shift opening tick before arrivals are admitted and capacity resets.
 - A resolution is permitted at `tick == maxTick`; the post-resolution advance may cross the boundary and end the shift.
 - A shift ends deterministically when no harm-avoiding authored resolution is affordable. An unsafe cheap action alone cannot keep it open.
+- A player may end the shift explicitly; the transition records all remaining cases as carried or expired and is reproducible in replay.
 - Every authored shift has a tested full-clear path inside its tick and capacity budgets.
 - A complete run has no ambiguous case state.
 - Never-arrived cases expire with an explicit terminal reason at final completion.
@@ -313,6 +316,7 @@ Acceptance criteria:
 - New cases arrive at authored ticks and appear without stealing focus.
 - No required countdown exists in campaign or daily v1.
 - A player can pause indefinitely without penalty.
+- A player can end a shift without resolving another case and receives the resulting backlog and service consequences.
 
 ### US-07: See the consequence of a decision
 
@@ -547,6 +551,7 @@ Acceptance:
 ### ER-106: Implement aging, warning, breach, and shifts
 
 - [ ] Write failing tests for age progression, one-time warning, one-time breach, late arrival, shift completion, carryover, capacity exhaustion, and final completion.
+- [ ] Add an explicit `endShift` transition that records the player input and terminal state of every remaining case.
 - [ ] Implement `advanceAfterResolution` and `completeShiftIfNeeded`.
 - [ ] Make shift rules data-driven rather than embedded in components.
 - [ ] Set Shift 3 starting capacity to 12.
@@ -562,6 +567,7 @@ Acceptance:
 - Carryover cases preserve age and evidence state.
 - Final state accounts for every authored case as resolved, escalated, or explicitly expired. No unresolved terminal state remains.
 - The preferred policy clears each shift within its tick and capacity budgets.
+- Ending a shift early cannot erase, hide, or silently resolve queued work.
 
 ### ER-107: Implement deterministic replay
 
@@ -808,6 +814,7 @@ Acceptance:
 - Create `CapacityHeader.tsx`, `QueueList.tsx`, and `QueueCaseCard.tsx`.
 
 - [ ] Render shift, capacity, tick, visible queue count, and warning summary.
+- [ ] Add a clearly secondary end-shift control with a concise unresolved-work consequence preview.
 - [ ] Render arrival-order cards with approved information hierarchy.
 - [ ] Add consequence and due-state text alternatives.
 - [ ] Add sort control after shift one.

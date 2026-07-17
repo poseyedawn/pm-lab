@@ -103,7 +103,7 @@ export type DecisionOutcome = 'preferred' | 'acceptable' | 'unsafe' | 'unnecessa
 export type ConsequenceTier = 'low' | 'medium' | 'high' | 'critical';
 export type Reversibility = 'easy' | 'moderate' | 'difficult';
 export type EvidenceStatus = 'supports' | 'conflicts' | 'missing' | 'context';
-export type CaseStatus = 'queued' | 'resolved' | 'escalated' | 'expired';
+export type CaseStatus = 'scheduled' | 'queued' | 'resolved' | 'escalated' | 'expired';
 
 export type RouteReason =
   | 'low-confidence'
@@ -206,6 +206,7 @@ If the queue becomes empty while an authored case is scheduled later in the curr
 - Default sort is arrival order. The player may toggle to consequence or due state after the first shift.
 - Preserve selected case and evidence state when moving between queue and case review.
 - End a shift when its required cases resolve, no harm-avoiding authored resolution is affordable, or a post-resolution advance crosses the maximum shift tick.
+- Let the player end the current shift explicitly. This is an operational queue control, not a fourth case action. It records every remaining case as carried or expired and exposes the resulting backlog penalty.
 - Carry unresolved cases into the next shift when the content definition permits it.
 - No case can disappear without a recorded resolution, escalation handoff, or explicit expired state.
 - The authored schedule must have at least one full-clear path per shift that resolves every required case within the tick and capacity budgets.
@@ -272,7 +273,7 @@ For each preferred or acceptable resolution, safe resolution value is the smalle
 Profiles communicate patterns, not competence:
 
 - **Balanced Operator:** all three dimensions at least 80 and no unsafe high or critical approval.
-- **Speed Over Evidence:** service or capacity at least 85 with safety below 70.
+- **Speed Over Evidence:** service or capacity at least 85 with safety below 70, unless unresolved or expired cases already meet Backlog Bound.
 - **Escalation Heavy:** more than half of resolved cases escalated and at least two were unnecessary.
 - **Backlog Bound:** unresolved or expired cases exceed one third of arrivals.
 - **Safety First:** safety at least 90, service below 70, and escalation burden above the authored baseline.
