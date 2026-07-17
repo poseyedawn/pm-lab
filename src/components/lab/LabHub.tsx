@@ -4,44 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from '@phosphor-icons/react';
 import { useLabProfile } from '@/hooks/lab/useLabProfile';
+import { LAB_GAMES } from '@/lib/gameCatalog';
 import { track } from '@/services/analyticsService';
-import type { GameId } from '@/types/lab';
-
-interface HubGame {
-  gameId: GameId;
-  fieldTest: string;
-  name: string;
-  tagline: string;
-  href: string;
-  art: string | null;
-}
-
-const GAMES: HubGame[] = [
-  {
-    gameId: 'significant',
-    fieldTest: '01',
-    name: 'Significant',
-    tagline: 'Trust your product instinct.',
-    href: '/significant',
-    art: '/significant/entry-world.webp',
-  },
-  {
-    gameId: 'ship-it',
-    fieldTest: '02',
-    name: 'Ship It',
-    tagline: 'Survive the quarter. Everyone wants something.',
-    href: '/ship-it',
-    art: null,
-  },
-  {
-    gameId: 'exception-room',
-    fieldTest: '03',
-    name: 'Exception Room',
-    tagline: 'The model made a call. You own what happens next.',
-    href: '/exception-room',
-    art: '/exception-room/selected-direction.webp',
-  },
-];
 
 export function LabHub() {
   const { ready, profile } = useLabProfile();
@@ -55,7 +19,7 @@ export function LabHub() {
       </header>
 
       <nav className="flex flex-col gap-4" aria-label="Games">
-        {GAMES.map((game) => {
+        {LAB_GAMES.map((game) => {
           const xp = profile.games[game.gameId]?.xp ?? 0;
           return (
             <Link

@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useLabProfile } from '@/hooks/lab/useLabProfile';
-import { labLandingProgress } from '@/lib/labLanding';
+import { significantLandingProgress } from '@/lib/significant/landing';
 import { defaultState, loadState, type SignificantState } from '@/lib/progress';
 
-export function useLabLanding() {
+export function useSignificantLanding() {
   const { ready: profileReady, totalXp } = useLabProfile();
   const [significantState, setSignificantState] = useState<SignificantState | null>(null);
 
@@ -15,7 +15,7 @@ export function useLabLanding() {
   }, []);
 
   const progress = useMemo(
-    () => labLandingProgress(significantState ?? defaultState()),
+    () => significantLandingProgress(significantState ?? defaultState()),
     [significantState],
   );
 

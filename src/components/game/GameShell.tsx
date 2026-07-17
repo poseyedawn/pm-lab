@@ -1,5 +1,5 @@
 import { GameHeader } from '@/components/game/GameHeader';
-import { gameTheme } from '@/lib/gameThemes';
+import { gameDefinition } from '@/lib/gameCatalog';
 import type { GameId } from '@/types/lab';
 
 interface GameShellProps {
@@ -8,9 +8,15 @@ interface GameShellProps {
 }
 
 export function GameShell({ gameId, children }: GameShellProps) {
+  const game = gameDefinition(gameId);
+
   return (
-    <section data-game={gameId} className={gameId === 'significant' ? 'significant-world' : undefined}>
-      <GameHeader gameId={gameId} theme={gameTheme(gameId)} />
+    <section
+      data-game={gameId}
+      data-lab-chrome={game.chrome}
+      className={gameId === 'significant' ? 'significant-world' : undefined}
+    >
+      <GameHeader gameId={gameId} />
       {children}
     </section>
   );

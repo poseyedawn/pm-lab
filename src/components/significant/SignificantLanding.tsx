@@ -4,18 +4,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, ChartBar, Clock } from '@phosphor-icons/react';
 import { SignificantEntryControls } from '@/components/significant/SignificantEntryControls';
-import { useLabLanding } from '@/hooks/lab/useLabLanding';
-import { labLandingHref } from '@/lib/labLanding';
+import { useSignificantLanding } from '@/hooks/significant/useSignificantLanding';
+import { significantLandingHref } from '@/lib/significant/landing';
 import type { Scenario } from '@/lib/engine/types';
 import { track } from '@/services/analyticsService';
 
-interface LabLandingProps {
+interface SignificantLandingProps {
   scenario: Scenario;
 }
 
-export function LabLanding({ scenario }: LabLandingProps) {
-  const { ready, totalXp, completedCases, isReturning, nextLevel } = useLabLanding();
-  const href = labLandingHref({ completedCases, isReturning, nextLevel }, null);
+export function SignificantLanding({ scenario }: SignificantLandingProps) {
+  const { ready, totalXp, completedCases, isReturning, nextLevel } = useSignificantLanding();
+  const href = significantLandingHref({ completedCases, isReturning, nextLevel }, null);
   const totalUsers = scenario.totals.nA + scenario.totals.nB;
   const ctaLabel = ready && isReturning ? `Resume level ${nextLevel}` : 'Start the field test';
 
@@ -77,7 +77,6 @@ export function LabLanding({ scenario }: LabLandingProps) {
               Replay calibration
             </Link>
           )}
-
         </div>
       </div>
     </section>

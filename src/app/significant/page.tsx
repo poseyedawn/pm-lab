@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight, CalendarDots, Info } from '@phosphor-icons/react';
 import { useCampaign } from '@/hooks/useCampaign';
-import { LabLanding } from '@/components/lab/LabLanding';
+import { SignificantLanding } from '@/components/significant/SignificantLanding';
 import { LevelPath } from '@/components/significant/LevelPath';
 import { IQCard } from '@/components/significant/IQCard';
 import { campaignSeed, generateScenario } from '@/lib/engine/scenario';
@@ -42,7 +42,7 @@ export default function SignificantHome() {
   if (visitor === 'first') {
     return (
       <main className="h-full">
-        <LabLanding scenario={featuredScenario} />
+        <SignificantLanding scenario={featuredScenario} />
       </main>
     );
   }

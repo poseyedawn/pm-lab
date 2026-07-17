@@ -2,13 +2,13 @@ import { CAMPAIGN_LEVELS } from '@/lib/engine/scenario';
 import type { Call } from '@/lib/engine/types';
 import type { SignificantState } from '@/lib/progress';
 
-export interface LabLandingProgress {
+export interface SignificantLandingProgress {
   completedCases: number;
   isReturning: boolean;
   nextLevel: number;
 }
 
-export function labLandingProgress(state: SignificantState): LabLandingProgress {
+export function significantLandingProgress(state: SignificantState): SignificantLandingProgress {
   const completedCases = CAMPAIGN_LEVELS.filter(({ id }) => state.campaign[id]?.correct).length;
   const nextLevel = CAMPAIGN_LEVELS.find(({ id }) => !state.campaign[id]?.correct)?.id
     ?? CAMPAIGN_LEVELS[CAMPAIGN_LEVELS.length - 1].id;
@@ -20,7 +20,7 @@ export function labLandingProgress(state: SignificantState): LabLandingProgress 
   return { completedCases, isReturning, nextLevel };
 }
 
-export function labLandingHref(progress: LabLandingProgress, call: Call | null): string {
+export function significantLandingHref(progress: SignificantLandingProgress, call: Call | null): string {
   if (!progress.isReturning) {
     const params = new URLSearchParams();
     if (call) params.set('call', call);
