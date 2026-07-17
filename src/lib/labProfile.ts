@@ -1,5 +1,5 @@
 /** Lab-wide profile shared by all pm-lab games: pmlab:profile:v1 = { xp: sum of all games }. */
-const GAME_KEYS = ['pmlab:significant:v1', 'pmlab:shipit:v1'];
+const GAME_KEYS = ['pmlab:significant:v1', 'pmlab:shipit:v1', 'pmlab:exception-room:v1'];
 
 export function syncLabProfile(): void {
   try {
