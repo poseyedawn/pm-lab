@@ -2,29 +2,48 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Fire, ShieldCheck } from '@phosphor-icons/react';
 import { dayNumber } from '@/lib/engine/daily';
 import { buildShareText, useDaily } from '@/hooks/useDaily';
 import { GameRound } from '@/components/significant/GameRound';
 import { ShareGrid } from '@/components/significant/ShareGrid';
-import { track } from '@/lib/analytics';
+import { streakBand, track } from '@/services/analyticsService';
 
 export default function DailyPage() {
+  const router = useRouter();
   const daily = useDaily();
-  const startTracked = useRef(false);
-  // Baseline streak value, captured on the first "ready" render — null until then.
+  const viewTrackedRef = useRef(false);
+  const pendingCorrectRef = useRef<boolean | null>(null);
+  // Baseline streak value, captured on the first ready render. It stays null until then.
   // We compare against this (not against a value read via loadState() right after
-  // daily.complete()) because React's setState updater — where saveState() actually
-  // runs — is not guaranteed to have flushed synchronously by the next line of the
+  // daily.complete()) because React's setState updater, where saveState() actually
+  // runs, is not guaranteed to have flushed synchronously by the next line of the
   // handler; driving the comparison off the re-rendered `daily.streak` prop is
   // deterministic regardless of batching.
   const prevStreakRef = useRef<number | null>(null);
+  const calibrationRedirectRef = useRef(false);
 
   useEffect(() => {
-    if (daily.ready && !daily.playedToday && !startTracked.current) {
-      startTracked.current = true;
-      track('game_start', { mode: 'daily' });
-    }
-  }, [daily.ready, daily.playedToday]);
+    if (!daily.ready || daily.calibrated || calibrationRedirectRef.current) return;
+    calibrationRedirectRef.current = true;
+    router.replace('/significant/calibration');
+  }, [daily.calibrated, daily.ready, router]);
+
+  useEffect(() => {
+    if (!daily.ready || !daily.calibrated || viewTrackedRef.current) return;
+    viewTrackedRef.current = true;
+    track('daily_viewed', { state: daily.playedToday ? 'completed' : 'unplayed' });
+  }, [daily.calibrated, daily.ready, daily.playedToday]);
+
+  useEffect(() => {
+    if (!daily.playedToday || pendingCorrectRef.current === null) return;
+    track('daily_completed', {
+      correct: pendingCorrectRef.current,
+      streakBand: streakBand(daily.streak),
+    });
+    pendingCorrectRef.current = null;
+  }, [daily.playedToday, daily.streak]);
 
   useEffect(() => {
     if (!daily.ready) return;
@@ -33,40 +52,32 @@ export default function DailyPage() {
       return;
     }
     if (daily.streak > prevStreakRef.current) {
-      track('streak_extended', { streak: daily.streak });
+      track('daily_streak_extended', { streakBand: streakBand(daily.streak) });
     }
     prevStreakRef.current = daily.streak;
   }, [daily.ready, daily.streak]);
 
-  if (!daily.ready) return <main className="mx-auto max-w-md p-6" aria-busy="true" />;
+  if (!daily.ready || !daily.calibrated) return <main className="significant-daily" aria-busy="true" />;
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
-  const handleToggleSound = () => {
-    track('sound_toggled', { on: !daily.soundOn });
-    daily.toggleSound();
-  };
-
   return (
-    <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
+    <main className="significant-daily mx-auto flex max-w-md flex-col gap-4">
       <header className="flex items-center justify-between">
-        <h1 className="font-extrabold text-brand-deep">Daily #{dayNumber(daily.today)}</h1>
-        <div className="flex flex-col items-end gap-1">
-          <p className="font-extrabold text-gold-text">
-            <span role="img" aria-label={`Streak ${daily.streak}`}>
-              🔥 {daily.streak}{daily.shields > 0 ? ` · 🛡 ${daily.shields}` : ''}
-            </span>
-          </p>
-          <button type="button" onClick={handleToggleSound} className="text-sm font-extrabold text-ink-soft underline">
-            Sound {daily.soundOn ? 'on' : 'off'}
-          </button>
+        <div>
+          <p className="text-[0.625rem] font-extrabold uppercase tracking-[0.12em] text-coral-deep">One fresh signal</p>
+          <h1 className="significant-section-title text-lg text-ink">Daily #{dayNumber(daily.today)}</h1>
         </div>
+        <p className="flex items-center gap-2 font-extrabold text-gold-text" aria-label={`Streak ${daily.streak}${daily.shields > 0 ? `, ${daily.shields} shields` : ''}`}>
+          <span className="inline-flex items-center gap-1"><Fire size={20} weight="fill" aria-hidden />{daily.streak}</span>
+          {daily.shields > 0 && <span className="inline-flex items-center gap-1"><ShieldCheck size={20} weight="fill" aria-hidden />{daily.shields}</span>}
+        </p>
       </header>
 
       {daily.playedToday ? (
-        <section className="flex flex-col gap-4 rounded-[var(--radius-card)] bg-surface p-6 text-center shadow-lg">
+        <section className="significant-card flex flex-col gap-4 rounded-[var(--radius-card)] p-6 text-center">
           <p className="text-lg font-extrabold">
-            {daily.lastCorrect ? 'Nailed it. See you tomorrow.' : 'Missed it — tomorrow is a new experiment.'}
+            {daily.lastCorrect ? 'Nailed it. See you tomorrow.' : 'Not this one. A new experiment arrives tomorrow.'}
           </p>
           <p className="text-sm text-ink-soft">Next experiment in <span className="font-extrabold text-ink">{daily.countdown}</span></p>
           <ShareGrid text={buildShareText(daily.today, daily.lastCorrect ?? false, daily.streak, origin)} />
@@ -77,10 +88,10 @@ export default function DailyPage() {
           key={daily.scenario.seed}
           scenario={daily.scenario}
           combo={1}
-          soundOn={daily.soundOn}
+          mode="daily"
           onComplete={({ correct, xpEarned }) => {
+            pendingCorrectRef.current = correct;
             daily.complete(correct, xpEarned);
-            track('daily_played', { correct });
           }}
         />
       )}

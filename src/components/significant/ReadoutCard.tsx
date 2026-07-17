@@ -5,13 +5,14 @@ const pct = (x: number) => `${x >= 0 ? '+' : ''}${(x * 100).toFixed(1)}%`;
 
 export function ReadoutCard({ scenario: s }: { scenario: Scenario }) {
   return (
-    <section className="rounded-[var(--radius-card)] bg-surface p-6 shadow-lg shadow-ink/5" data-seed={s.seed}>
+    <section className="significant-card significant-readout" data-seed={s.seed}>
+      <p className="significant-readout-badge">Experiment evidence</p>
       <p className="text-sm text-ink-soft">{s.product}</p>
       <h2 className="mt-1 text-lg font-extrabold leading-snug">{s.hypothesis}</h2>
 
       <div className="mt-4 flex items-baseline justify-between">
         <span className="text-sm font-extrabold text-ink-soft">{s.metricName}</span>
-        <span className="rounded-full bg-bg px-3 py-1 text-sm font-extrabold">{`Day ${s.daysRun} of ${s.daysPlanned}`}</span>
+        <span className="rounded-full bg-[#fff0f3] px-3 py-1 text-sm font-extrabold">{`Day ${s.daysRun} of ${s.daysPlanned}`}</span>
       </div>
 
       <div className="mt-2"><Sparkline control={s.control} variant={s.variant} /></div>
@@ -21,11 +22,11 @@ export function ReadoutCard({ scenario: s }: { scenario: Scenario }) {
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3">
-        <div className="rounded-2xl bg-bg p-3">
+        <div className="rounded-2xl bg-[#effcf4] p-3">
           <p className="text-xs text-ink-soft">Observed lift</p>
           <p className={`text-2xl font-extrabold ${s.observed.relLift >= 0 ? 'text-win-deep' : 'text-lose-deep'}`}>{pct(s.observed.relLift)}</p>
         </div>
-        <div className="rounded-2xl bg-bg p-3">
+        <div className="rounded-2xl bg-[#f4edff] p-3">
           <p className="text-xs text-ink-soft">95% CI · p={s.observed.pValue < 0.001 ? '<0.001' : s.observed.pValue.toFixed(3)}</p>
           <p className="text-sm font-extrabold">{pct(s.observed.ciLow)} to {pct(s.observed.ciHigh)}</p>
         </div>

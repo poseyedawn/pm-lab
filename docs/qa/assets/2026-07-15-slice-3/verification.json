@@ -1,0 +1,427 @@
+{
+  "checks": [
+    {
+      "name": "cold landing starts at zero XP",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390px calibration has no horizontal overflow",
+      "passed": true,
+      "detail": "{\"clientWidth\":390,\"clientHeight\":844,\"scrollWidth\":390,\"scrollHeight\":844}"
+    },
+    {
+      "name": "390px deciding state fits without vertical overflow",
+      "passed": true,
+      "detail": "{\"clientWidth\":390,\"clientHeight\":844,\"scrollWidth\":390,\"scrollHeight\":844}"
+    },
+    {
+      "name": "390px mobile frame is exactly viewport width",
+      "passed": true,
+      "detail": "{\"x\":0,\"y\":0,\"width\":390,\"height\":844,\"bottom\":844}"
+    },
+    {
+      "name": "selected evidence card is visible above the fold",
+      "passed": true,
+      "detail": "{\"x\":28,\"y\":314.5,\"width\":334,\"height\":289.90625,\"bottom\":604.40625}"
+    },
+    {
+      "name": "all three decision controls are visible above the fold",
+      "passed": true,
+      "detail": "{\"x\":12,\"y\":704.40625,\"width\":366,\"height\":84,\"bottom\":788.40625}"
+    },
+    {
+      "name": "visible calibration controls meet 44px target size",
+      "passed": true,
+      "detail": "[{\"name\":\"Alvin's Product Lab home\",\"tag\":\"a\",\"width\":115,\"height\":44,\"top\":4,\"bottom\":48},{\"name\":\"Portfolio (opens in a new tab)\",\"tag\":\"a\",\"width\":79,\"height\":44,\"top\":4,\"bottom\":48},{\"name\":\"Ship: Launch it to everyone\",\"tag\":\"button\",\"width\":117,\"height\":84,\"top\":704,\"bottom\":788},{\"name\":\"Kill: Not enough evidence\",\"tag\":\"button\",\"width\":117,\"height\":84,\"top\":704,\"bottom\":788},{\"name\":\"Keep Running: More data could change it\",\"tag\":\"button\",\"width\":117,\"height\":84,\"top\":704,\"bottom\":788},{\"name\":\"Skip coaching\",\"tag\":\"button\",\"width\":78,\"height\":44,\"top\":796,\"bottom\":840}]"
+    },
+    {
+      "name": "nested game header is absent during calibration",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "global footer is hidden during the focused calibration",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "evidence includes a textual chart summary",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "skip coaching removes the coaching note",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "skip coaching exposes a reversible Show coaching control",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "show coaching restores the coaching note",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "decision controls are keyboard reachable",
+      "passed": true,
+      "detail": "[\"Skip to main contentProduct Lab0 XPPortfolioSignificant · Field test 01You're the PM in ship review.Calibration · 1 of 3Use the evidence to Ship, Kill, or Keep Running.HypothesisProgress streaks on the library screen increase daily reading sessionsSession rateDay 14 of 14Day 1Day 7Day 14VariantControlObserved lift+15.4%59,946 variant vs 59,938 control users95% confidence interval+11.3% to +19.4%Variant and control session rates are shown across 14 days. The observed lift is +15.4%, with a 95% confidence interval from +11.3% to +19.4%.The confidence interval is the range of likely lift. Look for whether the whole range clears zero.Make your calibration callShipLaunch it to everyoneKillNot enough evidenceKeep RunningMore data could change itSkip coachingAbout 30 secondsProgress stays in your browser. We use aggregate analytics to improve the games.(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,\\\"1:\\\\\\\"$Sreact.fragment\\\\\\\"\\\\n2:I[92181,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"PreferenceRuntime\\\\\\\"]\\\\n3:I[22016,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"\\\\\\\"]\\\\n4:I[12161,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"LabProfileSummary\\\\\\\"]\\\\n5:I[96668,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"PortfolioReturnLink\\\\\\\"]\\\\n6:I[39756,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\"]\\\\n7:I[37457,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\"]\\\\n8:I[90390,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\"],\\\\\\\"AnalyticsViewTracker\\\\\\\"]\\\\n9:I[29701,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\"],\\\\\\\"LabLanding\\\\\\\"]\\\\na:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"OutletBoundary\\\\\\\"]\\\\nb:\\\\\\\"$Sreact.suspense\\\\\\\"\\\\nd:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"ViewportBoundary\\\\\\\"]\\\\nf:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"MetadataBoundary\\\\\\\"]\\\\n11:I[68027,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\",1]\\\\n:HL[\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"style\\\\\\\"]\\\\n:HL[\\\\\\\"/_next/static/media/07454f8ad8aaac57-s.p.2kjei9psvcorz.woff2\\\\\\\",\\\\\\\"font\\\\\\\",{\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"font/woff2\\\\\\\"}]\\\\n:HL[\\\\\\\"/_next/static/media/a85fe84266768609-s.p.0h6ig86gwutp4.woff2\\\\\\\",\\\\\\\"font\\\\\\\",{\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"font/woff2\\\\\\\"}]\\\\n\\\"])self.__next_f.push([1,\\\"0:{\\\\\\\"P\\\\\\\":null,\\\\\\\"c\\\\\\\":[\\\\\\\"\\\\\\\",\\\\\\\"\\\\\\\"],\\\\\\\"q\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"i\\\\\\\":false,\\\\\\\"f\\\\\\\":[[[\\\\\\\"\\\\\\\",{\\\\\\\"children\\\\\\\":[\\\\\\\"__PAGE__\\\\\\\",{}]},\\\\\\\"$undefined\\\\\\\",\\\\\\\"$undefined\\\\\\\",16],[[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"c\\\\\\\",{\\\\\\\"children\\\\\\\":[[[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"stylesheet\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"precedence\\\\\\\":\\\\\\\"next\\\\\\\",\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-0\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-1\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-2\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]],[\\\\\\\"$\\\\\\\",\\\\\\\"html\\\\\\\",null,{\\\\\\\"lang\\\\\\\":\\\\\\\"en\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"body\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"nunito_3664f718-module__YSIMpW__className caveat_f3db7932-module__c4SfXa__variable\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"lab-frame flex min-h-screen flex-col\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"a\\\\\\\",null,{\\\\\\\"href\\\\\\\":\\\\\\\"#main-content\\\\\\\",\\\\\\\"className\\\\\\\":\\\\\\\"skip-link\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Skip to main content\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L2\\\\\\\",null,{}],[\\\\\\\"$\\\\\\\",\\\\\\\"header\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"border-b border-ink/10 bg-surface/80\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"nav\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"flex items-center justify-between gap-3 px-5 py-1 min-[360px]:px-7\\\\\\\",\\\\\\\"aria-label\\\\\\\":\\\\\\\"Lab navigation\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L3\\\\\\\",null,{\\\\\\\"href\\\\\\\":\\\\\\\"/\\\\\\\",\\\\\\\"className\\\\\\\":\\\\\\\"inline-flex min-h-11 items-center text-xl font-extrabold text-ink no-underline\\\\\\\",\\\\\\\"aria-label\\\\\\\":\\\\\\\"Alvin's Product Lab home\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Product Lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"flex items-center gap-3 min-[360px]:gap-5\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L4\\\\\\\",null,{\\\\\\\"variant\\\\\\\":\\\\\\\"compact\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L5\\\\\\\",null,{}]]}]]}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"id\\\\\\\":\\\\\\\"main-content\\\\\\\",\\\\\\\"tabIndex\\\\\\\":-1,\\\\\\\"className\\\\\\\":\\\\\\\"flex-1 outline-none\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$L6\\\\\\\",null,{\\\\\\\"parallelRouterKey\\\\\\\":\\\\\\\"children\\\\\\\",\\\\\\\"error\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"errorStyles\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"errorScripts\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"template\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$L7\\\\\\\",null,{}],\\\\\\\"templateStyles\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"templateScripts\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"notFound\\\\\\\":[[[\\\\\\\"$\\\\\\\",\\\\\\\"title\\\\\\\",null,{\\\\\\\"children\\\\\\\":\\\\\\\"404: This page could not be found.\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"fontFamily\\\\\\\":\\\\\\\"system-ui,\\\\\\\\\\\\\\\"Segoe UI\\\\\\\\\\\\\\\",Roboto,Helvetica,Arial,sans-serif,\\\\\\\\\\\\\\\"Apple Color Emoji\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"Segoe UI Emoji\\\\\\\\\\\\\\\"\\\\\\\",\\\\\\\"height\\\\\\\":\\\\\\\"100vh\\\\\\\",\\\\\\\"textAlign\\\\\\\":\\\\\\\"center\\\\\\\",\\\\\\\"display\\\\\\\":\\\\\\\"flex\\\\\\\",\\\\\\\"flexDirection\\\\\\\":\\\\\\\"column\\\\\\\",\\\\\\\"alignItems\\\\\\\":\\\\\\\"center\\\\\\\",\\\\\\\"justifyContent\\\\\\\":\\\\\\\"center\\\\\\\"},\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"style\\\\\\\",null,{\\\\\\\"dangerouslySetInnerHTML\\\\\\\":{\\\\\\\"__html\\\\\\\":\\\\\\\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\\\\\"}}],[\\\\\\\"$\\\\\\\",\\\\\\\"h1\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"next-error-h1\\\\\\\",\\\\\\\"style\\\\\\\":{\\\\\\\"display\\\\\\\":\\\\\\\"inline-block\\\\\\\",\\\\\\\"margin\\\\\\\":\\\\\\\"0 20px 0 0\\\\\\\",\\\\\\\"padding\\\\\\\":\\\\\\\"0 23px 0 0\\\\\\\",\\\\\\\"fontSize\\\\\\\":24,\\\\\\\"fontWeight\\\\\\\":500,\\\\\\\"verticalAlign\\\\\\\":\\\\\\\"top\\\\\\\",\\\\\\\"lineHeight\\\\\\\":\\\\\\\"49px\\\\\\\"},\\\\\\\"children\\\\\\\":404}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"display\\\\\\\":\\\\\\\"inline-block\\\\\\\"},\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"h2\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"fontSize\\\\\\\":14,\\\\\\\"fontWeight\\\\\\\":400,\\\\\\\"lineHeight\\\\\\\":\\\\\\\"49px\\\\\\\",\\\\\\\"margin\\\\\\\":0},\\\\\\\"children\\\\\\\":\\\\\\\"This page could not be found.\\\\\\\"}]}]]}]}]],[]],\\\\\\\"forbidden\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"unauthorized\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"footer\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"border-t border-ink/10 px-6 py-5 text-center text-xs leading-relaxed text-ink-soft\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Progress stays in your browser. We use aggregate analytics to improve the games.\\\\\\\"}]]}],false]}]}]]}],{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"c\\\\\\\",{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"main\\\\\\\",null,{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L8\\\\\\\",null,{\\\\\\\"surface\\\\\\\":\\\\\\\"lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L9\\\\\\\",null,{\\\\\\\"scenario\\\\\\\":{\\\\\\\"seed\\\\\\\":2723984669,\\\\\\\"archetype\\\\\\\":\\\\\\\"clean-win\\\\\\\",\\\\\\\"product\\\\\\\":\\\\\\\"Kindling, a reading app\\\\\\\",\\\\\\\"hypothesis\\\\\\\":\\\\\\\"Progress streaks on the library screen increase daily reading sessions\\\\\\\",\\\\\\\"metricName\\\\\\\":\\\\\\\"Session rate\\\\\\\",\\\\\\\"daysPlanned\\\\\\\":14,\\\\\\\"daysRun\\\\\\\":14,\\\\\\\"control\\\\\\\":[{\\\\\\\"n\\\\\\\":4479,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4575,\\\\\\\"c\\\\\\\":345},{\\\\\\\"n\\\\\\\":4032,\\\\\\\"c\\\\\\\":286},{\\\\\\\"n\\\\\\\":4485,\\\\\\\"c\\\\\\\":350},{\\\\\\\"n\\\\\\\":3951,\\\\\\\"c\\\\\\\":302},{\\\\\\\"n\\\\\\\":4279,\\\\\\\"c\\\\\\\":375},{\\\\\\\"n\\\\\\\":3971,\\\\\\\"c\\\\\\\":280},{\\\\\\\"n\\\\\\\":4083,\\\\\\\"c\\\\\\\":324},{\\\\\\\"n\\\\\\\":4727,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4117,\\\\\\\"c\\\\\\\":320},{\\\\\\\"n\\\\\\\":4271,\\\\\\\"c\\\\\\\":343},{\\\\\\\"n\\\\\\\":4548,\\\\\\\"c\\\\\\\":340},{\\\\\\\"n\\\\\\\":4196,\\\\\\\"c\\\\\\\":322},{\\\\\\\"n\\\\\\\":4224,\\\\\\\"c\\\\\\\":332}],\\\\\\\"variant\\\\\\\":[{\\\\\\\"n\\\\\\\":4479,\\\\\\\"c\\\\\\\":384},{\\\\\\\"n\\\\\\\":4576,\\\\\\\"c\\\\\\\":407},{\\\\\\\"n\\\\\\\":4032,\\\\\\\"c\\\\\\\":382},{\\\\\\\"n\\\\\\\":4486,\\\\\\\"c\\\\\\\":409},{\\\\\\\"n\\\\\\\":3951,\\\\\\\"c\\\\\\\":350},{\\\\\\\"n\\\\\\\":4280,\\\\\\\"c\\\\\\\":363},{\\\\\\\"n\\\\\\\":3972,\\\\\\\"c\\\\\\\":374},{\\\\\\\"n\\\\\\\":4084,\\\\\\\"c\\\\\\\":307},{\\\\\\\"n\\\\\\\":4727,\\\\\\\"c\\\\\\\":452},{\\\\\\\"n\\\\\\\":4118,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4271,\\\\\\\"c\\\\\\\":396},{\\\\\\\"n\\\\\\\":4549,\\\\\\\"c\\\\\\\":410},{\\\\\\\"n\\\\\\\":4197,\\\\\\\"c\\\\\\\":386},{\\\\\\\"n\\\\\\\":4224,\\\\\\\"c\\\\\\\":368}],\\\\\\\"totals\\\\\\\":{\\\\\\\"nA\\\\\\\":59938,\\\\\\\"cA\\\\\\\":4631,\\\\\\\"nB\\\\\\\":59946,\\\\\\\"cB\\\\\\\":5344},\\\\\\\"observed\\\\\\\":{\\\\\\\"relLift\\\\\\\":0.15380842686439108,\\\\\\\"ciLow\\\\\\\":0.1133468905211935,\\\\\\\"ciHigh\\\\\\\":0.1942699632075887,\\\\\\\"pValue\\\\\\\":9.370282327836321e-14,\\\\\\\"significant\\\\\\\":true},\\\\\\\"note\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"segments\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"truth\\\\\\\":{\\\\\\\"trueLiftPct\\\\\\\":12.717830213718118,\\\\\\\"correctCall\\\\\\\":\\\\\\\"ship\\\\\\\",\\\\\\\"explanation\\\\\\\":\\\\\\\"No trap. The test ran its full two weeks, the lift held steady, and the CI (+11.3% to +19.4%) excludes zero. True lift was +12.7%. Ship it.\\\\\\\",\\\\\\\"trapName\\\\\\\":\\\\\\\"Clean win\\\\\\\"}}}]]}],[[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-0\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]],[\\\\\\\"$\\\\\\\",\\\\\\\"$La\\\\\\\",null,{\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$b\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"Next.MetadataOutlet\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"$@c\\\\\\\"}]}]]}],{},null,false,null]},null,false,null],[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"h\\\\\\\",{\\\\\\\"children\\\\\\\":[null,[\\\\\\\"$\\\\\\\",\\\\\\\"$Ld\\\\\\\",null,{\\\\\\\"children\\\\\\\":\\\\\\\"$Le\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"hidden\\\\\\\":true,\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$Lf\\\\\\\",null,{\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$b\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"Next.Metadata\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"$L10\\\\\\\"}]}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"next-size-adjust\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"\\\\\\\"}]]}],false]],\\\\\\\"m\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"G\\\\\\\":[\\\\\\\"$11\\\\\\\",[[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"stylesheet\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"precedence\\\\\\\":\\\\\\\"next\\\\\\\",\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]]],\\\\\\\"S\\\\\\\":true,\\\\\\\"h\\\\\\\":null,\\\\\\\"s\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"l\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"p\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"d\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"b\\\\\\\":\\\\\\\"qi7-Wb5bvR2CWG-SSF6Ki\\\\\\\"}\\\\n\\\"])self.__next_f.push([1,\\\"e:[[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"charSet\\\\\\\":\\\\\\\"utf-8\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"1\\\\\\\",{\\\\\\\"name\\\\\\\":\\\\\\\"viewport\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"width=device-width, initial-scale=1\\\\\\\"}]]\\\\n\\\"])self.__next_f.push([1,\\\"12:I[27201,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"IconMark\\\\\\\"]\\\\nc:null\\\\n10:[[\\\\\\\"$\\\\\\\",\\\\\\\"title\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"children\\\\\\\":\\\\\\\"Alvin's Product Lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"1\\\\\\\",{\\\\\\\"name\\\\\\\":\\\\\\\"description\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"Mobile-first games that make product judgment visible.\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"2\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"icon\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/favicon.ico?favicon.2vob68tjqpejf.ico\\\\\\\",\\\\\\\"sizes\\\\\\\":\\\\\\\"256x256\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"image/x-icon\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L12\\\\\\\",\\\\\\\"3\\\\\\\",{}]]\\\\n\\\"])\",\"Skip to main content\",\"Alvin's Product Lab home\",\"Portfolio (opens in a new tab)\",\"Ship: Launch it to everyone\",\"Kill: Not enough evidence\",\"Keep Running: More data could change it\",\"Skip coaching\",\"Skip to main contentProduct Lab0 XPPortfolioSignificant · Field test 01You're the PM in ship review.Calibration · 1 of 3Use the evidence to Ship, Kill, or Keep Running.HypothesisProgress streaks on the library screen increase daily reading sessionsSession rateDay 14 of 14Day 1Day 7Day 14VariantControlObserved lift+15.4%59,946 variant vs 59,938 control users95% confidence interval+11.3% to +19.4%Variant and control session rates are shown across 14 days. The observed lift is +15.4%, with a 95% confidence interval from +11.3% to +19.4%.The confidence interval is the range of likely lift. Look for whether the whole range clears zero.Make your calibration callShipLaunch it to everyoneKillNot enough evidenceKeep RunningMore data could change itSkip coachingAbout 30 secondsProgress stays in your browser. We use aggregate analytics to improve the games.(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,\\\"1:\\\\\\\"$Sreact.fragment\\\\\\\"\\\\n2:I[92181,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"PreferenceRuntime\\\\\\\"]\\\\n3:I[22016,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"\\\\\\\"]\\\\n4:I[12161,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"LabProfileSummary\\\\\\\"]\\\\n5:I[96668,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"PortfolioReturnLink\\\\\\\"]\\\\n6:I[39756,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\"]\\\\n7:I[37457,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\"]\\\\n8:I[90390,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\"],\\\\\\\"AnalyticsViewTracker\\\\\\\"]\\\\n9:I[29701,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\"],\\\\\\\"LabLanding\\\\\\\"]\\\\na:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"OutletBoundary\\\\\\\"]\\\\nb:\\\\\\\"$Sreact.suspense\\\\\\\"\\\\nd:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"ViewportBoundary\\\\\\\"]\\\\nf:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"MetadataBoundary\\\\\\\"]\\\\n11:I[68027,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\",1]\\\\n:HL[\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"style\\\\\\\"]\\\\n:HL[\\\\\\\"/_next/static/media/07454f8ad8aaac57-s.p.2kjei9psvcorz.woff2\\\\\\\",\\\\\\\"font\\\\\\\",{\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"font/woff2\\\\\\\"}]\\\\n:HL[\\\\\\\"/_next/static/media/a85fe84266768609-s.p.0h6ig86gwutp4.woff2\\\\\\\",\\\\\\\"font\\\\\\\",{\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"font/woff2\\\\\\\"}]\\\\n\\\"])self.__next_f.push([1,\\\"0:{\\\\\\\"P\\\\\\\":null,\\\\\\\"c\\\\\\\":[\\\\\\\"\\\\\\\",\\\\\\\"\\\\\\\"],\\\\\\\"q\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"i\\\\\\\":false,\\\\\\\"f\\\\\\\":[[[\\\\\\\"\\\\\\\",{\\\\\\\"children\\\\\\\":[\\\\\\\"__PAGE__\\\\\\\",{}]},\\\\\\\"$undefined\\\\\\\",\\\\\\\"$undefined\\\\\\\",16],[[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"c\\\\\\\",{\\\\\\\"children\\\\\\\":[[[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"stylesheet\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"precedence\\\\\\\":\\\\\\\"next\\\\\\\",\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-0\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-1\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-2\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]],[\\\\\\\"$\\\\\\\",\\\\\\\"html\\\\\\\",null,{\\\\\\\"lang\\\\\\\":\\\\\\\"en\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"body\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"nunito_3664f718-module__YSIMpW__className caveat_f3db7932-module__c4SfXa__variable\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"lab-frame flex min-h-screen flex-col\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"a\\\\\\\",null,{\\\\\\\"href\\\\\\\":\\\\\\\"#main-content\\\\\\\",\\\\\\\"className\\\\\\\":\\\\\\\"skip-link\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Skip to main content\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L2\\\\\\\",null,{}],[\\\\\\\"$\\\\\\\",\\\\\\\"header\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"border-b border-ink/10 bg-surface/80\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"nav\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"flex items-center justify-between gap-3 px-5 py-1 min-[360px]:px-7\\\\\\\",\\\\\\\"aria-label\\\\\\\":\\\\\\\"Lab navigation\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L3\\\\\\\",null,{\\\\\\\"href\\\\\\\":\\\\\\\"/\\\\\\\",\\\\\\\"className\\\\\\\":\\\\\\\"inline-flex min-h-11 items-center text-xl font-extrabold text-ink no-underline\\\\\\\",\\\\\\\"aria-label\\\\\\\":\\\\\\\"Alvin's Product Lab home\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Product Lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"flex items-center gap-3 min-[360px]:gap-5\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L4\\\\\\\",null,{\\\\\\\"variant\\\\\\\":\\\\\\\"compact\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L5\\\\\\\",null,{}]]}]]}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"id\\\\\\\":\\\\\\\"main-content\\\\\\\",\\\\\\\"tabIndex\\\\\\\":-1,\\\\\\\"className\\\\\\\":\\\\\\\"flex-1 outline-none\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$L6\\\\\\\",null,{\\\\\\\"parallelRouterKey\\\\\\\":\\\\\\\"children\\\\\\\",\\\\\\\"error\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"errorStyles\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"errorScripts\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"template\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$L7\\\\\\\",null,{}],\\\\\\\"templateStyles\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"templateScripts\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"notFound\\\\\\\":[[[\\\\\\\"$\\\\\\\",\\\\\\\"title\\\\\\\",null,{\\\\\\\"children\\\\\\\":\\\\\\\"404: This page could not be found.\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"fontFamily\\\\\\\":\\\\\\\"system-ui,\\\\\\\\\\\\\\\"Segoe UI\\\\\\\\\\\\\\\",Roboto,Helvetica,Arial,sans-serif,\\\\\\\\\\\\\\\"Apple Color Emoji\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"Segoe UI Emoji\\\\\\\\\\\\\\\"\\\\\\\",\\\\\\\"height\\\\\\\":\\\\\\\"100vh\\\\\\\",\\\\\\\"textAlign\\\\\\\":\\\\\\\"center\\\\\\\",\\\\\\\"display\\\\\\\":\\\\\\\"flex\\\\\\\",\\\\\\\"flexDirection\\\\\\\":\\\\\\\"column\\\\\\\",\\\\\\\"alignItems\\\\\\\":\\\\\\\"center\\\\\\\",\\\\\\\"justifyContent\\\\\\\":\\\\\\\"center\\\\\\\"},\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"style\\\\\\\",null,{\\\\\\\"dangerouslySetInnerHTML\\\\\\\":{\\\\\\\"__html\\\\\\\":\\\\\\\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\\\\\"}}],[\\\\\\\"$\\\\\\\",\\\\\\\"h1\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"next-error-h1\\\\\\\",\\\\\\\"style\\\\\\\":{\\\\\\\"display\\\\\\\":\\\\\\\"inline-block\\\\\\\",\\\\\\\"margin\\\\\\\":\\\\\\\"0 20px 0 0\\\\\\\",\\\\\\\"padding\\\\\\\":\\\\\\\"0 23px 0 0\\\\\\\",\\\\\\\"fontSize\\\\\\\":24,\\\\\\\"fontWeight\\\\\\\":500,\\\\\\\"verticalAlign\\\\\\\":\\\\\\\"top\\\\\\\",\\\\\\\"lineHeight\\\\\\\":\\\\\\\"49px\\\\\\\"},\\\\\\\"children\\\\\\\":404}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"display\\\\\\\":\\\\\\\"inline-block\\\\\\\"},\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"h2\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"fontSize\\\\\\\":14,\\\\\\\"fontWeight\\\\\\\":400,\\\\\\\"lineHeight\\\\\\\":\\\\\\\"49px\\\\\\\",\\\\\\\"margin\\\\\\\":0},\\\\\\\"children\\\\\\\":\\\\\\\"This page could not be found.\\\\\\\"}]}]]}]}]],[]],\\\\\\\"forbidden\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"unauthorized\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"footer\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"border-t border-ink/10 px-6 py-5 text-center text-xs leading-relaxed text-ink-soft\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Progress stays in your browser. We use aggregate analytics to improve the games.\\\\\\\"}]]}],false]}]}]]}],{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"c\\\\\\\",{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"main\\\\\\\",null,{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L8\\\\\\\",null,{\\\\\\\"surface\\\\\\\":\\\\\\\"lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L9\\\\\\\",null,{\\\\\\\"scenario\\\\\\\":{\\\\\\\"seed\\\\\\\":2723984669,\\\\\\\"archetype\\\\\\\":\\\\\\\"clean-win\\\\\\\",\\\\\\\"product\\\\\\\":\\\\\\\"Kindling, a reading app\\\\\\\",\\\\\\\"hypothesis\\\\\\\":\\\\\\\"Progress streaks on the library screen increase daily reading sessions\\\\\\\",\\\\\\\"metricName\\\\\\\":\\\\\\\"Session rate\\\\\\\",\\\\\\\"daysPlanned\\\\\\\":14,\\\\\\\"daysRun\\\\\\\":14,\\\\\\\"control\\\\\\\":[{\\\\\\\"n\\\\\\\":4479,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4575,\\\\\\\"c\\\\\\\":345},{\\\\\\\"n\\\\\\\":4032,\\\\\\\"c\\\\\\\":286},{\\\\\\\"n\\\\\\\":4485,\\\\\\\"c\\\\\\\":350},{\\\\\\\"n\\\\\\\":3951,\\\\\\\"c\\\\\\\":302},{\\\\\\\"n\\\\\\\":4279,\\\\\\\"c\\\\\\\":375},{\\\\\\\"n\\\\\\\":3971,\\\\\\\"c\\\\\\\":280},{\\\\\\\"n\\\\\\\":4083,\\\\\\\"c\\\\\\\":324},{\\\\\\\"n\\\\\\\":4727,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4117,\\\\\\\"c\\\\\\\":320},{\\\\\\\"n\\\\\\\":4271,\\\\\\\"c\\\\\\\":343},{\\\\\\\"n\\\\\\\":4548,\\\\\\\"c\\\\\\\":340},{\\\\\\\"n\\\\\\\":4196,\\\\\\\"c\\\\\\\":322},{\\\\\\\"n\\\\\\\":4224,\\\\\\\"c\\\\\\\":332}],\\\\\\\"variant\\\\\\\":[{\\\\\\\"n\\\\\\\":4479,\\\\\\\"c\\\\\\\":384},{\\\\\\\"n\\\\\\\":4576,\\\\\\\"c\\\\\\\":407},{\\\\\\\"n\\\\\\\":4032,\\\\\\\"c\\\\\\\":382},{\\\\\\\"n\\\\\\\":4486,\\\\\\\"c\\\\\\\":409},{\\\\\\\"n\\\\\\\":3951,\\\\\\\"c\\\\\\\":350},{\\\\\\\"n\\\\\\\":4280,\\\\\\\"c\\\\\\\":363},{\\\\\\\"n\\\\\\\":3972,\\\\\\\"c\\\\\\\":374},{\\\\\\\"n\\\\\\\":4084,\\\\\\\"c\\\\\\\":307},{\\\\\\\"n\\\\\\\":4727,\\\\\\\"c\\\\\\\":452},{\\\\\\\"n\\\\\\\":4118,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4271,\\\\\\\"c\\\\\\\":396},{\\\\\\\"n\\\\\\\":4549,\\\\\\\"c\\\\\\\":410},{\\\\\\\"n\\\\\\\":4197,\\\\\\\"c\\\\\\\":386},{\\\\\\\"n\\\\\\\":4224,\\\\\\\"c\\\\\\\":368}],\\\\\\\"totals\\\\\\\":{\\\\\\\"nA\\\\\\\":59938,\\\\\\\"cA\\\\\\\":4631,\\\\\\\"nB\\\\\\\":59946,\\\\\\\"cB\\\\\\\":5344},\\\\\\\"observed\\\\\\\":{\\\\\\\"relLift\\\\\\\":0.15380842686439108,\\\\\\\"ciLow\\\\\\\":0.1133468905211935,\\\\\\\"ciHigh\\\\\\\":0.1942699632075887,\\\\\\\"pValue\\\\\\\":9.370282327836321e-14,\\\\\\\"significant\\\\\\\":true},\\\\\\\"note\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"segments\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"truth\\\\\\\":{\\\\\\\"trueLiftPct\\\\\\\":12.717830213718118,\\\\\\\"correctCall\\\\\\\":\\\\\\\"ship\\\\\\\",\\\\\\\"explanation\\\\\\\":\\\\\\\"No trap. The test ran its full two weeks, the lift held steady, and the CI (+11.3% to +19.4%) excludes zero. True lift was +12.7%. Ship it.\\\\\\\",\\\\\\\"trapName\\\\\\\":\\\\\\\"Clean win\\\\\\\"}}}]]}],[[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-0\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]],[\\\\\\\"$\\\\\\\",\\\\\\\"$La\\\\\\\",null,{\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$b\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"Next.MetadataOutlet\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"$@c\\\\\\\"}]}]]}],{},null,false,null]},null,false,null],[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"h\\\\\\\",{\\\\\\\"children\\\\\\\":[null,[\\\\\\\"$\\\\\\\",\\\\\\\"$Ld\\\\\\\",null,{\\\\\\\"children\\\\\\\":\\\\\\\"$Le\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"hidden\\\\\\\":true,\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$Lf\\\\\\\",null,{\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$b\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"Next.Metadata\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"$L10\\\\\\\"}]}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"next-size-adjust\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"\\\\\\\"}]]}],false]],\\\\\\\"m\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"G\\\\\\\":[\\\\\\\"$11\\\\\\\",[[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"stylesheet\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"precedence\\\\\\\":\\\\\\\"next\\\\\\\",\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]]],\\\\\\\"S\\\\\\\":true,\\\\\\\"h\\\\\\\":null,\\\\\\\"s\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"l\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"p\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"d\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"b\\\\\\\":\\\\\\\"qi7-Wb5bvR2CWG-SSF6Ki\\\\\\\"}\\\\n\\\"])self.__next_f.push([1,\\\"e:[[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"charSet\\\\\\\":\\\\\\\"utf-8\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"1\\\\\\\",{\\\\\\\"name\\\\\\\":\\\\\\\"viewport\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"width=device-width, initial-scale=1\\\\\\\"}]]\\\\n\\\"])self.__next_f.push([1,\\\"12:I[27201,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"IconMark\\\\\\\"]\\\\nc:null\\\\n10:[[\\\\\\\"$\\\\\\\",\\\\\\\"title\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"children\\\\\\\":\\\\\\\"Alvin's Product Lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"1\\\\\\\",{\\\\\\\"name\\\\\\\":\\\\\\\"description\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"Mobile-first games that make product judgment visible.\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"2\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"icon\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/favicon.ico?favicon.2vob68tjqpejf.ico\\\\\\\",\\\\\\\"sizes\\\\\\\":\\\\\\\"256x256\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"image/x-icon\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L12\\\\\\\",\\\\\\\"3\\\\\\\",{}]]\\\\n\\\"])\"]"
+    },
+    {
+      "name": "skip coaching is keyboard reachable",
+      "passed": true,
+      "detail": "[\"Skip to main contentProduct Lab0 XPPortfolioSignificant · Field test 01You're the PM in ship review.Calibration · 1 of 3Use the evidence to Ship, Kill, or Keep Running.HypothesisProgress streaks on the library screen increase daily reading sessionsSession rateDay 14 of 14Day 1Day 7Day 14VariantControlObserved lift+15.4%59,946 variant vs 59,938 control users95% confidence interval+11.3% to +19.4%Variant and control session rates are shown across 14 days. The observed lift is +15.4%, with a 95% confidence interval from +11.3% to +19.4%.The confidence interval is the range of likely lift. Look for whether the whole range clears zero.Make your calibration callShipLaunch it to everyoneKillNot enough evidenceKeep RunningMore data could change itSkip coachingAbout 30 secondsProgress stays in your browser. We use aggregate analytics to improve the games.(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,\\\"1:\\\\\\\"$Sreact.fragment\\\\\\\"\\\\n2:I[92181,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"PreferenceRuntime\\\\\\\"]\\\\n3:I[22016,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"\\\\\\\"]\\\\n4:I[12161,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"LabProfileSummary\\\\\\\"]\\\\n5:I[96668,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"PortfolioReturnLink\\\\\\\"]\\\\n6:I[39756,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\"]\\\\n7:I[37457,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\"]\\\\n8:I[90390,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\"],\\\\\\\"AnalyticsViewTracker\\\\\\\"]\\\\n9:I[29701,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\"],\\\\\\\"LabLanding\\\\\\\"]\\\\na:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"OutletBoundary\\\\\\\"]\\\\nb:\\\\\\\"$Sreact.suspense\\\\\\\"\\\\nd:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"ViewportBoundary\\\\\\\"]\\\\nf:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"MetadataBoundary\\\\\\\"]\\\\n11:I[68027,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\",1]\\\\n:HL[\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"style\\\\\\\"]\\\\n:HL[\\\\\\\"/_next/static/media/07454f8ad8aaac57-s.p.2kjei9psvcorz.woff2\\\\\\\",\\\\\\\"font\\\\\\\",{\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"font/woff2\\\\\\\"}]\\\\n:HL[\\\\\\\"/_next/static/media/a85fe84266768609-s.p.0h6ig86gwutp4.woff2\\\\\\\",\\\\\\\"font\\\\\\\",{\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"font/woff2\\\\\\\"}]\\\\n\\\"])self.__next_f.push([1,\\\"0:{\\\\\\\"P\\\\\\\":null,\\\\\\\"c\\\\\\\":[\\\\\\\"\\\\\\\",\\\\\\\"\\\\\\\"],\\\\\\\"q\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"i\\\\\\\":false,\\\\\\\"f\\\\\\\":[[[\\\\\\\"\\\\\\\",{\\\\\\\"children\\\\\\\":[\\\\\\\"__PAGE__\\\\\\\",{}]},\\\\\\\"$undefined\\\\\\\",\\\\\\\"$undefined\\\\\\\",16],[[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"c\\\\\\\",{\\\\\\\"children\\\\\\\":[[[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"stylesheet\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"precedence\\\\\\\":\\\\\\\"next\\\\\\\",\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-0\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-1\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-2\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]],[\\\\\\\"$\\\\\\\",\\\\\\\"html\\\\\\\",null,{\\\\\\\"lang\\\\\\\":\\\\\\\"en\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"body\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"nunito_3664f718-module__YSIMpW__className caveat_f3db7932-module__c4SfXa__variable\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"lab-frame flex min-h-screen flex-col\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"a\\\\\\\",null,{\\\\\\\"href\\\\\\\":\\\\\\\"#main-content\\\\\\\",\\\\\\\"className\\\\\\\":\\\\\\\"skip-link\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Skip to main content\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L2\\\\\\\",null,{}],[\\\\\\\"$\\\\\\\",\\\\\\\"header\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"border-b border-ink/10 bg-surface/80\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"nav\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"flex items-center justify-between gap-3 px-5 py-1 min-[360px]:px-7\\\\\\\",\\\\\\\"aria-label\\\\\\\":\\\\\\\"Lab navigation\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L3\\\\\\\",null,{\\\\\\\"href\\\\\\\":\\\\\\\"/\\\\\\\",\\\\\\\"className\\\\\\\":\\\\\\\"inline-flex min-h-11 items-center text-xl font-extrabold text-ink no-underline\\\\\\\",\\\\\\\"aria-label\\\\\\\":\\\\\\\"Alvin's Product Lab home\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Product Lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"flex items-center gap-3 min-[360px]:gap-5\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L4\\\\\\\",null,{\\\\\\\"variant\\\\\\\":\\\\\\\"compact\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L5\\\\\\\",null,{}]]}]]}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"id\\\\\\\":\\\\\\\"main-content\\\\\\\",\\\\\\\"tabIndex\\\\\\\":-1,\\\\\\\"className\\\\\\\":\\\\\\\"flex-1 outline-none\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$L6\\\\\\\",null,{\\\\\\\"parallelRouterKey\\\\\\\":\\\\\\\"children\\\\\\\",\\\\\\\"error\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"errorStyles\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"errorScripts\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"template\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$L7\\\\\\\",null,{}],\\\\\\\"templateStyles\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"templateScripts\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"notFound\\\\\\\":[[[\\\\\\\"$\\\\\\\",\\\\\\\"title\\\\\\\",null,{\\\\\\\"children\\\\\\\":\\\\\\\"404: This page could not be found.\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"fontFamily\\\\\\\":\\\\\\\"system-ui,\\\\\\\\\\\\\\\"Segoe UI\\\\\\\\\\\\\\\",Roboto,Helvetica,Arial,sans-serif,\\\\\\\\\\\\\\\"Apple Color Emoji\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"Segoe UI Emoji\\\\\\\\\\\\\\\"\\\\\\\",\\\\\\\"height\\\\\\\":\\\\\\\"100vh\\\\\\\",\\\\\\\"textAlign\\\\\\\":\\\\\\\"center\\\\\\\",\\\\\\\"display\\\\\\\":\\\\\\\"flex\\\\\\\",\\\\\\\"flexDirection\\\\\\\":\\\\\\\"column\\\\\\\",\\\\\\\"alignItems\\\\\\\":\\\\\\\"center\\\\\\\",\\\\\\\"justifyContent\\\\\\\":\\\\\\\"center\\\\\\\"},\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"style\\\\\\\",null,{\\\\\\\"dangerouslySetInnerHTML\\\\\\\":{\\\\\\\"__html\\\\\\\":\\\\\\\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\\\\\"}}],[\\\\\\\"$\\\\\\\",\\\\\\\"h1\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"next-error-h1\\\\\\\",\\\\\\\"style\\\\\\\":{\\\\\\\"display\\\\\\\":\\\\\\\"inline-block\\\\\\\",\\\\\\\"margin\\\\\\\":\\\\\\\"0 20px 0 0\\\\\\\",\\\\\\\"padding\\\\\\\":\\\\\\\"0 23px 0 0\\\\\\\",\\\\\\\"fontSize\\\\\\\":24,\\\\\\\"fontWeight\\\\\\\":500,\\\\\\\"verticalAlign\\\\\\\":\\\\\\\"top\\\\\\\",\\\\\\\"lineHeight\\\\\\\":\\\\\\\"49px\\\\\\\"},\\\\\\\"children\\\\\\\":404}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"display\\\\\\\":\\\\\\\"inline-block\\\\\\\"},\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"h2\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"fontSize\\\\\\\":14,\\\\\\\"fontWeight\\\\\\\":400,\\\\\\\"lineHeight\\\\\\\":\\\\\\\"49px\\\\\\\",\\\\\\\"margin\\\\\\\":0},\\\\\\\"children\\\\\\\":\\\\\\\"This page could not be found.\\\\\\\"}]}]]}]}]],[]],\\\\\\\"forbidden\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"unauthorized\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"footer\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"border-t border-ink/10 px-6 py-5 text-center text-xs leading-relaxed text-ink-soft\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Progress stays in your browser. We use aggregate analytics to improve the games.\\\\\\\"}]]}],false]}]}]]}],{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"c\\\\\\\",{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"main\\\\\\\",null,{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L8\\\\\\\",null,{\\\\\\\"surface\\\\\\\":\\\\\\\"lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L9\\\\\\\",null,{\\\\\\\"scenario\\\\\\\":{\\\\\\\"seed\\\\\\\":2723984669,\\\\\\\"archetype\\\\\\\":\\\\\\\"clean-win\\\\\\\",\\\\\\\"product\\\\\\\":\\\\\\\"Kindling, a reading app\\\\\\\",\\\\\\\"hypothesis\\\\\\\":\\\\\\\"Progress streaks on the library screen increase daily reading sessions\\\\\\\",\\\\\\\"metricName\\\\\\\":\\\\\\\"Session rate\\\\\\\",\\\\\\\"daysPlanned\\\\\\\":14,\\\\\\\"daysRun\\\\\\\":14,\\\\\\\"control\\\\\\\":[{\\\\\\\"n\\\\\\\":4479,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4575,\\\\\\\"c\\\\\\\":345},{\\\\\\\"n\\\\\\\":4032,\\\\\\\"c\\\\\\\":286},{\\\\\\\"n\\\\\\\":4485,\\\\\\\"c\\\\\\\":350},{\\\\\\\"n\\\\\\\":3951,\\\\\\\"c\\\\\\\":302},{\\\\\\\"n\\\\\\\":4279,\\\\\\\"c\\\\\\\":375},{\\\\\\\"n\\\\\\\":3971,\\\\\\\"c\\\\\\\":280},{\\\\\\\"n\\\\\\\":4083,\\\\\\\"c\\\\\\\":324},{\\\\\\\"n\\\\\\\":4727,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4117,\\\\\\\"c\\\\\\\":320},{\\\\\\\"n\\\\\\\":4271,\\\\\\\"c\\\\\\\":343},{\\\\\\\"n\\\\\\\":4548,\\\\\\\"c\\\\\\\":340},{\\\\\\\"n\\\\\\\":4196,\\\\\\\"c\\\\\\\":322},{\\\\\\\"n\\\\\\\":4224,\\\\\\\"c\\\\\\\":332}],\\\\\\\"variant\\\\\\\":[{\\\\\\\"n\\\\\\\":4479,\\\\\\\"c\\\\\\\":384},{\\\\\\\"n\\\\\\\":4576,\\\\\\\"c\\\\\\\":407},{\\\\\\\"n\\\\\\\":4032,\\\\\\\"c\\\\\\\":382},{\\\\\\\"n\\\\\\\":4486,\\\\\\\"c\\\\\\\":409},{\\\\\\\"n\\\\\\\":3951,\\\\\\\"c\\\\\\\":350},{\\\\\\\"n\\\\\\\":4280,\\\\\\\"c\\\\\\\":363},{\\\\\\\"n\\\\\\\":3972,\\\\\\\"c\\\\\\\":374},{\\\\\\\"n\\\\\\\":4084,\\\\\\\"c\\\\\\\":307},{\\\\\\\"n\\\\\\\":4727,\\\\\\\"c\\\\\\\":452},{\\\\\\\"n\\\\\\\":4118,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4271,\\\\\\\"c\\\\\\\":396},{\\\\\\\"n\\\\\\\":4549,\\\\\\\"c\\\\\\\":410},{\\\\\\\"n\\\\\\\":4197,\\\\\\\"c\\\\\\\":386},{\\\\\\\"n\\\\\\\":4224,\\\\\\\"c\\\\\\\":368}],\\\\\\\"totals\\\\\\\":{\\\\\\\"nA\\\\\\\":59938,\\\\\\\"cA\\\\\\\":4631,\\\\\\\"nB\\\\\\\":59946,\\\\\\\"cB\\\\\\\":5344},\\\\\\\"observed\\\\\\\":{\\\\\\\"relLift\\\\\\\":0.15380842686439108,\\\\\\\"ciLow\\\\\\\":0.1133468905211935,\\\\\\\"ciHigh\\\\\\\":0.1942699632075887,\\\\\\\"pValue\\\\\\\":9.370282327836321e-14,\\\\\\\"significant\\\\\\\":true},\\\\\\\"note\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"segments\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"truth\\\\\\\":{\\\\\\\"trueLiftPct\\\\\\\":12.717830213718118,\\\\\\\"correctCall\\\\\\\":\\\\\\\"ship\\\\\\\",\\\\\\\"explanation\\\\\\\":\\\\\\\"No trap. The test ran its full two weeks, the lift held steady, and the CI (+11.3% to +19.4%) excludes zero. True lift was +12.7%. Ship it.\\\\\\\",\\\\\\\"trapName\\\\\\\":\\\\\\\"Clean win\\\\\\\"}}}]]}],[[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-0\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]],[\\\\\\\"$\\\\\\\",\\\\\\\"$La\\\\\\\",null,{\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$b\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"Next.MetadataOutlet\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"$@c\\\\\\\"}]}]]}],{},null,false,null]},null,false,null],[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"h\\\\\\\",{\\\\\\\"children\\\\\\\":[null,[\\\\\\\"$\\\\\\\",\\\\\\\"$Ld\\\\\\\",null,{\\\\\\\"children\\\\\\\":\\\\\\\"$Le\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"hidden\\\\\\\":true,\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$Lf\\\\\\\",null,{\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$b\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"Next.Metadata\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"$L10\\\\\\\"}]}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"next-size-adjust\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"\\\\\\\"}]]}],false]],\\\\\\\"m\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"G\\\\\\\":[\\\\\\\"$11\\\\\\\",[[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"stylesheet\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"precedence\\\\\\\":\\\\\\\"next\\\\\\\",\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]]],\\\\\\\"S\\\\\\\":true,\\\\\\\"h\\\\\\\":null,\\\\\\\"s\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"l\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"p\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"d\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"b\\\\\\\":\\\\\\\"qi7-Wb5bvR2CWG-SSF6Ki\\\\\\\"}\\\\n\\\"])self.__next_f.push([1,\\\"e:[[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"charSet\\\\\\\":\\\\\\\"utf-8\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"1\\\\\\\",{\\\\\\\"name\\\\\\\":\\\\\\\"viewport\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"width=device-width, initial-scale=1\\\\\\\"}]]\\\\n\\\"])self.__next_f.push([1,\\\"12:I[27201,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"IconMark\\\\\\\"]\\\\nc:null\\\\n10:[[\\\\\\\"$\\\\\\\",\\\\\\\"title\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"children\\\\\\\":\\\\\\\"Alvin's Product Lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"1\\\\\\\",{\\\\\\\"name\\\\\\\":\\\\\\\"description\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"Mobile-first games that make product judgment visible.\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"2\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"icon\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/favicon.ico?favicon.2vob68tjqpejf.ico\\\\\\\",\\\\\\\"sizes\\\\\\\":\\\\\\\"256x256\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"image/x-icon\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L12\\\\\\\",\\\\\\\"3\\\\\\\",{}]]\\\\n\\\"])\",\"Skip to main content\",\"Alvin's Product Lab home\",\"Portfolio (opens in a new tab)\",\"Ship: Launch it to everyone\",\"Kill: Not enough evidence\",\"Keep Running: More data could change it\",\"Skip coaching\",\"Skip to main contentProduct Lab0 XPPortfolioSignificant · Field test 01You're the PM in ship review.Calibration · 1 of 3Use the evidence to Ship, Kill, or Keep Running.HypothesisProgress streaks on the library screen increase daily reading sessionsSession rateDay 14 of 14Day 1Day 7Day 14VariantControlObserved lift+15.4%59,946 variant vs 59,938 control users95% confidence interval+11.3% to +19.4%Variant and control session rates are shown across 14 days. The observed lift is +15.4%, with a 95% confidence interval from +11.3% to +19.4%.The confidence interval is the range of likely lift. Look for whether the whole range clears zero.Make your calibration callShipLaunch it to everyoneKillNot enough evidenceKeep RunningMore data could change itSkip coachingAbout 30 secondsProgress stays in your browser. We use aggregate analytics to improve the games.(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,\\\"1:\\\\\\\"$Sreact.fragment\\\\\\\"\\\\n2:I[92181,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"PreferenceRuntime\\\\\\\"]\\\\n3:I[22016,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"\\\\\\\"]\\\\n4:I[12161,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"LabProfileSummary\\\\\\\"]\\\\n5:I[96668,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"PortfolioReturnLink\\\\\\\"]\\\\n6:I[39756,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\"]\\\\n7:I[37457,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\"]\\\\n8:I[90390,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\"],\\\\\\\"AnalyticsViewTracker\\\\\\\"]\\\\n9:I[29701,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\"],\\\\\\\"LabLanding\\\\\\\"]\\\\na:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"OutletBoundary\\\\\\\"]\\\\nb:\\\\\\\"$Sreact.suspense\\\\\\\"\\\\nd:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"ViewportBoundary\\\\\\\"]\\\\nf:I[97367,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"MetadataBoundary\\\\\\\"]\\\\n11:I[68027,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"default\\\\\\\",1]\\\\n:HL[\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"style\\\\\\\"]\\\\n:HL[\\\\\\\"/_next/static/media/07454f8ad8aaac57-s.p.2kjei9psvcorz.woff2\\\\\\\",\\\\\\\"font\\\\\\\",{\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"font/woff2\\\\\\\"}]\\\\n:HL[\\\\\\\"/_next/static/media/a85fe84266768609-s.p.0h6ig86gwutp4.woff2\\\\\\\",\\\\\\\"font\\\\\\\",{\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"font/woff2\\\\\\\"}]\\\\n\\\"])self.__next_f.push([1,\\\"0:{\\\\\\\"P\\\\\\\":null,\\\\\\\"c\\\\\\\":[\\\\\\\"\\\\\\\",\\\\\\\"\\\\\\\"],\\\\\\\"q\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"i\\\\\\\":false,\\\\\\\"f\\\\\\\":[[[\\\\\\\"\\\\\\\",{\\\\\\\"children\\\\\\\":[\\\\\\\"__PAGE__\\\\\\\",{}]},\\\\\\\"$undefined\\\\\\\",\\\\\\\"$undefined\\\\\\\",16],[[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"c\\\\\\\",{\\\\\\\"children\\\\\\\":[[[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"stylesheet\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"precedence\\\\\\\":\\\\\\\"next\\\\\\\",\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-0\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-1\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-2\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]],[\\\\\\\"$\\\\\\\",\\\\\\\"html\\\\\\\",null,{\\\\\\\"lang\\\\\\\":\\\\\\\"en\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"body\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"nunito_3664f718-module__YSIMpW__className caveat_f3db7932-module__c4SfXa__variable\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"lab-frame flex min-h-screen flex-col\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"a\\\\\\\",null,{\\\\\\\"href\\\\\\\":\\\\\\\"#main-content\\\\\\\",\\\\\\\"className\\\\\\\":\\\\\\\"skip-link\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Skip to main content\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L2\\\\\\\",null,{}],[\\\\\\\"$\\\\\\\",\\\\\\\"header\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"border-b border-ink/10 bg-surface/80\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"nav\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"flex items-center justify-between gap-3 px-5 py-1 min-[360px]:px-7\\\\\\\",\\\\\\\"aria-label\\\\\\\":\\\\\\\"Lab navigation\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L3\\\\\\\",null,{\\\\\\\"href\\\\\\\":\\\\\\\"/\\\\\\\",\\\\\\\"className\\\\\\\":\\\\\\\"inline-flex min-h-11 items-center text-xl font-extrabold text-ink no-underline\\\\\\\",\\\\\\\"aria-label\\\\\\\":\\\\\\\"Alvin's Product Lab home\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Product Lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"flex items-center gap-3 min-[360px]:gap-5\\\\\\\",\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L4\\\\\\\",null,{\\\\\\\"variant\\\\\\\":\\\\\\\"compact\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L5\\\\\\\",null,{}]]}]]}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"id\\\\\\\":\\\\\\\"main-content\\\\\\\",\\\\\\\"tabIndex\\\\\\\":-1,\\\\\\\"className\\\\\\\":\\\\\\\"flex-1 outline-none\\\\\\\",\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$L6\\\\\\\",null,{\\\\\\\"parallelRouterKey\\\\\\\":\\\\\\\"children\\\\\\\",\\\\\\\"error\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"errorStyles\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"errorScripts\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"template\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$L7\\\\\\\",null,{}],\\\\\\\"templateStyles\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"templateScripts\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"notFound\\\\\\\":[[[\\\\\\\"$\\\\\\\",\\\\\\\"title\\\\\\\",null,{\\\\\\\"children\\\\\\\":\\\\\\\"404: This page could not be found.\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"fontFamily\\\\\\\":\\\\\\\"system-ui,\\\\\\\\\\\\\\\"Segoe UI\\\\\\\\\\\\\\\",Roboto,Helvetica,Arial,sans-serif,\\\\\\\\\\\\\\\"Apple Color Emoji\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"Segoe UI Emoji\\\\\\\\\\\\\\\"\\\\\\\",\\\\\\\"height\\\\\\\":\\\\\\\"100vh\\\\\\\",\\\\\\\"textAlign\\\\\\\":\\\\\\\"center\\\\\\\",\\\\\\\"display\\\\\\\":\\\\\\\"flex\\\\\\\",\\\\\\\"flexDirection\\\\\\\":\\\\\\\"column\\\\\\\",\\\\\\\"alignItems\\\\\\\":\\\\\\\"center\\\\\\\",\\\\\\\"justifyContent\\\\\\\":\\\\\\\"center\\\\\\\"},\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"style\\\\\\\",null,{\\\\\\\"dangerouslySetInnerHTML\\\\\\\":{\\\\\\\"__html\\\\\\\":\\\\\\\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\\\\\"}}],[\\\\\\\"$\\\\\\\",\\\\\\\"h1\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"next-error-h1\\\\\\\",\\\\\\\"style\\\\\\\":{\\\\\\\"display\\\\\\\":\\\\\\\"inline-block\\\\\\\",\\\\\\\"margin\\\\\\\":\\\\\\\"0 20px 0 0\\\\\\\",\\\\\\\"padding\\\\\\\":\\\\\\\"0 23px 0 0\\\\\\\",\\\\\\\"fontSize\\\\\\\":24,\\\\\\\"fontWeight\\\\\\\":500,\\\\\\\"verticalAlign\\\\\\\":\\\\\\\"top\\\\\\\",\\\\\\\"lineHeight\\\\\\\":\\\\\\\"49px\\\\\\\"},\\\\\\\"children\\\\\\\":404}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"display\\\\\\\":\\\\\\\"inline-block\\\\\\\"},\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"h2\\\\\\\",null,{\\\\\\\"style\\\\\\\":{\\\\\\\"fontSize\\\\\\\":14,\\\\\\\"fontWeight\\\\\\\":400,\\\\\\\"lineHeight\\\\\\\":\\\\\\\"49px\\\\\\\",\\\\\\\"margin\\\\\\\":0},\\\\\\\"children\\\\\\\":\\\\\\\"This page could not be found.\\\\\\\"}]}]]}]}]],[]],\\\\\\\"forbidden\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"unauthorized\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"footer\\\\\\\",null,{\\\\\\\"className\\\\\\\":\\\\\\\"border-t border-ink/10 px-6 py-5 text-center text-xs leading-relaxed text-ink-soft\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"Progress stays in your browser. We use aggregate analytics to improve the games.\\\\\\\"}]]}],false]}]}]]}],{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"c\\\\\\\",{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"main\\\\\\\",null,{\\\\\\\"children\\\\\\\":[[\\\\\\\"$\\\\\\\",\\\\\\\"$L8\\\\\\\",null,{\\\\\\\"surface\\\\\\\":\\\\\\\"lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L9\\\\\\\",null,{\\\\\\\"scenario\\\\\\\":{\\\\\\\"seed\\\\\\\":2723984669,\\\\\\\"archetype\\\\\\\":\\\\\\\"clean-win\\\\\\\",\\\\\\\"product\\\\\\\":\\\\\\\"Kindling, a reading app\\\\\\\",\\\\\\\"hypothesis\\\\\\\":\\\\\\\"Progress streaks on the library screen increase daily reading sessions\\\\\\\",\\\\\\\"metricName\\\\\\\":\\\\\\\"Session rate\\\\\\\",\\\\\\\"daysPlanned\\\\\\\":14,\\\\\\\"daysRun\\\\\\\":14,\\\\\\\"control\\\\\\\":[{\\\\\\\"n\\\\\\\":4479,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4575,\\\\\\\"c\\\\\\\":345},{\\\\\\\"n\\\\\\\":4032,\\\\\\\"c\\\\\\\":286},{\\\\\\\"n\\\\\\\":4485,\\\\\\\"c\\\\\\\":350},{\\\\\\\"n\\\\\\\":3951,\\\\\\\"c\\\\\\\":302},{\\\\\\\"n\\\\\\\":4279,\\\\\\\"c\\\\\\\":375},{\\\\\\\"n\\\\\\\":3971,\\\\\\\"c\\\\\\\":280},{\\\\\\\"n\\\\\\\":4083,\\\\\\\"c\\\\\\\":324},{\\\\\\\"n\\\\\\\":4727,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4117,\\\\\\\"c\\\\\\\":320},{\\\\\\\"n\\\\\\\":4271,\\\\\\\"c\\\\\\\":343},{\\\\\\\"n\\\\\\\":4548,\\\\\\\"c\\\\\\\":340},{\\\\\\\"n\\\\\\\":4196,\\\\\\\"c\\\\\\\":322},{\\\\\\\"n\\\\\\\":4224,\\\\\\\"c\\\\\\\":332}],\\\\\\\"variant\\\\\\\":[{\\\\\\\"n\\\\\\\":4479,\\\\\\\"c\\\\\\\":384},{\\\\\\\"n\\\\\\\":4576,\\\\\\\"c\\\\\\\":407},{\\\\\\\"n\\\\\\\":4032,\\\\\\\"c\\\\\\\":382},{\\\\\\\"n\\\\\\\":4486,\\\\\\\"c\\\\\\\":409},{\\\\\\\"n\\\\\\\":3951,\\\\\\\"c\\\\\\\":350},{\\\\\\\"n\\\\\\\":4280,\\\\\\\"c\\\\\\\":363},{\\\\\\\"n\\\\\\\":3972,\\\\\\\"c\\\\\\\":374},{\\\\\\\"n\\\\\\\":4084,\\\\\\\"c\\\\\\\":307},{\\\\\\\"n\\\\\\\":4727,\\\\\\\"c\\\\\\\":452},{\\\\\\\"n\\\\\\\":4118,\\\\\\\"c\\\\\\\":356},{\\\\\\\"n\\\\\\\":4271,\\\\\\\"c\\\\\\\":396},{\\\\\\\"n\\\\\\\":4549,\\\\\\\"c\\\\\\\":410},{\\\\\\\"n\\\\\\\":4197,\\\\\\\"c\\\\\\\":386},{\\\\\\\"n\\\\\\\":4224,\\\\\\\"c\\\\\\\":368}],\\\\\\\"totals\\\\\\\":{\\\\\\\"nA\\\\\\\":59938,\\\\\\\"cA\\\\\\\":4631,\\\\\\\"nB\\\\\\\":59946,\\\\\\\"cB\\\\\\\":5344},\\\\\\\"observed\\\\\\\":{\\\\\\\"relLift\\\\\\\":0.15380842686439108,\\\\\\\"ciLow\\\\\\\":0.1133468905211935,\\\\\\\"ciHigh\\\\\\\":0.1942699632075887,\\\\\\\"pValue\\\\\\\":9.370282327836321e-14,\\\\\\\"significant\\\\\\\":true},\\\\\\\"note\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"segments\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"truth\\\\\\\":{\\\\\\\"trueLiftPct\\\\\\\":12.717830213718118,\\\\\\\"correctCall\\\\\\\":\\\\\\\"ship\\\\\\\",\\\\\\\"explanation\\\\\\\":\\\\\\\"No trap. The test ran its full two weeks, the lift held steady, and the CI (+11.3% to +19.4%) excludes zero. True lift was +12.7%. Ship it.\\\\\\\",\\\\\\\"trapName\\\\\\\":\\\\\\\"Clean win\\\\\\\"}}}]]}],[[\\\\\\\"$\\\\\\\",\\\\\\\"script\\\\\\\",\\\\\\\"script-0\\\\\\\",{\\\\\\\"src\\\\\\\":\\\\\\\"/_next/static/chunks/3dxlcy5jbm2_h.js\\\\\\\",\\\\\\\"async\\\\\\\":true,\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]],[\\\\\\\"$\\\\\\\",\\\\\\\"$La\\\\\\\",null,{\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$b\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"Next.MetadataOutlet\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"$@c\\\\\\\"}]}]]}],{},null,false,null]},null,false,null],[\\\\\\\"$\\\\\\\",\\\\\\\"$1\\\\\\\",\\\\\\\"h\\\\\\\",{\\\\\\\"children\\\\\\\":[null,[\\\\\\\"$\\\\\\\",\\\\\\\"$Ld\\\\\\\",null,{\\\\\\\"children\\\\\\\":\\\\\\\"$Le\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"div\\\\\\\",null,{\\\\\\\"hidden\\\\\\\":true,\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$Lf\\\\\\\",null,{\\\\\\\"children\\\\\\\":[\\\\\\\"$\\\\\\\",\\\\\\\"$b\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"Next.Metadata\\\\\\\",\\\\\\\"children\\\\\\\":\\\\\\\"$L10\\\\\\\"}]}]}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",null,{\\\\\\\"name\\\\\\\":\\\\\\\"next-size-adjust\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"\\\\\\\"}]]}],false]],\\\\\\\"m\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"G\\\\\\\":[\\\\\\\"$11\\\\\\\",[[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"stylesheet\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/_next/static/chunks/0uey2penqoff_.css\\\\\\\",\\\\\\\"precedence\\\\\\\":\\\\\\\"next\\\\\\\",\\\\\\\"crossOrigin\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"nonce\\\\\\\":\\\\\\\"$undefined\\\\\\\"}]]],\\\\\\\"S\\\\\\\":true,\\\\\\\"h\\\\\\\":null,\\\\\\\"s\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"l\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"p\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"d\\\\\\\":\\\\\\\"$undefined\\\\\\\",\\\\\\\"b\\\\\\\":\\\\\\\"qi7-Wb5bvR2CWG-SSF6Ki\\\\\\\"}\\\\n\\\"])self.__next_f.push([1,\\\"e:[[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"charSet\\\\\\\":\\\\\\\"utf-8\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"1\\\\\\\",{\\\\\\\"name\\\\\\\":\\\\\\\"viewport\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"width=device-width, initial-scale=1\\\\\\\"}]]\\\\n\\\"])self.__next_f.push([1,\\\"12:I[27201,[\\\\\\\"/_next/static/chunks/1hqqbz4r_tia3.js\\\\\\\",\\\\\\\"/_next/static/chunks/3loj92dlyi_jk.js\\\\\\\",\\\\\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\\\\\"],\\\\\\\"IconMark\\\\\\\"]\\\\nc:null\\\\n10:[[\\\\\\\"$\\\\\\\",\\\\\\\"title\\\\\\\",\\\\\\\"0\\\\\\\",{\\\\\\\"children\\\\\\\":\\\\\\\"Alvin's Product Lab\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"meta\\\\\\\",\\\\\\\"1\\\\\\\",{\\\\\\\"name\\\\\\\":\\\\\\\"description\\\\\\\",\\\\\\\"content\\\\\\\":\\\\\\\"Mobile-first games that make product judgment visible.\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"link\\\\\\\",\\\\\\\"2\\\\\\\",{\\\\\\\"rel\\\\\\\":\\\\\\\"icon\\\\\\\",\\\\\\\"href\\\\\\\":\\\\\\\"/favicon.ico?favicon.2vob68tjqpejf.ico\\\\\\\",\\\\\\\"sizes\\\\\\\":\\\\\\\"256x256\\\\\\\",\\\\\\\"type\\\\\\\":\\\\\\\"image/x-icon\\\\\\\"}],[\\\\\\\"$\\\\\\\",\\\\\\\"$L12\\\\\\\",\\\\\\\"3\\\\\\\",{}]]\\\\n\\\"])\"]"
+    },
+    {
+      "name": "keyboard focus has a visible outline",
+      "passed": true,
+      "detail": "{\"outlineStyle\":\"solid\",\"outlineWidth\":\"4px\"}"
+    },
+    {
+      "name": "calibration reveal awards the earned 50 XP baseline",
+      "passed": true,
+      "detail": "{\"campaign\":{},\"warmupDone\":true,\"dailyStreak\":0,\"lastDailyDate\":null,\"lastDailyCorrect\":null,\"shields\":0,\"xp\":50,\"soundOn\":true,\"campaignStreak\":0,\"campaignCompleteTracked\":false}"
+    },
+    {
+      "name": "calibration does not pre-complete campaign case 1",
+      "passed": true,
+      "detail": "{}"
+    },
+    {
+      "name": "header reflects earned XP after the decision",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "decisive confidence interval is highlighted on reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "evidence remains visible through the reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "390px reveal state fits without vertical overflow",
+      "passed": true,
+      "detail": "{\"clientWidth\":390,\"clientHeight\":844,\"scrollWidth\":390,\"scrollHeight\":844}"
+    },
+    {
+      "name": "campaign handoff starts at case 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign handoff keeps stars at zero",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "replaying calibration does not grant a second baseline",
+      "passed": true,
+      "detail": "{\"campaign\":{},\"warmupDone\":true,\"dailyStreak\":0,\"lastDailyDate\":null,\"lastDailyCorrect\":null,\"shields\":0,\"xp\":50,\"soundOn\":true,\"campaignStreak\":0,\"campaignCompleteTracked\":false}"
+    },
+    {
+      "name": "replay still provides corrective feedback",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Kill produces its matching reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Kill completes calibration exactly once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Keep Running produces its matching reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Keep Running completes calibration exactly once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "selected landing call is encoded in the calibration CTA",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "landing call opens the matching calibration reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "landing call earns the baseline once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "cold /significant redirects to calibration",
+      "passed": true,
+      "detail": "http://127.0.0.1:3103/significant/calibration"
+    },
+    {
+      "name": "cold /significant/play?level=1 redirects to calibration",
+      "passed": true,
+      "detail": "http://127.0.0.1:3103/significant/calibration"
+    },
+    {
+      "name": "cold /significant/daily redirects to calibration",
+      "passed": true,
+      "detail": "http://127.0.0.1:3103/significant/calibration"
+    },
+    {
+      "name": "legacy calibration URL preserves a validated call",
+      "passed": true,
+      "detail": "http://127.0.0.1:3103/significant/calibration?call=kill"
+    },
+    {
+      "name": "legacy validated call opens its matching reveal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "malformed call is ignored safely",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "malformed call leaves all decisions available",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "320px calibration has no horizontal overflow",
+      "passed": true,
+      "detail": "{\"clientWidth\":320,\"clientHeight\":568,\"scrollWidth\":320,\"scrollHeight\":568}"
+    },
+    {
+      "name": "320px calibration fits the short viewport",
+      "passed": true,
+      "detail": "{\"clientWidth\":320,\"clientHeight\":568,\"scrollWidth\":320,\"scrollHeight\":568}"
+    },
+    {
+      "name": "visible 320px controls meet 44px target size",
+      "passed": true,
+      "detail": "[{\"name\":\"Alvin's Product Lab home\",\"tag\":\"a\",\"width\":115,\"height\":44,\"top\":4,\"bottom\":48},{\"name\":\"Portfolio (opens in a new tab)\",\"tag\":\"a\",\"width\":79,\"height\":44,\"top\":4,\"bottom\":48},{\"name\":\"Ship: Launch it to everyone\",\"tag\":\"button\",\"width\":99,\"height\":72,\"top\":420,\"bottom\":492},{\"name\":\"Kill: Not enough evidence\",\"tag\":\"button\",\"width\":99,\"height\":72,\"top\":420,\"bottom\":492},{\"name\":\"Keep Running: More data could change it\",\"tag\":\"button\",\"width\":99,\"height\":72,\"top\":420,\"bottom\":492}]"
+    },
+    {
+      "name": "desktop keeps the mobile app locked to 390px",
+      "passed": true,
+      "detail": "{\"x\":525,\"y\":0,\"width\":390,\"height\":900,\"bottom\":900}"
+    },
+    {
+      "name": "desktop centers the locked mobile app",
+      "passed": true,
+      "detail": "{\"x\":525,\"y\":0,\"width\":390,\"height\":900,\"bottom\":900}"
+    },
+    {
+      "name": "browser diagnostics are empty",
+      "passed": true,
+      "detail": "[]"
+    }
+  ],
+  "diagnostics": [],
+  "metrics": {
+    "decision390": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "clientWidth": 390,
+        "clientHeight": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844
+      },
+      "regions": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "bottom": 844
+        },
+        "evidence": {
+          "x": 28,
+          "y": 314.5,
+          "width": 334,
+          "height": 289.90625,
+          "bottom": 604.40625
+        },
+        "decisions": {
+          "x": 12,
+          "y": 704.40625,
+          "width": 366,
+          "height": 84,
+          "bottom": 788.40625
+        }
+      },
+      "controls": [
+        {
+          "name": "Alvin's Product Lab home",
+          "tag": "a",
+          "width": 115,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "Portfolio (opens in a new tab)",
+          "tag": "a",
+          "width": 79,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "Ship: Launch it to everyone",
+          "tag": "button",
+          "width": 117,
+          "height": 84,
+          "top": 704,
+          "bottom": 788
+        },
+        {
+          "name": "Kill: Not enough evidence",
+          "tag": "button",
+          "width": 117,
+          "height": 84,
+          "top": 704,
+          "bottom": 788
+        },
+        {
+          "name": "Keep Running: More data could change it",
+          "tag": "button",
+          "width": 117,
+          "height": 84,
+          "top": 704,
+          "bottom": 788
+        },
+        {
+          "name": "Skip coaching",
+          "tag": "button",
+          "width": 78,
+          "height": 44,
+          "top": 796,
+          "bottom": 840
+        }
+      ]
+    },
+    "reveal390": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "clientWidth": 390,
+        "clientHeight": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844
+      },
+      "regions": {
+        "reveal": {
+          "x": 28,
+          "y": 680.40625,
+          "width": 334,
+          "height": 160,
+          "bottom": 840.40625
+        }
+      }
+    },
+    "decision320": {
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "document": {
+        "clientWidth": 320,
+        "clientHeight": 568,
+        "scrollWidth": 320,
+        "scrollHeight": 568
+      },
+      "regions": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 568,
+          "bottom": 568
+        }
+      },
+      "controls": [
+        {
+          "name": "Alvin's Product Lab home",
+          "tag": "a",
+          "width": 115,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "Portfolio (opens in a new tab)",
+          "tag": "a",
+          "width": 79,
+          "height": 44,
+          "top": 4,
+          "bottom": 48
+        },
+        {
+          "name": "Ship: Launch it to everyone",
+          "tag": "button",
+          "width": 99,
+          "height": 72,
+          "top": 420,
+          "bottom": 492
+        },
+        {
+          "name": "Kill: Not enough evidence",
+          "tag": "button",
+          "width": 99,
+          "height": 72,
+          "top": 420,
+          "bottom": 492
+        },
+        {
+          "name": "Keep Running: More data could change it",
+          "tag": "button",
+          "width": 99,
+          "height": 72,
+          "top": 420,
+          "bottom": 492
+        }
+      ]
+    },
+    "desktop1440": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "document": {
+        "clientWidth": 1440,
+        "clientHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900
+      },
+      "regions": {
+        "frame": {
+          "x": 525,
+          "y": 0,
+          "width": 390,
+          "height": 900,
+          "bottom": 900
+        }
+      }
+    }
+  }
+}

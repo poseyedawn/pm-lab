@@ -1,0 +1,95 @@
+{
+  "origin": "http://127.0.0.1:3110",
+  "checks": [
+    {
+      "id": "LAB-DISCLOSURE",
+      "passed": true,
+      "details": "Compact aggregate-analytics disclosure is visible"
+    },
+    {
+      "id": "LAB-MOBILE-FIT",
+      "passed": true,
+      "details": "{\"width\":390,\"height\":844,\"scrollWidth\":390,\"scrollHeight\":844,\"canScrollX\":false,\"main\":{\"left\":0,\"right\":390,\"top\":0,\"bottom\":452}}"
+    },
+    {
+      "id": "CASE-STUDY-SOURCE",
+      "passed": true,
+      "details": "href=/significant/about?from=significant"
+    },
+    {
+      "id": "LEVEL-/significant/play",
+      "passed": true,
+      "details": "http://127.0.0.1:3110/significant/play?level=1"
+    },
+    {
+      "id": "LEVEL-/significant/play?level=",
+      "passed": true,
+      "details": "http://127.0.0.1:3110/significant/play?level=1"
+    },
+    {
+      "id": "LEVEL-/significant/play?level=1.5",
+      "passed": true,
+      "details": "http://127.0.0.1:3110/significant/play?level=1"
+    },
+    {
+      "id": "LEVEL-/significant/play?level=-1",
+      "passed": true,
+      "details": "http://127.0.0.1:3110/significant/play?level=1"
+    },
+    {
+      "id": "LEVEL-/significant/play?level=NaN",
+      "passed": true,
+      "details": "http://127.0.0.1:3110/significant/play?level=1"
+    },
+    {
+      "id": "LEVEL-/significant/play?level=0",
+      "passed": true,
+      "details": "http://127.0.0.1:3110/significant/play?level=1"
+    },
+    {
+      "id": "LEVEL-/significant/play?level=11",
+      "passed": true,
+      "details": "http://127.0.0.1:3110/significant/play?level=1"
+    },
+    {
+      "id": "LEVEL-/significant/play?level=999",
+      "passed": true,
+      "details": "http://127.0.0.1:3110/significant/play?level=1"
+    },
+    {
+      "id": "LEVEL-PERSISTENCE",
+      "passed": true,
+      "details": "[\"1\"]"
+    },
+    {
+      "id": "ABOUT-TRUTHFUL",
+      "passed": true,
+      "details": "Truthful limited-analytics copy is present"
+    },
+    {
+      "id": "ABOUT-NO-ABSOLUTE-CLAIM",
+      "passed": true,
+      "details": "Old absolute claims are absent"
+    },
+    {
+      "id": "SHARE-SUCCESS",
+      "passed": true,
+      "details": "Visible success confirmation follows clipboard resolution"
+    },
+    {
+      "id": "SHARE-MOBILE-FIT",
+      "passed": true,
+      "details": "{\"width\":390,\"height\":844,\"scrollWidth\":390,\"scrollHeight\":844,\"canScrollX\":false,\"main\":{\"left\":0,\"right\":390,\"top\":0,\"bottom\":348}}"
+    },
+    {
+      "id": "SHARE-FAILURE",
+      "passed": true,
+      "details": "Clipboard rejection produces visible recovery guidance"
+    },
+    {
+      "id": "SHARE-FALLBACK",
+      "passed": true,
+      "details": "Selectable text fallback remains available"
+    }
+  ]
+}

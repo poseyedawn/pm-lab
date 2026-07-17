@@ -35,15 +35,18 @@ export const defaultState = (): SignificantState => ({
 export const xpForCall = (correct: boolean, combo: number): number =>
   correct ? 100 * Math.min(combo, 3) : 0;
 
+export const CALIBRATION_XP = 50;
+
 export const addXp = (s: SignificantState, amount: number): SignificantState => ({
   ...s,
   xp: s.xp + amount,
 });
 
-export const completeWarmup = (s: SignificantState): SignificantState => ({
-  ...s,
-  warmupDone: true,
-});
+export const completeCalibration = (s: SignificantState): SignificantState => (
+  s.warmupDone
+    ? s
+    : { ...s, warmupDone: true, xp: s.xp + CALIBRATION_XP }
+);
 
 export function recordCampaignResult(
   s: SignificantState,
@@ -106,9 +109,6 @@ export function saveState(s: SignificantState): void {
   try {
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(KEY, raw);
-      // Lab-wide profile shared by all pm-lab games. With one game,
-      // lab XP === significant XP; future games merge their XP in here.
-      window.localStorage.setItem('pmlab:profile:v1', JSON.stringify({ xp: s.xp }));
     }
   } catch {
     // localStorage threw; memoryFallback already holds the latest state above.

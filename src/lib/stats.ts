@@ -1,13 +1,13 @@
 import { normal, type RNG } from '@/lib/prng';
 
-/** Binomial draw via normal approximation — generators guarantee n*p >= 5. */
+/** Binomial draw via normal approximation. Generators guarantee n*p >= 5. */
 export function binomialDraw(rng: RNG, n: number, p: number): number {
   const mean = n * p;
   const sd = Math.sqrt(n * p * (1 - p));
   return Math.min(n, Math.max(0, Math.round(mean + normal(rng) * sd)));
 }
 
-/** Standard normal CDF (Abramowitz–Stegun 26.2.17, |err| < 7.5e-8). */
+/** Standard normal CDF (Abramowitz and Stegun 26.2.17, |err| < 7.5e-8). */
 export function phi(z: number): number {
   const t = 1 / (1 + 0.2316419 * Math.abs(z));
   const d = 0.3989423 * Math.exp((-z * z) / 2);

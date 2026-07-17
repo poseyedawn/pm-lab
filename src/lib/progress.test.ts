@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
-  addXp, defaultState, loadState, recordCampaignResult, recordDaily, saveState, xpForCall,
+  addXp, CALIBRATION_XP, completeCalibration, defaultState, loadState, recordCampaignResult,
+  recordDaily, saveState, xpForCall,
 } from '@/lib/progress';
 
 describe('campaign results', () => {
@@ -61,6 +62,15 @@ describe('xp', () => {
     expect(xpForCall(true, 9)).toBe(300);
     expect(xpForCall(false, 5)).toBe(0);
     expect(addXp(defaultState(), 250).xp).toBe(250);
+  });
+
+  it('awards the baseline only after calibration and never awards it twice', () => {
+    const fresh = defaultState();
+    expect(fresh).toMatchObject({ warmupDone: false, xp: 0 });
+
+    const completed = completeCalibration(fresh);
+    expect(completed).toMatchObject({ warmupDone: true, xp: CALIBRATION_XP });
+    expect(completeCalibration(completed)).toEqual(completed);
   });
 });
 

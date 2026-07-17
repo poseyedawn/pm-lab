@@ -10,7 +10,7 @@ export function mulberry32(seed: number): RNG {
   };
 }
 
-/** FNV-1a 32-bit — stable string → seed. */
+/** FNV-1a 32-bit hash that maps a stable string to a seed. */
 export function hashString(s: string): number {
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) {

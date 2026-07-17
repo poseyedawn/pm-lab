@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePreferences } from '@/hooks/lab/usePreferences';
 
 interface CountUpProps {
   value: number;
@@ -11,11 +12,12 @@ interface CountUpProps {
 export function CountUp({ value, durationMs = 600, className }: CountUpProps) {
   const [shown, setShown] = useState(value);
   const fromRef = useRef(value);
+  const { reducedMotion } = usePreferences();
 
   useEffect(() => {
     const from = fromRef.current;
     fromRef.current = value;
-    if (durationMs === 0 || from === value) {
+    if (reducedMotion || durationMs === 0 || from === value) {
       setShown(value);
       return;
     }
@@ -29,7 +31,7 @@ export function CountUp({ value, durationMs = 600, className }: CountUpProps) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [value, durationMs]);
+  }, [value, durationMs, reducedMotion]);
 
   return <span className={className}>{shown}</span>;
 }

@@ -11,6 +11,7 @@ describe('ReadoutCard', () => {
     expect(screen.getByText(s.hypothesis)).toBeInTheDocument();
     expect(screen.getByText(s.metricName)).toBeInTheDocument();
     expect(screen.getByText(`Day ${s.daysRun} of ${s.daysPlanned}`)).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /daily conversion rate, control vs variant/i })).toBeInTheDocument();
   });
   it('shows the note chip and segment table when present', () => {
     const s = generateScenario(42, 'simpson');

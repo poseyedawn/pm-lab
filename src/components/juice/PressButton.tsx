@@ -1,10 +1,10 @@
 'use client';
 
 const STYLES = {
-  brand: 'bg-brand-deep text-white shadow-[0_4px_0_rgba(0,0,0,0.35)]',
-  win: 'bg-win-deep text-white shadow-[0_4px_0_rgba(0,0,0,0.35)]',
-  lose: 'bg-lose-deep text-white shadow-[0_4px_0_rgba(0,0,0,0.35)]',
-  sky: 'bg-sky-deep text-white shadow-[0_4px_0_rgba(0,0,0,0.35)]',
+  brand: 'bg-brand-deep text-white shadow-[0_4px_0_#401875]',
+  win: 'bg-win-deep text-white shadow-[0_4px_0_#0d682f]',
+  lose: 'bg-coral text-white shadow-[0_4px_0_#aa2248]',
+  sky: 'bg-cyan text-ink shadow-[0_4px_0_#208c92]',
 } as const;
 
 interface PressButtonProps {

@@ -1,12 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CAMPAIGN_LEVELS } from '@/lib/engine/scenario';
 import type { ArchetypeId } from '@/lib/engine/types';
 import {
-  addXp, completeWarmup, loadState, recordCampaignResult, saveState,
+  addXp, completeCalibration as completeCalibrationState, loadState, recordCampaignResult, saveState,
   type SignificantState,
 } from '@/lib/progress';
+import { significantGameProgress } from '@/lib/labProgress';
+import { saveGameProgress } from '@/services/labProfileService';
 
 export interface LevelStatus {
   id: number;
@@ -36,24 +38,27 @@ export const iqTitle = (correctCount: number): string =>
 
 export function useCampaign() {
   const [state, setState] = useState<SignificantState | null>(null);
+  const [visitor, setVisitor] = useState<'first' | 'returning' | null>(null);
+  const stateRef = useRef<SignificantState | null>(null);
 
   useEffect(() => {
-    let s = loadState();
-    if (!s.warmupDone) {
-      s = addXp(completeWarmup(s), 50); // endowed progress: path starts non-empty
-      saveState(s);
-    }
+    const s = loadState();
+    const entryVisitor = s.warmupDone ? 'returning' : 'first';
+    stateRef.current = s;
+    saveGameProgress(significantGameProgress(s, null));
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage on mount, not a derived-state loop
     setState(s);
+    setVisitor(entryVisitor);
   }, []);
 
   const mutate = useCallback((fn: (s: SignificantState) => SignificantState) => {
-    setState((prev) => {
-      if (!prev) return prev;
-      const next = fn(prev);
-      saveState(next);
-      return next;
-    });
+    const prev = stateRef.current;
+    if (!prev) return;
+    const next = fn(prev);
+    stateRef.current = next;
+    saveState(next);
+    saveGameProgress(significantGameProgress(next, new Date().toISOString()));
+    setState(next);
   }, []);
 
   const completeLevel = useCallback(
@@ -62,8 +67,8 @@ export function useCampaign() {
     [mutate],
   );
 
-  const toggleSound = useCallback(
-    () => mutate((s) => ({ ...s, soundOn: !s.soundOn })),
+  const completeCalibration = useCallback(
+    () => mutate(completeCalibrationState),
     [mutate],
   );
 
@@ -75,12 +80,13 @@ export function useCampaign() {
   const levels = state ? levelStatuses(state) : [];
   return {
     ready: state !== null,
+    visitor,
     state: state ?? null,
     levels,
     totalStars: levels.reduce((sum, l) => sum + l.stars, 0),
     allDone: levels.length > 0 && levels.every((l) => l.status === 'done'),
+    completeCalibration,
     completeLevel,
-    toggleSound,
     markCampaignCompleteTracked,
   };
 }

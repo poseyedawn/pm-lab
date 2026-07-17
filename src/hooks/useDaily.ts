@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { dailyArchetype, dailySeed, dayNumber } from '@/lib/engine/daily';
 import { generateScenario } from '@/lib/engine/scenario';
 import { addXp, loadState, recordDaily, saveState, type SignificantState } from '@/lib/progress';
+import { significantGameProgress } from '@/lib/labProgress';
+import { saveGameProgress } from '@/services/labProfileService';
 
 export function localToday(now: Date): string {
   const y = now.getFullYear();
@@ -55,30 +57,21 @@ export function useDaily() {
       if (!prev) return prev;
       const next = addXp(recordDaily(prev, date, correct), xp);
       saveState(next);
-      return next;
-    });
-  }, []);
-
-  const toggleSound = useCallback(() => {
-    setState((prev) => {
-      if (!prev) return prev;
-      const next = { ...prev, soundOn: !prev.soundOn };
-      saveState(next);
+      saveGameProgress(significantGameProgress(next, new Date().toISOString()));
       return next;
     });
   }, []);
 
   return {
     ready: state !== null,
+    calibrated: state?.warmupDone ?? false,
     today,
     scenario,
     playedToday: state?.lastDailyDate === today,
     lastCorrect: state?.lastDailyCorrect ?? null,
     streak: state?.dailyStreak ?? 0,
     shields: state?.shields ?? 0,
-    soundOn: state?.soundOn ?? true,
     complete,
-    toggleSound,
     countdown,
   };
 }
