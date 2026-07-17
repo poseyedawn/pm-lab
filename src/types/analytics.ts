@@ -1,5 +1,16 @@
-export type GameId = 'significant' | 'ship-it';
+import type { GameId } from '@/types/lab';
+
+export type { GameId };
 export type GameMode = 'calibration' | 'campaign' | 'daily';
+export type ShipItMode = 'free' | 'daily';
+export type ShipItRating =
+  | 'PIP'
+  | 'Meets Expectations'
+  | 'Exceeds Expectations'
+  | 'Promoted'
+  | 'CEO-in-waiting';
+export type ExceptionMode = 'campaign' | 'daily';
+export type ExceptionActionName = 'approve' | 'correct' | 'escalate';
 export type ExperimentCall = 'ship' | 'kill' | 'keep';
 export type ExperimentArchetype =
   | 'clean-win'
@@ -18,7 +29,7 @@ export interface AnalyticsEventMap {
     referrerClass: 'direct' | 'internal' | 'portfolio' | 'external';
     viewportClass: 'mobile' | 'tablet' | 'desktop';
   };
-  game_selected: { gameId: GameId; placement: 'lab_primary' };
+  game_selected: { gameId: GameId; placement: 'lab_primary' | 'lab_more' };
   game_intro_viewed: { gameId: GameId; visitor: 'first' | 'returning' };
   calibration_started: { gameId: GameId };
   decision_made:
@@ -44,6 +55,23 @@ export interface AnalyticsEventMap {
   settings_changed:
     | { setting: 'sound' | 'haptics'; enabled: boolean }
     | { setting: 'motion'; value: 'system' | 'reduced' | 'full' };
+  shipit_run_started: { mode: ShipItMode };
+  shipit_card_choice: { cardId: string; dir: 'left' | 'right' };
+  shipit_run_completed: { mode: ShipItMode; rating: ShipItRating; weeks: number; died: boolean };
+  shipit_daily_completed: { rating: ShipItRating; streakBand: '1-2' | '3-6' | '7-29' | '30+' };
+  shipit_streak_extended: { streakBand: '1-2' | '3-6' | '7-29' | '30+' };
+  exception_run_started: { mode: ExceptionMode; seed: number };
+  exception_case_opened: { mode: ExceptionMode; shift: number; caseId: string };
+  exception_evidence_viewed: { mode: ExceptionMode; caseId: string; evidenceId: string };
+  exception_decision_submitted: { mode: ExceptionMode; caseId: string; action: ExceptionActionName };
+  exception_shift_ended: { mode: ExceptionMode; shift: number; remaining: number };
+  exception_run_completed: {
+    mode: ExceptionMode;
+    profile: string;
+    safety: number;
+    service: number;
+    capacity: number;
+  };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;

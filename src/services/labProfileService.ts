@@ -5,7 +5,7 @@ export const LAB_PROFILE_STORAGE_KEY = 'pmlab:profile:v2';
 const LEGACY_PROFILE_STORAGE_KEY = 'pmlab:profile:v1';
 const PROFILE_CHANGE_EVENT = 'pmlab:profile-change';
 
-const gameIdSchema = z.enum(['significant', 'ship-it']);
+const gameIdSchema = z.enum(['significant', 'ship-it', 'exception-room']);
 const gameProgressSchema = z.object({
   gameId: gameIdSchema,
   xp: z.number().int().nonnegative(),
@@ -17,6 +17,7 @@ const profileSchema = z.object({
   games: z.object({
     significant: gameProgressSchema.optional(),
     'ship-it': gameProgressSchema.optional(),
+    'exception-room': gameProgressSchema.optional(),
   }).strict(),
 }).strict();
 const legacyProfileSchema = z.object({ xp: z.number().int().nonnegative() }).passthrough();

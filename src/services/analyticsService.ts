@@ -2,7 +2,16 @@ import { track as vercelTrack } from '@vercel/analytics';
 import { z } from 'zod';
 import type { AnalyticsEventName, AnalyticsEventProperties } from '@/types/analytics';
 
-const gameIdSchema = z.enum(['significant', 'ship-it']);
+const gameIdSchema = z.enum(['significant', 'ship-it', 'exception-room']);
+const shipitModeSchema = z.enum(['free', 'daily']);
+const shipitRatingSchema = z.enum([
+  'PIP',
+  'Meets Expectations',
+  'Exceeds Expectations',
+  'Promoted',
+  'CEO-in-waiting',
+]);
+const exceptionModeSchema = z.enum(['campaign', 'daily']);
 const modeSchema = z.enum(['calibration', 'campaign', 'daily']);
 const archetypeSchema = z.enum([
   'clean-win',
@@ -21,7 +30,7 @@ const clipboardSurfaceSchema = z.enum(['daily', 'profile']);
 
 const analyticsEventSchema = z.discriminatedUnion('name', [
   z.object({ name: z.literal('lab_viewed'), referrerClass: z.enum(['direct', 'internal', 'portfolio', 'external']), viewportClass: z.enum(['mobile', 'tablet', 'desktop']) }).strict(),
-  z.object({ name: z.literal('game_selected'), gameId: gameIdSchema, placement: z.literal('lab_primary') }).strict(),
+  z.object({ name: z.literal('game_selected'), gameId: gameIdSchema, placement: z.enum(['lab_primary', 'lab_more']) }).strict(),
   z.object({ name: z.literal('game_intro_viewed'), gameId: gameIdSchema, visitor: z.enum(['first', 'returning']) }).strict(),
   z.object({ name: z.literal('calibration_started'), gameId: gameIdSchema }).strict(),
   z.object({ name: z.literal('decision_made'), gameId: gameIdSchema, mode: modeSchema, level: z.union([z.number().int().min(1).max(10), z.literal('calibration'), z.literal('daily')]), call: z.enum(['ship', 'kill', 'keep']) })
@@ -58,6 +67,17 @@ const analyticsEventSchema = z.discriminatedUnion('name', [
     const isMotion = event.setting === 'motion' && event.value !== undefined && event.enabled === undefined;
     if (!isToggle && !isMotion) context.addIssue({ code: 'custom', message: 'Setting and value must match' });
   }),
+  z.object({ name: z.literal('shipit_run_started'), mode: shipitModeSchema }).strict(),
+  z.object({ name: z.literal('shipit_card_choice'), cardId: z.string().min(1).max(80), dir: z.enum(['left', 'right']) }).strict(),
+  z.object({ name: z.literal('shipit_run_completed'), mode: shipitModeSchema, rating: shipitRatingSchema, weeks: z.number().int().min(1).max(18), died: z.boolean() }).strict(),
+  z.object({ name: z.literal('shipit_daily_completed'), rating: shipitRatingSchema, streakBand: streakBandSchema }).strict(),
+  z.object({ name: z.literal('shipit_streak_extended'), streakBand: streakBandSchema }).strict(),
+  z.object({ name: z.literal('exception_run_started'), mode: exceptionModeSchema, seed: z.number().int() }).strict(),
+  z.object({ name: z.literal('exception_case_opened'), mode: exceptionModeSchema, shift: z.number().int().nonnegative(), caseId: z.string().min(1).max(80) }).strict(),
+  z.object({ name: z.literal('exception_evidence_viewed'), mode: exceptionModeSchema, caseId: z.string().min(1).max(80), evidenceId: z.string().min(1).max(80) }).strict(),
+  z.object({ name: z.literal('exception_decision_submitted'), mode: exceptionModeSchema, caseId: z.string().min(1).max(80), action: z.enum(['approve', 'correct', 'escalate']) }).strict(),
+  z.object({ name: z.literal('exception_shift_ended'), mode: exceptionModeSchema, shift: z.number().int().nonnegative(), remaining: z.number().int().nonnegative() }).strict(),
+  z.object({ name: z.literal('exception_run_completed'), mode: exceptionModeSchema, profile: z.string().min(1).max(80), safety: z.number(), service: z.number(), capacity: z.number() }).strict(),
 ]);
 
 export function validateAnalyticsEvent(value: unknown): boolean {

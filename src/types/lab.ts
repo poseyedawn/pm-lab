@@ -1,7 +1,7 @@
-export type GameId = 'significant' | 'ship-it';
+export type GameId = 'significant' | 'ship-it' | 'exception-room';
 
 export interface GameTheme {
-  accent: 'violet' | 'orange';
+  accent: 'violet' | 'orange' | 'teal';
   iconKey: GameId;
 }
 
