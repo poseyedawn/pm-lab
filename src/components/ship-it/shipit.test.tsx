@@ -1,15 +1,15 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { DilemmaCard } from '@/components/shipit/DilemmaCard';
-import { ChoiceButtons } from '@/components/shipit/ChoiceButtons';
-import { FailureScreen } from '@/components/shipit/FailureScreen';
-import { ReviewCard } from '@/components/shipit/ReviewCard';
-import { RunScreen } from '@/components/shipit/RunScreen';
-import type { Card } from '@/lib/shipit/types';
+import { DilemmaCard } from '@/components/ship-it/DilemmaCard';
+import { ChoiceButtons } from '@/components/ship-it/ChoiceButtons';
+import { FailureScreen } from '@/components/ship-it/FailureScreen';
+import { ReviewCard } from '@/components/ship-it/ReviewCard';
+import { RunScreen } from '@/components/ship-it/RunScreen';
+import type { Card } from '@/lib/ship-it/types';
 
 afterEach(cleanup);
-import { MetersHud } from '@/components/shipit/MetersHud';
-import { HintDots } from '@/components/shipit/HintDots';
+import { MetersHud } from '@/components/ship-it/MetersHud';
+import { HintDots } from '@/components/ship-it/HintDots';
 
 describe('MetersHud', () => {
   it('renders 4 labelled meters with accessible values and the week chip', () => {
@@ -101,7 +101,7 @@ describe('ReviewCard', () => {
 describe('RunScreen', () => {
   it('plays a full run via buttons and lands on the review exactly once', () => {
     const ends: string[] = [];
-    render(<RunScreen seed={42} mode="shipit-free" soundOn={false} onRunEnd={(r) => ends.push(r.rating)} onRunBack={() => {}} />);
+    render(<RunScreen seed={42} mode="free" soundOn={false} onRunEnd={(r) => ends.push(r.rating)} onRunBack={() => {}} />);
     for (let i = 0; i < 40; i++) {
       const btn = screen.queryAllByRole('button').find((b) => b.textContent && !/sound|review|run it back|share/i.test(b.textContent));
       if (!btn) break;

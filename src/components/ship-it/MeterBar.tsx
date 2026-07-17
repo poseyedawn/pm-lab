@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { METER_INFO, type MeterId } from '@/lib/shipit/types';
+import { METER_INFO, type MeterId } from '@/lib/ship-it/types';
 
 interface MeterBarProps {
   id: MeterId;

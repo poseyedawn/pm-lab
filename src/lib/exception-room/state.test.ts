@@ -36,10 +36,12 @@ describe('Exception Room progress', () => {
     expect(progress).toMatchObject({ xp: 150, dailyStreak: 1 });
   });
 
-  it('contributes Exception Room XP to the shared Lab profile', () => {
-    window.localStorage.setItem('pmlab:significant:v1', JSON.stringify({ xp: 100 }));
-    window.localStorage.setItem('pmlab:shipit:v1', JSON.stringify({ xp: 250 }));
-    saveExceptionRoomState({ ...defaultExceptionRoomState(), xp: 200 });
-    expect(JSON.parse(window.localStorage.getItem('pmlab:profile:v1')!)).toEqual({ xp: 550 });
+  it('records Exception Room progress in the lab profile (v2)', () => {
+    saveExceptionRoomState({ ...defaultExceptionRoomState(), xp: 200, campaignComplete: true });
+    const profile = JSON.parse(window.localStorage.getItem('pmlab:profile:v2')!) as {
+      games: { 'exception-room': { xp: number; completedMilestones: string[] } };
+    };
+    expect(profile.games['exception-room'].xp).toBe(200);
+    expect(profile.games['exception-room'].completedMilestones).toContain('campaign:complete');
   });
 });

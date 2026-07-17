@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
-import type { Card, Dir } from '@/lib/shipit/types';
+import type { Card, Dir } from '@/lib/ship-it/types';
 
 const SWIPE_THRESHOLD = 100;
 

@@ -1,5 +1,5 @@
 import { hashString, mulberry32, type RNG } from '@/lib/prng';
-import { METERS, type Card, type Dir, type Meters, type MeterId, type RunState } from '@/lib/shipit/types';
+import { METERS, type Card, type Dir, type Meters, type MeterId, type RunState } from '@/lib/ship-it/types';
 
 const START = 50;
 const QUARTER_END = 12;   // surviving to week 12 completes the quarter…
@@ -14,7 +14,7 @@ const stepRng = (seed: number, step: number): RNG => mulberry32(hashString(`ship
 
 const clamp = (n: number): number => Math.max(0, Math.min(100, n));
 
-export { METERS } from '@/lib/shipit/types';
+export { METERS } from '@/lib/ship-it/types';
 
 export function isEligible(card: Card, state: RunState): boolean {
   if (state.drawn.includes(card.id)) return false;

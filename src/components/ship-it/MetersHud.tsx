@@ -1,7 +1,7 @@
 'use client';
 
-import { METERS, type Meters, type MeterId } from '@/lib/shipit/types';
-import { MeterBar } from '@/components/shipit/MeterBar';
+import { METERS, type Meters, type MeterId } from '@/lib/ship-it/types';
+import { MeterBar } from '@/components/ship-it/MeterBar';
 
 interface MetersHudProps {
   meters: Meters;

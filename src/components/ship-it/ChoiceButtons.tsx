@@ -1,8 +1,8 @@
 'use client';
 
 import { PressButton } from '@/components/juice/PressButton';
-import { HintDots } from '@/components/shipit/HintDots';
-import type { Card, Dir } from '@/lib/shipit/types';
+import { HintDots } from '@/components/ship-it/HintDots';
+import type { Card, Dir } from '@/lib/ship-it/types';
 
 interface ChoiceButtonsProps {
   card: Card;

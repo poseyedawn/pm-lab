@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { hashString } from '@/lib/prng';
-import { shipitDailySeed } from '@/lib/shipit/daily';
+import { shipitDailySeed } from '@/lib/ship-it/daily';
 
 describe('shipitDailySeed', () => {
   it('derives from the spec key format and differs from Significant daily', () => {

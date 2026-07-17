@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { choose, isEligible, startRun } from '@/lib/shipit/engine';
-import type { Card, RunState } from '@/lib/shipit/types';
+import { choose, isEligible, startRun } from '@/lib/ship-it/engine';
+import type { Card, RunState } from '@/lib/ship-it/types';
 
 const card = (id: string, over: Partial<Card> = {}): Card => ({
   id,

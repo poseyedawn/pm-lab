@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   defaultShipItState, loadShipItState, recordBestRating, recordShipItDaily, saveShipItState,
-} from '@/lib/shipit/state';
+} from '@/lib/ship-it/state';
 
 beforeEach(() => window.localStorage.clear());
 
@@ -14,10 +14,13 @@ describe('storage round-trip', () => {
     expect(loadShipItState()).toEqual(defaultShipItState());
   });
 
-  it('merges XP into the lab profile alongside Significant XP', () => {
-    window.localStorage.setItem('pmlab:significant:v1', JSON.stringify({ xp: 1000 }));
-    saveShipItState({ ...defaultShipItState(), xp: 250 });
-    expect(JSON.parse(window.localStorage.getItem('pmlab:profile:v1')!)).toEqual({ xp: 1250 });
+  it('records ship-it progress in the lab profile (v2)', () => {
+    saveShipItState({ ...defaultShipItState(), xp: 250, bestRatingFree: 'Promoted' });
+    const profile = JSON.parse(window.localStorage.getItem('pmlab:profile:v2')!) as {
+      games: { 'ship-it': { xp: number; completedMilestones: string[] } };
+    };
+    expect(profile.games['ship-it'].xp).toBe(250);
+    expect(profile.games['ship-it'].completedMilestones).toContain('free:Promoted');
   });
 });
 

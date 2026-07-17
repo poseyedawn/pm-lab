@@ -1,4 +1,4 @@
-import type { Card } from '@/lib/shipit/types';
+import type { Card } from '@/lib/ship-it/types';
 
 export const ARCS = ['incident', 'big-customer', 'burnout', 'launch-gamble'] as const;
 

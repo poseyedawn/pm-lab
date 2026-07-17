@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { GameShell } from '@/components/game/GameShell';
 
 export const metadata = {
   title: 'How Ship It was designed',
@@ -14,6 +15,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 
 export default function ShipItAbout() {
   return (
+    <GameShell gameId="ship-it">
     <main className="mx-auto flex max-w-md flex-col gap-4 p-6">
       <header>
         <h1 className="text-2xl font-extrabold text-sky-deep">How Ship It was designed</h1>
@@ -69,5 +71,6 @@ export default function ShipItAbout() {
         Back to Ship It
       </Link>
     </main>
+    </GameShell>
   );
 }

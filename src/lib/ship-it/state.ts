@@ -1,6 +1,6 @@
 import { dayNumber } from '@/lib/engine/daily';
-import { syncLabProfile } from '@/lib/labProfile';
-import type { Rating } from '@/lib/shipit/types';
+import { saveGameProgress } from '@/services/labProfileService';
+import type { Rating } from '@/lib/ship-it/types';
 
 export interface ShipItState {
   xp: number;
@@ -76,5 +76,13 @@ export function saveShipItState(s: ShipItState): void {
   } catch {
     // localStorage threw; memoryFallback already holds the latest state above.
   }
-  syncLabProfile();
+  saveGameProgress({
+    gameId: 'ship-it',
+    xp: s.xp,
+    completedMilestones: [
+      ...(s.bestRatingFree ? [`free:${s.bestRatingFree}`] : []),
+      ...(s.bestRatingDaily ? [`daily:${s.bestRatingDaily}`] : []),
+    ],
+    lastPlayedAt: new Date().toISOString(),
+  });
 }

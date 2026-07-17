@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { localToday } from '@/hooks/useDaily';
-import { useShipDaily } from '@/hooks/useShipDaily';
-import { shipitDailySeed } from '@/lib/shipit/daily';
+import { useShipDaily } from '@/hooks/ship-it/useShipDaily';
+import { shipitDailySeed } from '@/lib/ship-it/daily';
 
 beforeEach(() => window.localStorage.clear());
 
@@ -29,13 +29,5 @@ describe('useShipDaily', () => {
     act(() => result.current.complete('PIP', 50)); // second call same day: no double-record
     expect(result.current.streak).toBe(1);
     expect(result.current.lastRating).toBe('Exceeds Expectations');
-  });
-
-  it('toggleSound persists', async () => {
-    const { result } = renderHook(() => useShipDaily());
-    await act(async () => {});
-    act(() => result.current.toggleSound());
-    expect(result.current.soundOn).toBe(false);
-    expect(JSON.parse(window.localStorage.getItem('pmlab:shipit:v1')!).soundOn).toBe(false);
   });
 });

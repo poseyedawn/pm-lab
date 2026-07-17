@@ -2,22 +2,22 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useShipRun } from '@/hooks/useShipRun';
-import { MetersHud } from '@/components/shipit/MetersHud';
-import { DilemmaCard } from '@/components/shipit/DilemmaCard';
-import { ChoiceButtons } from '@/components/shipit/ChoiceButtons';
-import { FailureScreen } from '@/components/shipit/FailureScreen';
-import { ReviewCard } from '@/components/shipit/ReviewCard';
+import { useShipRun } from '@/hooks/ship-it/useShipRun';
+import { MetersHud } from '@/components/ship-it/MetersHud';
+import { DilemmaCard } from '@/components/ship-it/DilemmaCard';
+import { ChoiceButtons } from '@/components/ship-it/ChoiceButtons';
+import { FailureScreen } from '@/components/ship-it/FailureScreen';
+import { ReviewCard } from '@/components/ship-it/ReviewCard';
 import { fireConfetti } from '@/components/juice/confetti';
 import { sfx } from '@/components/juice/sound';
 import { vibrate } from '@/components/juice/haptics';
-import { track } from '@/lib/analytics';
-import type { Review } from '@/lib/shipit/review';
-import type { Dir, RunState } from '@/lib/shipit/types';
+import { track } from '@/services/analyticsService';
+import type { Review } from '@/lib/ship-it/review';
+import type { Dir, RunState } from '@/lib/ship-it/types';
 
 interface RunScreenProps {
   seed: number;
-  mode: 'shipit-free' | 'shipit-daily';
+  mode: 'free' | 'daily';
   soundOn: boolean;
   totalXp?: number;
   onRunEnd: (review: Review, run: RunState, xp: number) => void;
@@ -25,7 +25,7 @@ interface RunScreenProps {
   onRunBack?: () => void;
 }
 
-export function RunScreen({ seed, soundOn, totalXp = 0, onRunEnd, onRunBack }: RunScreenProps) {
+export function RunScreen({ seed, mode, soundOn, totalXp = 0, onRunEnd, onRunBack }: RunScreenProps) {
   const { run, card, review, xpEarned, lastDeltas, chooseDir } = useShipRun(seed);
   const reducedMotion = useReducedMotion() ?? false;
   const [failureSeen, setFailureSeen] = useState(false);
@@ -35,7 +35,7 @@ export function RunScreen({ seed, soundOn, totalXp = 0, onRunEnd, onRunBack }: R
   useEffect(() => {
     if (run.status !== 'active' && review && !endedRef.current) {
       endedRef.current = true;
-      track('run_complete', { rating: review.rating, weeks: run.week, died: run.status === 'dead' });
+      track('shipit_run_completed', { mode, rating: review.rating, weeks: run.week, died: run.status === 'dead' });
       onRunEnd(review, run, xpEarned);
       if (run.status === 'complete') {
         sfx.reward(soundOn);
@@ -45,11 +45,11 @@ export function RunScreen({ seed, soundOn, totalXp = 0, onRunEnd, onRunBack }: R
         vibrate([80, 50, 80]);
       }
     }
-  }, [run, review, xpEarned, onRunEnd, soundOn, reducedMotion]);
+  }, [run, review, xpEarned, onRunEnd, soundOn, reducedMotion, mode]);
 
   const handleChoose = (dir: Dir) => {
     if (!card) return;
-    track('card_choice', { cardId: card.id, dir });
+    track('shipit_card_choice', { cardId: card.id, dir });
     sfx.click(soundOn);
     vibrate(20);
     setDirSign(dir === 'left' ? -1 : 1);

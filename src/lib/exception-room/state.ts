@@ -1,5 +1,5 @@
 import { dayNumber } from '@/lib/engine/daily';
-import { syncLabProfile } from '@/lib/labProfile';
+import { saveGameProgress } from '@/services/labProfileService';
 import type { OperatorProfile } from '@/lib/exception-room/types';
 
 export const EXCEPTION_STATE_KEY = 'pmlab:exception-room:v1';
@@ -123,5 +123,13 @@ export function saveExceptionRoomState(state: ExceptionRoomState): void {
   } catch {
     // The in-memory fallback preserves progress for this browser session.
   }
-  syncLabProfile();
+  saveGameProgress({
+    gameId: 'exception-room',
+    xp: state.xp,
+    completedMilestones: [
+      ...(state.campaignComplete ? ['campaign:complete'] : []),
+      ...(state.bestProfile ? [`profile:${state.bestProfile}`] : []),
+    ],
+    lastPlayedAt: new Date().toISOString(),
+  });
 }

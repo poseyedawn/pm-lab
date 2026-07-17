@@ -1,5 +1,5 @@
 import { hashString, mulberry32, pick, type RNG } from '@/lib/prng';
-import { METERS, type Card, type MeterId, type Rating, type RunState } from '@/lib/shipit/types';
+import { METERS, type Card, type MeterId, type Rating, type RunState } from '@/lib/ship-it/types';
 
 export interface Review {
   rating: Rating;

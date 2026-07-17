@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useShipRun } from '@/hooks/useShipRun';
+import { useShipRun } from '@/hooks/ship-it/useShipRun';
 
 describe('useShipRun', () => {
   it('starts an active run with a current card and no review', () => {

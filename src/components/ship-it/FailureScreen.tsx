@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { PressButton } from '@/components/juice/PressButton';
-import { METER_INFO, type MeterId } from '@/lib/shipit/types';
+import { METER_INFO, type MeterId } from '@/lib/ship-it/types';
 
 const DEATH_COPY: Record<MeterId, string> = {
   users: 'Your DAU chart is a cliff. The product is shelved.',

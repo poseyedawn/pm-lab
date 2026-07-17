@@ -4,8 +4,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { CountUp } from '@/components/juice/CountUp';
 import { PressButton } from '@/components/juice/PressButton';
 import { ShareGrid } from '@/components/significant/ShareGrid';
-import { buildShareText, type Review } from '@/lib/shipit/review';
-import { METERS, METER_INFO, type RunState } from '@/lib/shipit/types';
+import { buildShareText, type Review } from '@/lib/ship-it/review';
+import { METERS, METER_INFO, type RunState } from '@/lib/ship-it/types';
 
 interface ReviewCardProps {
   review: Review;

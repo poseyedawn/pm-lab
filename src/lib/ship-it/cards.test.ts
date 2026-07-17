@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { mulberry32 } from '@/lib/prng';
-import { choose, isEligible, startRun } from '@/lib/shipit/engine';
-import { ARCS, DECK, PRODUCTS } from '@/lib/shipit/cards';
-import { METERS, type MeterId, type RunState } from '@/lib/shipit/types';
+import { choose, isEligible, startRun } from '@/lib/ship-it/engine';
+import { ARCS, DECK, PRODUCTS } from '@/lib/ship-it/cards';
+import { METERS, type MeterId, type RunState } from '@/lib/ship-it/types';
 
 const simulate = (seed: number): RunState[] => {
   const policy = mulberry32(seed ^ 0x9e3779b9);

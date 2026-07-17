@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { localToday, msToLocalMidnight } from '@/hooks/useDaily';
-import { shipitDailySeed } from '@/lib/shipit/daily';
+import { shipitDailySeed } from '@/lib/ship-it/daily';
 import {
   loadShipItState, recordBestRating, recordShipItDaily, saveShipItState, type ShipItState,
-} from '@/lib/shipit/state';
-import type { Rating } from '@/lib/shipit/types';
+} from '@/lib/ship-it/state';
+import type { Rating } from '@/lib/ship-it/types';
 
 const fmt = (ms: number): string => {
   const s = Math.max(0, Math.floor(ms / 1000));
@@ -48,15 +48,6 @@ export function useShipDaily() {
     });
   }, []);
 
-  const toggleSound = useCallback(() => {
-    setState((prev) => {
-      if (!prev) return prev;
-      const next = { ...prev, soundOn: !prev.soundOn };
-      saveShipItState(next);
-      return next;
-    });
-  }, []);
-
   return {
     ready: state !== null,
     today,
@@ -65,11 +56,9 @@ export function useShipDaily() {
     lastRating: state?.lastDailyRating ?? null,
     streak: state?.dailyStreak ?? 0,
     shields: state?.shields ?? 0,
-    soundOn: state?.soundOn ?? true,
     bestRatingDaily: state?.bestRatingDaily ?? null,
     xp: state?.xp ?? 0,
     complete,
-    toggleSound,
     countdown,
   };
 }

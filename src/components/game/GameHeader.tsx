@@ -11,10 +11,15 @@ interface GameHeaderProps {
   theme: GameTheme;
 }
 
-const GAME_NAMES = { significant: 'Significant', 'ship-it': 'Ship It' } satisfies Record<GameId, string>;
+const GAME_NAMES = {
+  significant: 'Significant',
+  'ship-it': 'Ship It',
+  'exception-room': 'Exception Room',
+} satisfies Record<GameId, string>;
 const ACCENT_STYLES = {
   violet: 'border-brand/20 text-brand-deep',
   orange: 'border-gold/30 text-gold-text',
+  teal: 'border-cyan/30 text-ink',
 } satisfies Record<GameTheme['accent'], string>;
 
 export function GameHeader({ gameId, theme }: GameHeaderProps) {

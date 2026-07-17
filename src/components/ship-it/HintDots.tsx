@@ -1,4 +1,4 @@
-import { METERS, METER_INFO, type MeterId } from '@/lib/shipit/types';
+import { METERS, METER_INFO, type MeterId } from '@/lib/ship-it/types';
 
 export function HintDots({ effects }: { effects: Partial<Record<MeterId, number>> }) {
   const affected = METERS.filter((m) => effects[m] !== undefined && effects[m] !== 0);

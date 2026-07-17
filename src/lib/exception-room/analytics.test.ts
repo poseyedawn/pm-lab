@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { trackException } from '@/lib/exception-room/analytics';
-import { track } from '@/lib/analytics';
+import { track } from '@/services/analyticsService';
 
-vi.mock('@/lib/analytics', () => ({ track: vi.fn() }));
+vi.mock('@/services/analyticsService', () => ({ track: vi.fn() }));
 
 describe('trackException', () => {
   beforeEach(() => vi.mocked(track).mockClear());

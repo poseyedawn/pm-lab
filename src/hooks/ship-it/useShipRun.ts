@@ -1,10 +1,10 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
-import { choose, startRun } from '@/lib/shipit/engine';
-import { DECK, PRODUCTS } from '@/lib/shipit/cards';
-import { generateReview, xpForRun, type Review } from '@/lib/shipit/review';
-import type { Dir, MeterId, RunState } from '@/lib/shipit/types';
+import { choose, startRun } from '@/lib/ship-it/engine';
+import { DECK, PRODUCTS } from '@/lib/ship-it/cards';
+import { generateReview, xpForRun, type Review } from '@/lib/ship-it/review';
+import type { Dir, MeterId, RunState } from '@/lib/ship-it/types';
 
 export function useShipRun(seed: number) {
   const [run, setRun] = useState<RunState>(() => startRun(seed, DECK, PRODUCTS));

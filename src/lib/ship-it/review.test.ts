@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { buildShareText, generateReview, xpForRun } from '@/lib/shipit/review';
-import { DECK } from '@/lib/shipit/cards';
-import type { RunState } from '@/lib/shipit/types';
+import { buildShareText, generateReview, xpForRun } from '@/lib/ship-it/review';
+import { DECK } from '@/lib/ship-it/cards';
+import type { RunState } from '@/lib/ship-it/types';
 
 const run = (over: Partial<RunState>): RunState => ({
   seed: 42, product: 'Plumage, a B2B invoicing tool', week: 12,
