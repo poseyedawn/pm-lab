@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { GameShell } from '@/components/game/GameShell';
 import { RunScreen } from '@/components/ship-it/RunScreen';
 import { usePreferences } from '@/hooks/lab/usePreferences';
 import { loadShipItState, recordBestRating, saveShipItState, type ShipItState } from '@/lib/ship-it/state';
@@ -27,7 +26,7 @@ export default function ShipItPlay() {
   }, []);
 
   return (
-    <GameShell gameId="ship-it">
+    <>
       {!state || seed === null ? (
         <main className="mx-auto max-w-md p-6" aria-busy="true" />
       ) : (
@@ -57,6 +56,6 @@ export default function ShipItPlay() {
           />
         </main>
       )}
-    </GameShell>
+    </>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { GameShell } from '@/components/game/GameShell';
 import { loadShipItState, type ShipItState } from '@/lib/ship-it/state';
 import { METERS, METER_INFO } from '@/lib/ship-it/types';
 
@@ -14,7 +13,7 @@ export default function ShipItHome() {
   }, []);
 
   return (
-    <GameShell gameId="ship-it">
+    <>
       {state === null ? (
         <main className="mx-auto max-w-md p-6" aria-busy="true" />
       ) : (
@@ -51,6 +50,6 @@ export default function ShipItHome() {
           </Link>
         </main>
       )}
-    </GameShell>
+    </>
   );
 }

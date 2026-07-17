@@ -11,10 +11,12 @@ import {
   type ExceptionRoomState,
 } from '@/lib/exception-room/state';
 import type { ScoreBreakdown } from '@/lib/exception-room/types';
+import { usePreferences } from '@/hooks/lab/usePreferences';
 
 const randomSeed = () => Math.floor(Math.random() * 2 ** 31);
 
 export function ExceptionPlayClient({ previewSelected }: { previewSelected: boolean }) {
+  const { preferences } = usePreferences();
   const [progress, setProgress] = useState<ExceptionRoomState | null>(null);
   const [seed, setSeed] = useState<number | null>(null);
   const started = useRef(false);
@@ -53,7 +55,7 @@ export function ExceptionPlayClient({ previewSelected }: { previewSelected: bool
       <ExceptionRunScreen
         key={seed}
         seed={seed}
-        soundOn={progress.soundOn}
+        soundOn={preferences.sound}
         totalXp={progress.xp}
         initialState={previewSelected ? selectedVisualPreview(seed) : undefined}
         onComplete={handleComplete}

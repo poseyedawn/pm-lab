@@ -12,14 +12,12 @@ import {
   Stack,
   Target,
 } from '@phosphor-icons/react';
-import {
-  loadExceptionRoomState,
-  saveExceptionRoomState,
-  type ExceptionRoomState,
-} from '@/lib/exception-room/state';
+import { usePreferences } from '@/hooks/lab/usePreferences';
+import { loadExceptionRoomState, type ExceptionRoomState } from '@/lib/exception-room/state';
 
 export default function ExceptionRoomHome() {
   const [progress, setProgress] = useState<ExceptionRoomState | null>(null);
+  const { preferences, updatePreference } = usePreferences();
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate saved game preference once
@@ -29,9 +27,7 @@ export default function ExceptionRoomHome() {
   if (!progress) return <main className="exception-world" aria-busy="true" />;
 
   const toggleSound = () => {
-    const next = { ...progress, soundOn: !progress.soundOn };
-    saveExceptionRoomState(next);
-    setProgress(next);
+    updatePreference('sound', !preferences.sound);
   };
 
   return (
@@ -39,8 +35,8 @@ export default function ExceptionRoomHome() {
       <section className="exception-shell exception-start-shell">
         <header className="exception-topbar">
           <div className="exception-brand-mark"><Stack weight="fill" size={19} /></div>
-          <button className="exception-icon-button" type="button" onClick={toggleSound} aria-label={`Turn sound ${progress.soundOn ? 'off' : 'on'}`}>
-            {progress.soundOn ? <SpeakerHigh size={20} weight="fill" /> : <SpeakerSlash size={20} weight="fill" />}
+          <button className="exception-icon-button" type="button" onClick={toggleSound} aria-label={`Turn sound ${preferences.sound ? 'off' : 'on'}`}>
+            {preferences.sound ? <SpeakerHigh size={20} weight="fill" /> : <SpeakerSlash size={20} weight="fill" />}
           </button>
         </header>
 
@@ -53,7 +49,7 @@ export default function ExceptionRoomHome() {
             </p>
             <div className="exception-hero-art">
               <Image
-                src="/assets/exception-room/selected-direction.webp"
+                src="/exception-room/selected-direction.webp"
                 alt="Exception Room queue and case review interface"
                 fill
                 sizes="348px"

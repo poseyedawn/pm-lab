@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { dayNumber } from '@/lib/engine/daily';
-import { GameShell } from '@/components/game/GameShell';
 import { useShipDaily } from '@/hooks/ship-it/useShipDaily';
 import { usePreferences } from '@/hooks/lab/usePreferences';
 import { RunScreen } from '@/components/ship-it/RunScreen';
@@ -38,7 +37,7 @@ export default function ShipItDaily() {
   }, [daily.ready, daily.streak]);
 
   return (
-    <GameShell gameId="ship-it">
+    <>
       {!daily.ready ? (
         <main className="mx-auto max-w-md p-6" aria-busy="true" />
       ) : (
@@ -75,6 +74,6 @@ export default function ShipItDaily() {
           )}
         </main>
       )}
-    </GameShell>
+    </>
   );
 }
