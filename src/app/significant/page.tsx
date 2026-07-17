@@ -2,24 +2,19 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { ArrowRight, CalendarDots, Info } from '@phosphor-icons/react';
 import { useCampaign } from '@/hooks/useCampaign';
+import { LabLanding } from '@/components/lab/LabLanding';
 import { LevelPath } from '@/components/significant/LevelPath';
 import { IQCard } from '@/components/significant/IQCard';
+import { campaignSeed, generateScenario } from '@/lib/engine/scenario';
 import { firstTryBand, track } from '@/services/analyticsService';
 
+const featuredScenario = generateScenario(campaignSeed(1, 1), 'clean-win');
+
 export default function SignificantHome() {
-  const router = useRouter();
   const { ready, visitor, state, levels, totalStars, allDone, markCampaignCompleteTracked } = useCampaign();
   const introTrackedRef = useRef(false);
-  const calibrationRedirectRef = useRef(false);
-
-  useEffect(() => {
-    if (!ready || visitor !== 'first' || calibrationRedirectRef.current) return;
-    calibrationRedirectRef.current = true;
-    router.replace('/significant/calibration');
-  }, [ready, router, visitor]);
 
   useEffect(() => {
     if (!ready || visitor !== 'returning' || introTrackedRef.current) return;
@@ -39,8 +34,17 @@ export default function SignificantHome() {
     }
   }, [allDone, state, levels, markCampaignCompleteTracked]);
 
-  if (!ready || !state || visitor !== 'returning') {
+  if (!ready || !state) {
     return <main className="significant-campaign" aria-busy="true" />;
+  }
+
+  // First-time visitors get the game's entry world; its CTA leads into calibration.
+  if (visitor === 'first') {
+    return (
+      <main className="h-full">
+        <LabLanding scenario={featuredScenario} />
+      </main>
+    );
   }
 
   const nextLevel = levels.find((level) => level.status === 'open');

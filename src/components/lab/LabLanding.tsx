@@ -78,24 +78,6 @@ export function LabLanding({ scenario }: LabLandingProps) {
             </Link>
           )}
 
-          <nav className="significant-entry-more" aria-label="More field tests">
-            <Link
-              href="/ship-it"
-              onClick={() => track('game_selected', { gameId: 'ship-it', placement: 'lab_more' })}
-            >
-              <span>Field test 02</span>
-              <strong>Ship It</strong>
-              <ArrowRight size={14} weight="bold" aria-hidden />
-            </Link>
-            <Link
-              href="/exception-room"
-              onClick={() => track('game_selected', { gameId: 'exception-room', placement: 'lab_more' })}
-            >
-              <span>Field test 03</span>
-              <strong>Exception Room</strong>
-              <ArrowRight size={14} weight="bold" aria-hidden />
-            </Link>
-          </nav>
         </div>
       </div>
     </section>

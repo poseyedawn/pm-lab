@@ -574,36 +574,3 @@
   .significant-entry-progress .is-active { animation: none; }
 }
 
-/* More field tests strip on the lab entry */
-.significant-entry-more {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.significant-entry-more a {
-  display: flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border: 1px solid rgb(255 255 255 / 48%);
-  border-radius: 14px;
-  background: rgb(120 22 68 / 24%);
-  color: #ffffff;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  box-shadow: 0 4px 14px rgb(97 14 51 / 16%);
-}
-
-.significant-entry-more a:active { transform: translateY(2px); }
-
-.significant-entry-more span {
-  color: rgb(255 255 255 / 72%);
-  font-size: 0.5625rem;
-}
-
-.significant-entry-more strong { font-weight: 800; }
