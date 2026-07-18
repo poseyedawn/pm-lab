@@ -38,7 +38,7 @@ const OPENERS: Record<Rating, string[]> = {
   'PIP': [
     'This quarter did not go the way anyone hoped.',
     'We need to talk about how the quarter ended.',
-    'The less said about weeks like these, the better — but HR insists.',
+    'HR insists we say something, but the less said about weeks like these, the better.',
   ],
   'Meets Expectations': [
     'The product shipped and nobody quit, which counts for more than it sounds.',
@@ -46,7 +46,7 @@ const OPENERS: Record<Rating, string[]> = {
     'You kept the lights on under real pressure.',
   ],
   'Exceeds Expectations': [
-    'You kept four constituencies fed with one roadmap — genuinely rare.',
+    'You kept four constituencies fed with one roadmap. That is genuinely rare.',
     'A balanced quarter under pressure; the meters tell a disciplined story.',
     'Strong quarter. Stakeholders are, improbably, all still speaking to you.',
   ],
@@ -60,12 +60,12 @@ const OPENERS: Record<Rating, string[]> = {
   ],
 };
 
-// keyed by the lowest meter — one sentence about the sore spot (always included)
+// Keyed by the lowest meter, with one sentence about the sore spot (always included).
 const LOW_METER: Record<MeterId, string[]> = {
   users:    ['Users noticed the neglect: growth was the meter you fed last.', 'The Users number limped; adoption paid for your other wins.'],
-  business: ['Business confidence took the hits — the board reads that chart first.', 'Business was the meter you gambled with, and it shows.'],
+  business: ['Business confidence took the hits. The board reads that chart first.', 'Business was the meter you gambled with, and it shows.'],
   team:     ['The Team carried the cost; watch the morale line before it watches you.', 'Team morale absorbed every trade-off. That bill comes due.'],
-  tech:     ['Tech health quietly eroded — next quarter inherits the debt.', 'The Tech platform creaked all quarter; you shipped on borrowed uptime.'],
+  tech:     ['Tech health quietly eroded. Next quarter inherits the debt.', 'The Tech platform creaked all quarter; you shipped on borrowed uptime.'],
 };
 
 const DIED: Record<MeterId, string[]> = {

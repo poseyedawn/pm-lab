@@ -15,7 +15,7 @@ const run = (over: Partial<RunState>): RunState => ({
 const arcCards = (arc: string) => DECK.filter((c) => c.arc === arc).map((c) => ({ cardId: c.id, dir: 'left' as const }));
 const [arcA, arcB] = ['incident', 'big-customer'];
 
-describe('rating tiers — every tier reachable', () => {
+describe('rating tiers: every tier reachable', () => {
   it('died → PIP', () => {
     expect(generateReview(run({ status: 'dead', deadMeter: 'tech', week: 5 }), DECK).rating).toBe('PIP');
   });

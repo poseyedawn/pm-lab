@@ -15,7 +15,7 @@ export default function ShipItDaily() {
   // True once the run finished during THIS visit: keep the review card (with
   // share) on screen instead of instantly swapping to the played-today gate.
   const [ranThisVisit, setRanThisVisit] = useState(false);
-  // Baseline streak value, captured on the first "ready" render — see
+  // Baseline streak value, captured on the first "ready" render. See
   // significant/daily/page.tsx for why this is driven off the re-rendered prop.
   const prevStreakRef = useRef<number | null>(null);
 

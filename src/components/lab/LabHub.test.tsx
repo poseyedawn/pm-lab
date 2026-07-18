@@ -2,12 +2,15 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LabHub } from '@/components/lab/LabHub';
 import { useLabProfile } from '@/hooks/lab/useLabProfile';
+import { usePreferences } from '@/hooks/lab/usePreferences';
 import { track } from '@/services/analyticsService';
 
 vi.mock('@/hooks/lab/useLabProfile', () => ({ useLabProfile: vi.fn() }));
+vi.mock('@/hooks/lab/usePreferences', () => ({ usePreferences: vi.fn() }));
 vi.mock('@/services/analyticsService', () => ({ track: vi.fn() }));
 
 const mockedUseLabProfile = vi.mocked(useLabProfile);
+const mockedUsePreferences = vi.mocked(usePreferences);
 
 afterEach(cleanup);
 
@@ -28,19 +31,40 @@ beforeEach(() => {
     },
     totalXp: 120,
   });
+  mockedUsePreferences.mockReturnValue({
+    ready: true,
+    preferences: { sound: true, haptics: true, motion: 'full' },
+    reducedMotion: false,
+    updatePreference: vi.fn(),
+  });
 });
 
 describe('Lab hub', () => {
   it('renders the complete game catalog in order', () => {
     render(<LabHub />);
 
-    const links = screen.getAllByRole('link');
+    const games = screen.getByRole('navigation', { name: 'Games' });
+    const links = Array.from(games.querySelectorAll('a'));
     expect(links.map((link) => link.getAttribute('href'))).toEqual([
       '/significant',
       '/ship-it',
       '/exception-room',
     ]);
-    expect(screen.getByText('120 XP')).toBeInTheDocument();
+    expect(screen.getByLabelText('120 experience points')).toBeInTheDocument();
+  });
+
+  it('keeps ambient motion still when reduced motion is enabled', () => {
+    mockedUsePreferences.mockReturnValue({
+      ready: true,
+      preferences: { sound: true, haptics: true, motion: 'reduced' },
+      reducedMotion: true,
+      updatePreference: vi.fn(),
+    });
+
+    const { container } = render(<LabHub />);
+
+    expect(container.querySelectorAll('.lab-hub-card-float')).toHaveLength(3);
+    expect(document.documentElement).not.toHaveAttribute('data-motion', 'full');
   });
 
   it('tracks the selected catalog game', () => {

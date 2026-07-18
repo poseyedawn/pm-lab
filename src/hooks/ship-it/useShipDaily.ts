@@ -36,7 +36,7 @@ export function useShipDaily() {
     const date = localToday(new Date());
     setState((prev) => {
       // recordShipItDaily is idempotent for the streak, but the XP add must be
-      // guarded here too — same double-grant bug class as Significant (3c43256).
+      // Guarded here too because this is the same double-grant bug class as Significant (3c43256).
       if (!prev || prev.lastDailyDate === date) return prev;
       const next = recordBestRating(
         { ...recordShipItDaily(prev, date, rating), xp: prev.xp + xp },

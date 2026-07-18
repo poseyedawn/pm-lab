@@ -13,6 +13,7 @@ describe('game catalog', () => {
       expect(game.theme.iconKey).toBe(game.gameId);
       expect(game.name).not.toHaveLength(0);
       expect(game.tagline).not.toHaveLength(0);
+      expect(game.art).toMatch(/^\/lab\/.+-card\.webp$/);
     }
 
     expect(gameDefinition('significant').chrome).toBe('immersive');

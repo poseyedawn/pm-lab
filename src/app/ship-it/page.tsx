@@ -25,7 +25,7 @@ export default function ShipItHome() {
 
           <p className="text-sm text-ink-soft">
             You are the PM. Twelve weeks, four meters, no correct answers. Keep Users, Business, Team and Tech
-            alive to the end of the quarter — let any hit zero and it&apos;s over.
+            alive to the end of the quarter. Let any hit zero and it&apos;s over.
           </p>
 
           <div className="grid grid-cols-4 gap-2 rounded-[var(--radius-card)] bg-surface p-4 shadow-lg">

@@ -5,7 +5,7 @@ const START = 50;
 const QUARTER_END = 12;   // surviving to week 12 completes the quarter…
 const HARD_STOP = 18;     // …unless pending arc cards extend it, to 18 max
 // When any overshoot card is eligible, the draw uses overshoot cards only 90% of
-// the time — "strongly weights that meter's overshoot card" without making the
+// the time. This strongly weights that meter's overshoot card without making the
 // backlash a certainty.
 const OVERSHOOT_POOL_BIAS = 0.9;
 

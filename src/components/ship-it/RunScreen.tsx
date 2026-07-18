@@ -21,7 +21,7 @@ interface RunScreenProps {
   soundOn: boolean;
   totalXp?: number;
   onRunEnd: (review: Review, run: RunState, xp: number) => void;
-  /** "Run it back" — the parent mints a new seed and remounts via key={seed}. */
+  /** "Run it back" makes the parent mint a new seed and remount via key={seed}. */
   onRunBack?: () => void;
 }
 
