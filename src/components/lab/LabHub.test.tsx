@@ -53,6 +53,10 @@ describe('Lab hub', () => {
     expect(screen.getByLabelText('120 experience points')).toBeInTheDocument();
     expect(container.querySelectorAll('.lab-hub-card-action svg')).toHaveLength(3);
     expect(container.querySelectorAll('.lab-hub-ambient img')).toHaveLength(5);
+    expect(container.querySelector('.lab-hub-title-logo img'))
+      .toHaveAttribute('src', expect.stringContaining('/lab/pick-field-test-logo.svg'));
+    expect(container.querySelector('.lab-hub-brand-wordmark'))
+      .toHaveAttribute('src', expect.stringContaining('/lab/product-lab-wordmark.svg'));
   });
 
   it('keeps ambient motion still when reduced motion is enabled', () => {

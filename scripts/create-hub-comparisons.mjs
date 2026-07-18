@@ -41,7 +41,7 @@ const referenceCard = await sharp(referencePath)
   .toBuffer();
 
 const implementationCard = await sharp(implementationPath)
-  .extract({ left: 14, top: 202, width: 362, height: 200 })
+  .extract({ left: 14, top: 222, width: 362, height: 200 })
   .png()
   .toBuffer();
 
