@@ -1,12 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   ArrowSquareOut,
-  Circle,
-  CircleNotch,
-  Flask,
-  Sparkle,
   Star,
 } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
@@ -30,7 +27,7 @@ export function LabHub() {
         <nav className="lab-hub-nav" aria-label="Lab navigation">
           <Link className="lab-hub-brand" href="/" aria-label="Alvin's Product Lab home">
             <span className="lab-hub-brand-mark" aria-hidden="true">
-              <Flask size={25} weight="fill" />
+              <Image src="/lab/flask.webp" alt="" width={32} height={40} priority />
             </span>
             <span>Product Lab</span>
           </Link>
@@ -55,12 +52,12 @@ export function LabHub() {
 
         <div className="lab-hub-title-lockup">
           <motion.span
-            className="lab-hub-ambient lab-hub-ambient-spark"
+            className="lab-hub-ambient lab-hub-ambient-spark lab-hub-ambient-spark-left"
             aria-hidden="true"
             animate={reducedMotion ? undefined : { y: [-3, 3, -3], rotate: [0, 14, 0] }}
             transition={reducedMotion ? undefined : { duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <Sparkle size={19} weight="fill" />
+            <Image src="/lab/sparkle.webp" alt="" width={22} height={23} />
           </motion.span>
           <motion.span
             className="lab-hub-ambient lab-hub-ambient-ring"
@@ -68,18 +65,36 @@ export function LabHub() {
             animate={reducedMotion ? undefined : { y: [3, -4, 3], rotate: [0, -8, 0] }}
             transition={reducedMotion ? undefined : { duration: 5.4, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <CircleNotch size={32} weight="bold" />
+            <Image src="/lab/ring.webp" alt="" width={40} height={41} />
           </motion.span>
           <motion.span
-            className="lab-hub-ambient lab-hub-ambient-bubble"
+            className="lab-hub-ambient lab-hub-ambient-bubble lab-hub-ambient-bubble-left"
             aria-hidden="true"
             animate={reducedMotion ? undefined : { y: [-4, 4, -4], x: [-1, 2, -1] }}
             transition={reducedMotion ? undefined : { duration: 6.1, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <Circle size={21} weight="fill" />
+            <Image src="/lab/bubble.webp" alt="" width={34} height={35} />
           </motion.span>
-          <p className="lab-hub-kicker">Pocket arcade</p>
-          <h1>Pick a field test</h1>
+          <motion.span
+            className="lab-hub-ambient lab-hub-ambient-bubble lab-hub-ambient-bubble-right"
+            aria-hidden="true"
+            animate={reducedMotion ? undefined : { y: [3, -4, 3], x: [1, -2, 1] }}
+            transition={reducedMotion ? undefined : { duration: 5.7, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <Image src="/lab/bubble.webp" alt="" width={24} height={25} />
+          </motion.span>
+          <motion.span
+            className="lab-hub-ambient lab-hub-ambient-squiggle"
+            aria-hidden="true"
+            animate={reducedMotion ? undefined : { y: [-2, 4, -2], rotate: [-4, 5, -4] }}
+            transition={reducedMotion ? undefined : { duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <Image src="/lab/squiggle.webp" alt="" width={42} height={25} />
+          </motion.span>
+          <h1>
+            <span className="lab-hub-title-top">Pick a</span>
+            <span className="lab-hub-title-bottom">Field test</span>
+          </h1>
           <p>Small games that make product judgment visible.</p>
         </div>
       </header>

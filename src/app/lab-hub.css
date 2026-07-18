@@ -59,21 +59,23 @@
   font-size: 0.875rem;
   font-weight: 800;
   letter-spacing: 0.02em;
+  text-transform: uppercase;
   text-shadow: 0 2px 3px rgb(104 8 39 / 38%);
 }
 
 .lab-hub-brand-mark {
   display: grid;
   width: 36px;
-  height: 36px;
+  height: 44px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid rgb(255 255 255 / 42%);
-  border-radius: 12px;
-  background: rgb(255 255 255 / 17%);
-  color: #ffea6d;
-  box-shadow: 0 6px 16px rgb(118 4 36 / 20%);
-  backdrop-filter: blur(10px);
+  filter: drop-shadow(0 5px 5px rgb(118 4 36 / 28%));
+}
+
+.lab-hub-brand-mark img {
+  width: 32px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .lab-hub-nav-actions {
@@ -110,40 +112,51 @@
 
 .lab-hub-title-lockup {
   position: relative;
-  margin: 16px auto;
+  margin: 14px auto 10px;
   text-align: center;
 }
 
-.lab-hub-kicker {
-  margin-bottom: 4px;
-  color: #ffe263;
-  font-size: 0.625rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 1px rgb(105 6 37 / 32%);
-}
-
 .lab-hub-title-lockup h1 {
+  display: flex;
   max-width: 340px;
   margin-inline: auto;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.15rem, 10.8vw, 2.8rem);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  line-height: 0.84;
+  letter-spacing: -0.045em;
   text-transform: uppercase;
   text-wrap: balance;
-  color: #ffdc27;
-  -webkit-text-stroke: 1px #7b1d36;
+}
+
+.lab-hub-title-top,
+.lab-hub-title-bottom {
+  display: block;
+  -webkit-text-stroke: 1px #64142e;
   text-shadow:
-    0 3px 0 #ef9512,
-    0 6px 0 #7a1c36,
-    0 9px 18px rgb(101 7 37 / 30%);
+    0 3px 0 #b63c54,
+    0 6px 0 #65162e,
+    0 10px 18px rgb(101 7 37 / 30%);
+}
+
+.lab-hub-title-top {
+  color: #fff9ef;
+  font-size: clamp(2.25rem, 11.5vw, 2.9rem);
+}
+
+.lab-hub-title-bottom {
+  margin-top: 10px;
+  color: #ffce1c;
+  font-size: clamp(2.55rem, 13vw, 3.25rem);
+  text-shadow:
+    0 3px 0 #e78c0d,
+    0 6px 0 #711832,
+    0 10px 18px rgb(101 7 37 / 32%);
 }
 
 .lab-hub-title-lockup > p:last-child {
   max-width: 310px;
-  margin: 12px auto 0;
+  margin: 14px auto 0;
   color: rgb(255 255 255 / 93%);
   font-size: 0.75rem;
   font-weight: 800;
@@ -153,29 +166,52 @@
 
 .lab-hub-ambient {
   position: absolute;
-  z-index: -1;
+  z-index: 2;
   display: grid;
   place-items: center;
-  filter: drop-shadow(0 5px 5px rgb(112 12 41 / 20%));
+  pointer-events: none;
+  filter: drop-shadow(0 6px 6px rgb(112 12 41 / 22%));
 }
 
-.lab-hub-ambient-spark {
-  top: 22px;
-  left: 1px;
-  color: #ffdc27;
+.lab-hub-ambient img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lab-hub-ambient-spark-left {
+  top: 53px;
+  left: 2px;
+  width: 22px;
+  height: 23px;
 }
 
 .lab-hub-ambient-ring {
   top: 12px;
-  right: 0;
-  color: #ffd321;
+  right: -4px;
+  width: 40px;
+  height: 41px;
 }
 
-.lab-hub-ambient-bubble {
-  bottom: 7px;
-  left: 18px;
-  color: rgb(112 224 255 / 68%);
-  filter: drop-shadow(0 0 4px rgb(255 255 255 / 70%));
+.lab-hub-ambient-bubble-left {
+  top: -10px;
+  left: 48px;
+  width: 34px;
+  height: 35px;
+}
+
+.lab-hub-ambient-bubble-right {
+  top: -7px;
+  right: 30px;
+  width: 24px;
+  height: 25px;
+}
+
+.lab-hub-ambient-squiggle {
+  top: 30px;
+  left: -4px;
+  width: 42px;
+  height: 25px;
 }
 
 .lab-hub-games ol {
@@ -184,7 +220,11 @@
   padding: 0;
   list-style: none;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
+}
+
+.lab-hub-games {
+  padding-top: 10px;
 }
 
 .lab-hub-card-float,
@@ -194,6 +234,7 @@
 
 .lab-hub-card-float {
   perspective: 900px;
+  transform-origin: center;
 }
 
 .lab-hub-card-drag {
@@ -210,14 +251,9 @@
 .lab-hub-card {
   position: relative;
   display: block;
-  height: clamp(148px, 20.5vh, 176px);
-  overflow: hidden;
-  isolation: isolate;
-  border-radius: 24px;
+  height: clamp(182px, 22.8vh, 194px);
+  overflow: visible;
   color: #ffffff;
-  box-shadow:
-    0 8px 0 rgb(94 11 42 / 22%),
-    0 18px 32px rgb(101 8 40 / 23%);
   transform: translateZ(0);
 }
 
@@ -227,34 +263,39 @@
 }
 
 .lab-hub-card-art {
-  z-index: -2;
-  object-fit: cover;
+  z-index: 0;
+  object-fit: fill;
   object-position: center;
   pointer-events: none;
-  transform: scale(1.045);
   user-select: none;
+  filter: drop-shadow(0 14px 13px rgb(82 4 31 / 24%));
 }
 
 .lab-hub-card-scrim {
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(90deg, rgb(34 4 20 / 72%) 0%, rgb(34 4 20 / 38%) 42%, transparent 66%);
+  top: 17px;
+  bottom: 17px;
+  left: 12px;
+  z-index: 1;
+  width: 54%;
+  border-radius: 24px 0 0 24px;
+  background: linear-gradient(90deg, rgb(45 4 23 / 22%) 0%, transparent 100%);
   pointer-events: none;
 }
 
 .lab-hub-card[data-game-tile='exception-room'] .lab-hub-card-scrim {
-  background: linear-gradient(90deg, rgb(11 5 43 / 86%) 0%, rgb(11 5 43 / 54%) 48%, transparent 70%);
+  background: linear-gradient(90deg, rgb(11 5 43 / 30%) 0%, transparent 100%);
 }
 
 .lab-hub-card-copy {
   position: absolute;
   inset: 0 auto 0 0;
+  z-index: 2;
   display: flex;
   width: 53%;
   flex-direction: column;
   justify-content: center;
-  padding: 16px 0 16px 16px;
+  padding: 22px 0 20px 18px;
 }
 
 .lab-hub-card-eyebrow {
@@ -273,7 +314,7 @@
 
 .lab-hub-card-name {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.25rem, 6vw, 1.55rem);
+  font-size: clamp(1.125rem, 5.3vw, 1.35rem);
   line-height: 1.06;
   letter-spacing: -0.025em;
   text-transform: uppercase;
@@ -282,13 +323,22 @@
 }
 
 .lab-hub-card-tagline {
-  max-width: 170px;
+  max-width: 138px;
   margin-top: 8px;
   color: rgb(255 255 255 / 94%);
   font-size: 0.6875rem;
   font-weight: 800;
   line-height: 1.28;
   text-shadow: 0 2px 2px rgb(27 3 17 / 50%);
+}
+
+.lab-hub-card[data-game-tile='significant'] .lab-hub-card-tagline {
+  max-width: 170px;
+  white-space: nowrap;
+}
+
+.lab-hub-card[data-game-tile='ship-it'] .lab-hub-card-name {
+  font-size: clamp(1.45rem, 6.8vw, 1.75rem);
 }
 
 .lab-hub-card-progress {
@@ -313,17 +363,21 @@
 
 .lab-hub-card-action {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: 15px;
+  bottom: 20px;
+  z-index: 2;
   display: grid;
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   place-items: center;
-  border: 4px solid rgb(255 255 255 / 50%);
+  border: 4px solid rgb(255 255 255 / 58%);
   border-radius: 999px;
   background: #ffffff;
   color: #ec315b;
-  box-shadow: 0 5px 0 rgb(73 10 38 / 30%), 0 10px 18px rgb(49 5 26 / 20%);
+  box-shadow:
+    0 5px 0 rgb(73 10 38 / 30%),
+    0 10px 18px rgb(49 5 26 / 24%),
+    inset 0 2px 0 rgb(255 255 255 / 90%);
 }
 
 .lab-hub-card[data-game-tile='ship-it'] .lab-hub-card-action {
@@ -384,6 +438,6 @@
   }
 
   .lab-hub-card {
-    height: 144px;
+    height: 162px;
   }
 }

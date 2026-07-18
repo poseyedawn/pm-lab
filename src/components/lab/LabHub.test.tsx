@@ -41,7 +41,7 @@ beforeEach(() => {
 
 describe('Lab hub', () => {
   it('renders the complete game catalog in order', () => {
-    render(<LabHub />);
+    const { container } = render(<LabHub />);
 
     const games = screen.getByRole('navigation', { name: 'Games' });
     const links = Array.from(games.querySelectorAll('a'));
@@ -51,6 +51,8 @@ describe('Lab hub', () => {
       '/exception-room',
     ]);
     expect(screen.getByLabelText('120 experience points')).toBeInTheDocument();
+    expect(container.querySelectorAll('.lab-hub-card-action svg')).toHaveLength(3);
+    expect(container.querySelectorAll('.lab-hub-ambient img')).toHaveLength(5);
   });
 
   it('keeps ambient motion still when reduced motion is enabled', () => {
