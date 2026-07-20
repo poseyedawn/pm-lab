@@ -35,11 +35,11 @@ export function CalibrationEvidence({
 
       {coaching && (
         <div className="calibration-coach mt-3">
-          <div className="flex items-center gap-4" aria-label={`Calibration step ${stepNumber} of ${totalSteps}`}>
-            <p className="shrink-0 text-sm font-extrabold text-coral-deep">
+          <div className="calibration-progress flex items-center gap-2 min-[360px]:gap-4" aria-label={`Calibration step ${stepNumber} of ${totalSteps}`}>
+            <p className="calibration-progress-label shrink-0 text-xs font-extrabold text-coral-deep min-[360px]:text-sm">
               Calibration <span className="text-ink-soft">· {stepNumber} of {totalSteps}</span>
             </p>
-            <div className="flex flex-1 items-center" aria-hidden>
+            <div className="calibration-progress-track flex min-w-0 flex-1 items-center" aria-hidden>
               {Array.from({ length: totalSteps }, (_, index) => (
                 <span key={index} className="contents">
                   {index > 0 && <span className="h-px flex-1 bg-ink/20" />}
@@ -96,7 +96,7 @@ export function CalibrationEvidence({
           <div
             id="calibration-confidence"
             aria-describedby={coaching ? 'calibration-coaching-note' : undefined}
-            className={`ml-3 rounded-xl px-1 transition-colors ${revealed ? 'bg-win/15 ring-2 ring-win-deep/40' : ''}`}
+            className={`calibration-confidence ml-3 rounded-xl px-1 transition-colors ${revealed ? 'bg-win/15 ring-2 ring-win-deep/40' : ''}`}
           >
             <p className="text-[0.625rem] font-extrabold uppercase tracking-wide text-ink-soft">95% confidence interval</p>
             <p className="mt-1 text-base font-extrabold leading-5 text-brand-deep">

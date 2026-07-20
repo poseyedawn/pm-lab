@@ -550,6 +550,17 @@
   .significant-daily,
   .significant-about { padding-inline: 8px; }
   .significant-call-grid { grid-template-columns: 1fr; }
+  .calibration-progress { flex-wrap: wrap; }
+  .calibration-progress-track { flex-basis: 100%; }
+  .calibration-evidence { overflow: clip; }
+  .calibration-stats { grid-template-columns: 1fr; gap: 12px; }
+  .calibration-stats > div:first-child {
+    border-right: 0;
+    border-bottom: 1px dashed rgb(49 20 61 / 15%);
+    padding-right: 0;
+    padding-bottom: 12px;
+  }
+  .calibration-confidence { margin-left: 0; }
   .calibration-decision-grid { grid-template-columns: 1fr; }
   .calibration-decision { min-height: 76px; }
   .significant-result-comparison { grid-template-columns: 1fr; }
