@@ -3,8 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useCalibration } from '@/hooks/significant/useCalibration';
 import { useCampaign } from '@/hooks/useCampaign';
 import { usePreferences } from '@/hooks/lab/usePreferences';
-import { campaignSeed, generateScenario } from '@/lib/engine/scenario';
-import { defaultState } from '@/lib/progress';
+import { defaultState, type SignificantState } from '@/lib/progress';
 import { track } from '@/services/analyticsService';
 import { sfx } from '@/components/juice/sound';
 import { vibrate } from '@/components/juice/haptics';
@@ -17,24 +16,30 @@ vi.mock('@/components/juice/sound', () => ({
 }));
 vi.mock('@/components/juice/haptics', () => ({ vibrate: vi.fn() }));
 
-const scenario = generateScenario(campaignSeed(1, 1), 'clean-win');
-const completeCalibration = vi.fn();
+const commitCalibrationDecision = vi.fn();
+const continueCalibration = vi.fn();
 const mockedUseCampaign = vi.mocked(useCampaign);
 const mockedUsePreferences = vi.mocked(usePreferences);
 
-beforeEach(() => {
-  vi.clearAllMocks();
+function stageCampaign(state: SignificantState, visitor: 'first' | 'returning' = 'first') {
   mockedUseCampaign.mockReturnValue({
     ready: true,
-    visitor: 'first',
-    state: defaultState(),
+    visitor,
+    state,
     levels: [],
     totalStars: 0,
     allDone: false,
-    completeCalibration,
-    completeLevel: vi.fn(),
+    commitCalibrationDecision,
+    continueCalibration,
+    commitLevelDecision: vi.fn(),
+    clearLevelReveal: vi.fn(),
     markCampaignCompleteTracked: vi.fn(),
   });
+}
+
+beforeEach(() => {
+  vi.clearAllMocks();
+  stageCampaign(defaultState());
   mockedUsePreferences.mockReturnValue({
     ready: true,
     preferences: { sound: true, haptics: true, motion: 'system' },
@@ -44,15 +49,16 @@ beforeEach(() => {
 });
 
 describe('useCalibration', () => {
-  it('begins at zero-earned progress and settles exactly one real decision', async () => {
-    const { result } = renderHook(() => useCalibration({ scenario, initialCall: null }));
+  it('settles one on-screen decision without completing the three-round sequence', async () => {
+    const { result } = renderHook(() => useCalibration());
     await waitFor(() => expect(track).toHaveBeenCalledWith('calibration_started', { gameId: 'significant' }));
 
-    expect(result.current.phase).toBe('deciding');
+    expect(result.current).toMatchObject({ phase: 'deciding', stepNumber: 1, totalSteps: 3 });
     act(() => expect(result.current.decide('ship')).toBe(true));
 
-    expect(result.current).toMatchObject({ phase: 'revealed', call: 'ship', correct: true });
-    expect(completeCalibration).toHaveBeenCalledTimes(1);
+    expect(commitCalibrationDecision).toHaveBeenCalledTimes(1);
+    expect(commitCalibrationDecision).toHaveBeenCalledWith('ship', true);
+    expect(continueCalibration).not.toHaveBeenCalled();
     expect(track).toHaveBeenCalledWith('decision_made', {
       gameId: 'significant', mode: 'calibration', level: 'calibration', call: 'ship',
     });
@@ -60,18 +66,54 @@ describe('useCalibration', () => {
     expect(vibrate).toHaveBeenCalledWith(30, true);
 
     act(() => expect(result.current.decide('kill')).toBeNull());
-    expect(completeCalibration).toHaveBeenCalledTimes(1);
+    expect(commitCalibrationDecision).toHaveBeenCalledTimes(1);
   });
 
-  it('honors a call made on the landing without awarding twice or replaying feedback after navigation', async () => {
-    const { result } = renderHook(() => useCalibration({ scenario, initialCall: 'kill' }));
-
-    expect(result.current).toMatchObject({ phase: 'revealed', call: 'kill', correct: false });
-    await waitFor(() => expect(completeCalibration).toHaveBeenCalledTimes(1));
-    expect(track).toHaveBeenCalledWith('reveal_viewed', {
-      gameId: 'significant', mode: 'calibration', correct: false, archetype: 'clean-win',
+  it('restores a stored review without replaying decision feedback', () => {
+    stageCampaign({
+      ...defaultState(),
+      calibrationStep: 1,
+      pendingCalibrationCall: 'ship',
     });
+
+    const { result } = renderHook(() => useCalibration());
+
+    expect(result.current).toMatchObject({
+      phase: 'revealed',
+      stepNumber: 2,
+      call: 'ship',
+      correct: false,
+      isFinalRound: false,
+    });
+    expect(commitCalibrationDecision).not.toHaveBeenCalled();
     expect(sfx.lose).not.toHaveBeenCalled();
     expect(vibrate).not.toHaveBeenCalled();
+
+    act(() => expect(result.current.continueRound()).toBe(false));
+    expect(continueCalibration).toHaveBeenCalledTimes(1);
+  });
+
+  it('finishes only after the third stored reveal', () => {
+    stageCampaign({
+      ...defaultState(),
+      calibrationStep: 2,
+      pendingCalibrationCall: 'keep',
+    });
+
+    const { result } = renderHook(() => useCalibration());
+
+    expect(result.current).toMatchObject({
+      phase: 'revealed',
+      stepNumber: 3,
+      correct: true,
+      isFinalRound: true,
+      xpEarned: 20,
+      isReplay: false,
+    });
+    act(() => expect(result.current.continueRound()).toBe(true));
+    expect(continueCalibration).toHaveBeenCalledTimes(1);
+    expect(track).toHaveBeenCalledWith('round_continued', {
+      gameId: 'significant', mode: 'calibration', nextAction: 'campaign_path',
+    });
   });
 });

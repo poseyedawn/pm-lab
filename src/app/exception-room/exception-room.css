@@ -12,56 +12,50 @@
   --er-magenta: #ed349d;
   --er-amber: #ffb224;
   --er-red: #ff5578;
-  min-height: 100dvh;
+  width: 100%;
+  min-height: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
   background: #020407;
   color: var(--er-text);
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
   padding: 0;
 }
 
 .exception-shell {
-  width: min(100%, 390px);
-  height: min(100dvh, 844px);
-  min-height: 720px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
   background: var(--er-shell);
   overflow: hidden;
   position: relative;
   border: 1px solid #121b27;
-  box-shadow: 0 24px 80px #000;
+  box-shadow: none;
 }
 
 .exception-shell button,
 .exception-shell a { -webkit-tap-highlight-color: transparent; }
 .exception-shell button:focus-visible,
 .exception-shell a:focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }
+.exception-reveal h2:focus,
+.exception-debrief h1:focus,
+.exception-detail-heading p:focus,
+.exception-evidence-confirm h3:focus,
+.exception-shift-dialog h2:focus { outline: none; }
 
-.exception-topbar,
-.exception-run-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 20px 12px;
-}
-
-.exception-brand-mark,
-.exception-icon-button,
-.exception-sound-status {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--er-border);
-  border-radius: 12px;
-  color: var(--er-cyan);
-  background: var(--er-panel);
-  display: grid;
-  place-items: center;
-}
-.exception-icon-button { cursor: pointer; }
-
-.exception-start-shell { display: flex; flex-direction: column; }
-.exception-start-scroll { overflow-y: auto; padding: 0 20px 28px; scrollbar-width: none; }
+.exception-start-shell { display: flex; min-height: 0; flex-direction: column; }
+.exception-start-scroll { min-height: 0; flex: 1 1 auto; overflow-y: auto; padding: 0 20px 28px; scrollbar-width: none; }
 .exception-start-scroll::-webkit-scrollbar,
-.exception-run-scroll::-webkit-scrollbar { display: none; }
+.exception-run-scroll::-webkit-scrollbar,
+.exception-reveal::-webkit-scrollbar,
+.exception-debrief::-webkit-scrollbar,
+.exception-about-scroll::-webkit-scrollbar { display: none; }
+.exception-reveal,
+.exception-debrief,
+.exception-about-scroll { scrollbar-width: none; }
 
 .exception-hero { padding-top: 20px; position: relative; }
 .exception-kicker,
@@ -103,8 +97,10 @@
 .exception-brief-grid b { display: block; color: var(--er-text); font-size: 13px; }
 
 .exception-mode-card { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 16px; margin-top: 12px; border-radius: 16px; }
-.exception-mode-primary { color: white; background: var(--er-teal); box-shadow: 0 5px 0 #006f68; }
+.exception-mode-primary { color: #021716; background: var(--er-teal); box-shadow: 0 5px 0 #006f68; }
+.exception-mode-campaign { color: white; background: var(--er-purple); box-shadow: 0 5px 0 #4d278f; }
 .exception-mode-primary:active { transform: translateY(4px); box-shadow: 0 1px 0 #006f68; }
+.exception-mode-campaign:active { transform: translateY(4px); box-shadow: 0 1px 0 #4d278f; }
 .exception-mode-locked { color: var(--er-muted); background: var(--er-panel); border: 1px solid var(--er-border); }
 .exception-mode-icon { width: 40px; height: 40px; display: grid; place-items: center; background: #051d21; border-radius: 12px; color: var(--er-cyan); }
 .exception-mode-card b { display: block; font-size: 15px; }
@@ -112,22 +108,23 @@
 .exception-soon { font-size: 9px; font-weight: 800; letter-spacing: 0.12em; border: 1px solid var(--er-border); border-radius: 999px; padding: 5px 7px; }
 .exception-disclosure { color: #6f7c8e; font-size: 10px; text-align: center; line-height: 1.5; margin-top: 20px; }
 
-.exception-run-shell { display: flex; flex-direction: column; }
-.exception-run-header { padding-bottom: 10px; flex: 0 0 auto; gap: 12px; }
-.exception-run-title { margin-right: auto; }
-.exception-run-header h1 { font-family: var(--font-exception-display), sans-serif; font-size: 33px; line-height: 0.8; letter-spacing: 0.02em; }
-.exception-run-header h1 span,
-.exception-run-header h1 strong { display: block; font-weight: 400; }
-.exception-run-header h1 strong { color: var(--er-cyan); }
-.exception-shift-progress { width: 108px; }
-.exception-shift-progress p { color: #a26cff; font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-align: center; margin-bottom: 8px; }
-.exception-shift-progress > div { display: flex; align-items: center; height: 10px; position: relative; }
-.exception-shift-progress > div::before { content: ''; position: absolute; left: 5px; right: 5px; height: 3px; background: #3b3f49; }
+.exception-how-it-works { margin-top: 16px; padding: 16px; border: 1px solid var(--er-border); border-radius: 16px; background: linear-gradient(145deg, #111927, #0c121b); }
+.exception-how-it-works h2 { color: var(--er-cyan); font-size: 9px; font-weight: 800; letter-spacing: 0.14em; }
+.exception-how-it-works ol { display: grid; gap: 10px; margin-top: 12px; counter-reset: exception-step; }
+.exception-how-it-works li { display: grid; grid-template-columns: 64px 1fr; gap: 8px; color: var(--er-text); font-size: 11px; line-height: 1.45; }
+.exception-how-it-works li span { color: var(--er-muted); }
+.exception-about-link { min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--er-cyan); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; margin-top: 16px; }
+
+.exception-run-shell { display: flex; min-height: 0; flex-direction: column; }
+.exception-capacity { padding: 12px 20px 10px; flex: 0 0 auto; }
+.exception-capacity-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.exception-capacity-heading p { color: #a26cff; font-size: 10px; font-weight: 800; letter-spacing: 0.12em; }
+.exception-shift-progress { display: flex; align-items: center; width: 108px; height: 10px; position: relative; }
+.exception-shift-progress::before { content: ''; position: absolute; left: 5px; right: 5px; height: 3px; background: #3b3f49; }
 .exception-shift-progress i { width: 10px; height: 10px; border: 2px solid #6d7380; background: var(--er-shell); border-radius: 50%; z-index: 1; margin-left: auto; }
 .exception-shift-progress i:first-child { margin-left: 0; }
 .exception-shift-progress i.is-complete { background: var(--er-purple); border-color: #bd9aff; }
 
-.exception-capacity { padding: 0 20px 10px; flex: 0 0 auto; }
 .exception-capacity-row { background: var(--er-panel); border: 1px solid var(--er-border); border-radius: 14px; padding: 10px 10px 11px; display: grid; grid-template-columns: 1fr 116px; gap: 10px; align-items: stretch; }
 .exception-capacity-core { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
 .exception-capacity-label-row { display: flex; align-items: center; justify-content: space-between; }
@@ -156,6 +153,9 @@
 .exception-queue-copy b { display: block; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .exception-queue-copy small { display: block; color: var(--er-muted); font-size: 9px; margin-top: 2px; }
 .exception-due-tag { color: var(--er-muted); background: #1b2530; border-radius: 7px; padding: 4px 6px; font-size: 8px; font-weight: 800; text-transform: uppercase; white-space: nowrap; }
+.exception-due-tag b,
+.exception-due-tag small { display: block; font-size: 8px; line-height: 1.25; }
+.exception-due-tag small { margin-top: 2px; color: currentColor; font-weight: 700; text-transform: none; }
 .exception-due-tag.is-high,
 .exception-due-tag.is-critical { color: #ff7894; background: #351321; }
 .exception-due-tag.is-medium { color: var(--er-amber); background: #33230f; }
@@ -169,24 +169,30 @@
 .exception-consequence.is-critical { color: var(--er-red); }
 .exception-consequence.is-low { color: var(--er-cyan); }
 .exception-confidence { color: var(--er-purple); border: 1px solid #5b3a92; height: fit-content; padding: 5px 6px; border-radius: 999px; white-space: nowrap; }
-.exception-case-summary { display: none; }
+.exception-case-summary { color: #c8d1dd; font-size: 13px; line-height: 1.5; margin-top: 8px; }
+.exception-case-due { color: var(--er-amber); font-size: 10px; font-weight: 800; margin-top: 4px; }
+.exception-practice-guide { padding: 10px 12px; margin-top: 10px; border: 1px solid #4f3c86; border-radius: 10px; background: #17142e; }
+.exception-practice-guide small { color: #bd9aff; font-size: 8px; font-weight: 800; letter-spacing: 0.12em; }
+.exception-practice-guide p { color: var(--er-text); font-size: 12px; line-height: 1.45; margin-top: 3px; }
 .exception-ai-call { display: flex; gap: 10px; background: #17142e; border: 1px solid #4c3679; border-radius: 11px; padding: 9px; margin-top: 9px; }
 .exception-ai-call > span { color: #a77bff; }
-.exception-ai-call small { color: #a77bff; font-size: 8px; font-weight: 800; letter-spacing: 0.12em; }
-.exception-ai-call p { color: #dce7ed; font-size: 10px; line-height: 1.4; margin-top: 2px; }
+.exception-ai-call small { color: #c9aeff; font-size: 9px; font-weight: 800; letter-spacing: 0.12em; }
+.exception-ai-call p { color: #e7edf2; font-size: 12px; line-height: 1.45; margin-top: 3px; }
 .exception-evidence-heading { display: flex; align-items: center; justify-content: space-between; margin: 9px 0 5px; }
-.exception-evidence-heading span { color: var(--er-muted); font-size: 8px; font-weight: 800; }
+.exception-evidence-heading span { color: #b8c3d0; font-size: 8px; font-weight: 800; text-align: right; }
 .exception-evidence-list { display: grid; gap: 4px; }
-.exception-evidence-item { width: 100%; display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; text-align: left; color: var(--er-text); background: var(--er-panel-strong); border: 1px solid var(--er-border); border-radius: 9px; padding: 7px 8px; }
+.exception-evidence-item { width: 100%; display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: start; text-align: left; color: var(--er-text); background: var(--er-panel-strong); border: 1px solid var(--er-border); border-radius: 9px; padding: 10px; }
 .exception-evidence-item.is-viewed { border-color: #3b6c72; }
 .exception-evidence-icon { color: var(--er-muted); }
 .exception-evidence-item.is-supports .exception-evidence-icon { color: var(--er-teal); }
 .exception-evidence-item.is-conflicts .exception-evidence-icon,
 .exception-evidence-item.is-missing .exception-evidence-icon { color: var(--er-amber); }
-.exception-evidence-item b { display: block; font-size: 10px; }
-.exception-evidence-item small { display: -webkit-box; color: var(--er-muted); font-size: 8px; line-height: 1.3; margin-top: 2px; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.exception-evidence-title { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.exception-evidence-item b { display: block; font-size: 12px; }
+.exception-evidence-title em { color: var(--er-cyan); border: 1px solid #3b6c72; border-radius: 999px; padding: 2px 5px; font-size: 7px; font-style: normal; font-weight: 800; letter-spacing: 0.06em; }
+.exception-evidence-item small { display: block; color: #b8c3d0; font-size: 12px; line-height: 1.45; margin-top: 4px; }
 .exception-review-dot { width: 9px; height: 9px; border: 1px solid var(--er-muted); border-radius: 50%; }
-.exception-reason-line { color: var(--er-muted); font-size: 8px; margin-top: 7px; }
+.exception-reason-line { color: #b8c3d0; font-size: 10px; line-height: 1.4; margin-top: 9px; }
 .exception-reason-line span { color: var(--er-cyan); font-weight: 800; margin-right: 4px; }
 
 .exception-decision-area { margin-top: 9px; }
@@ -200,6 +206,7 @@
 .exception-decision-button.is-escalate { background: var(--er-magenta); box-shadow: 0 4px 0 #891653; }
 .exception-decision-button:active { transform: translateY(3px); box-shadow: 0 1px 0 #000; }
 .exception-decision-button:disabled { opacity: 0.3; cursor: not-allowed; }
+.exception-capacity-help { color: var(--er-muted); font-size: 10px; line-height: 1.4; margin-top: 9px; text-align: center; }
 .exception-detail-picker { margin-top: 12px; display: grid; gap: 6px; }
 .exception-detail-heading { display: flex; justify-content: space-between; align-items: center; }
 .exception-detail-heading p { color: var(--er-text); font-size: 9px; font-weight: 800; letter-spacing: 0.1em; }
@@ -207,6 +214,14 @@
 .exception-detail-picker > button { color: var(--er-text); background: var(--er-panel-strong); border: 1px solid var(--er-border); border-radius: 10px; padding: 10px; display: flex; align-items: center; justify-content: space-between; text-align: left; }
 .exception-detail-picker > button b { display: block; font-size: 10px; }
 .exception-detail-picker > button small { color: var(--er-muted); display: block; font-size: 9px; margin-top: 2px; }
+
+.exception-evidence-confirm { display: grid; gap: 10px; color: var(--er-amber); background: #21170d; border: 1px solid #79551a; border-radius: 12px; padding: 14px; margin-top: 12px; }
+.exception-evidence-confirm h3 { color: var(--er-text); font-size: 13px; font-weight: 800; letter-spacing: 0.08em; }
+.exception-evidence-confirm p { color: #e2c58d; font-size: 12px; line-height: 1.5; }
+.exception-confirm-primary,
+.exception-confirm-risk { min-height: 44px; border-radius: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.06em; }
+.exception-confirm-primary { color: #021617; background: var(--er-cyan); }
+.exception-confirm-risk { color: #ffd6df; background: transparent; border: 1px solid #9c4054; }
 
 .exception-run-footer { flex: 0 0 auto; padding: 6px 20px; border-top: 1px solid #1b2531; display: flex; align-items: center; justify-content: space-between; background: #070b11; }
 .exception-run-footer button { min-height: 44px; display: flex; gap: 6px; align-items: center; color: var(--er-muted); background: transparent; border: 1px solid var(--er-border); border-radius: 10px; padding: 8px 10px; font-size: 9px; font-weight: 800; }
@@ -217,7 +232,9 @@
 .exception-debrief { min-height: 100%; padding: 28px 20px; overflow-y: auto; }
 .exception-reveal-status { display: flex; gap: 12px; align-items: center; color: var(--er-teal); }
 .exception-reveal.is-unnecessary .exception-reveal-status { color: var(--er-amber); }
+.exception-reveal.is-acceptable .exception-reveal-status { color: var(--er-cyan); }
 .exception-reveal.is-unsafe .exception-reveal-status { color: var(--er-red); }
+.exception-reveal.has-evidence-deficit .exception-reveal-status { color: var(--er-amber); }
 .exception-reveal-status small { font-size: 9px; font-weight: 800; letter-spacing: 0.12em; }
 .exception-reveal-status h2 { color: var(--er-text); font-family: var(--font-exception-display), sans-serif; font-size: 28px; font-weight: 400; letter-spacing: 0.02em; }
 .exception-reveal-case { color: var(--er-cyan) !important; font-weight: 800; margin-top: 32px !important; }
@@ -225,6 +242,10 @@
 .exception-consequence-box { background: var(--er-panel); border-left: 3px solid var(--er-magenta); border-radius: 10px; padding: 14px; margin-top: 20px; }
 .exception-consequence-box small { color: var(--er-magenta); font-size: 8px; font-weight: 800; letter-spacing: 0.12em; }
 .exception-consequence-box p { font-size: 11px; line-height: 1.45; margin-top: 5px; }
+.exception-outcome-note { color: #b5eaf0 !important; background: #0c2429; border: 1px solid #285f67; border-radius: 10px; padding: 12px; }
+.exception-evidence-deficit-note { color: var(--er-amber); background: #21170d; border: 1px solid #79551a; border-radius: 10px; padding: 12px; margin-top: 16px; }
+.exception-evidence-deficit-note small { font-size: 8px; font-weight: 800; letter-spacing: 0.12em; }
+.exception-evidence-deficit-note p { color: #f1d7a4; font-size: 11px; line-height: 1.5; margin-top: 4px; }
 .exception-reveal-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
 .exception-reveal-meta span { color: var(--er-muted); background: var(--er-panel); border: 1px solid var(--er-border); border-radius: 999px; padding: 6px 8px; font-size: 9px; }
 .exception-primary-button,
@@ -235,7 +256,7 @@
 .exception-debrief .exception-kicker { color: var(--er-magenta); }
 .exception-debrief h1 { font-family: var(--font-exception-display), sans-serif; font-size: 42px; line-height: 0.95; font-weight: 400; margin-top: 10px; }
 .exception-debrief-copy { color: var(--er-muted); font-size: 12px; line-height: 1.5; margin-top: 12px; }
-.exception-score-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 28px; }
+.exception-score-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 28px; }
 .exception-score-grid div { background: var(--er-panel); border: 1px solid var(--er-border); border-radius: 14px; padding: 13px 6px; text-align: center; color: var(--er-cyan); }
 .exception-score-grid b { display: block; color: var(--er-text); font-family: var(--font-exception-display), sans-serif; font-size: 29px; font-weight: 400; }
 .exception-score-grid small { color: var(--er-muted); font-size: 8px; font-weight: 800; }
@@ -244,13 +265,89 @@
 .exception-debrief-details p:last-child { border: 0; }
 .exception-debrief-details span { color: var(--er-muted); }
 
-@media (min-width: 520px) {
-  .exception-world { padding: 24px; }
-  .exception-shell { border-radius: 30px; }
-}
+.exception-debrief-guidance { background: #101a24; border: 1px solid #2a3a49; border-radius: 14px; padding: 14px; margin-top: 16px; }
+.exception-debrief-guidance h2 { color: var(--er-cyan); font-size: 9px; font-weight: 800; letter-spacing: 0.12em; }
+.exception-debrief-guidance p { color: #c7d1dc; font-size: 11px; line-height: 1.5; margin-top: 8px; }
+.exception-profile-rule { color: #b6e8dd; background: #0d2522; border: 1px solid #265f57; border-radius: 10px; padding: 12px; font-size: 11px; line-height: 1.5; margin-bottom: 18px; }
+.exception-profile-rule.has-deficit { color: #f0d49b; background: #21170d; border-color: #79551a; }
+.exception-decision-trace { margin-bottom: 20px; }
+.exception-decision-trace > div:last-child { display: grid; gap: 6px; }
+.exception-decision-trace article { background: var(--er-panel); border: 1px solid var(--er-border); border-left: 3px solid var(--er-teal); border-radius: 10px; padding: 10px; }
+.exception-decision-trace article.is-acceptable { border-left-color: var(--er-cyan); }
+.exception-decision-trace article.is-unnecessary { border-left-color: var(--er-amber); }
+.exception-decision-trace article.is-unsafe { border-left-color: var(--er-red); }
+.exception-decision-trace article p { display: flex; justify-content: space-between; gap: 8px; font-size: 10px; }
+.exception-decision-trace article p span { color: var(--er-cyan); font-weight: 800; }
+.exception-decision-trace article small { display: block; color: var(--er-muted); font-size: 8px; line-height: 1.4; margin-top: 4px; }
+.exception-practice-recap { background: var(--er-panel); border: 1px solid var(--er-border); border-radius: 14px; padding: 8px 14px; margin: 20px 0; }
+.exception-practice-recap p { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1f2a36; font-size: 11px; }
+.exception-practice-recap p:last-child { border-bottom: 0; }
+.exception-practice-recap span { color: var(--er-muted); }
+.exception-practice-recap b { color: var(--er-cyan); }
+
+.exception-shift-dialog-backdrop { position: absolute; inset: 0; z-index: 20; display: grid; align-items: end; background: #010306cc; padding: 16px; }
+.exception-shift-dialog { background: #121b25; border: 1px solid #4a5a6b; border-radius: 18px; padding: 20px; box-shadow: 0 20px 60px #000c; }
+.exception-shift-dialog h2 { color: var(--er-text); font-size: 24px; margin-top: 6px; }
+.exception-shift-dialog > p:not(.exception-kicker) { color: #c8d1dd; font-size: 12px; line-height: 1.5; margin-top: 10px; }
+.exception-shift-dialog .exception-shift-dialog-note { color: var(--er-muted); }
+.exception-shift-dialog > div { display: grid; gap: 8px; margin-top: 16px; }
+
+.exception-about-shell { min-height: 0; }
+.exception-about-scroll { height: 100%; overflow-y: auto; padding: 24px 20px 32px; }
+.exception-about-scroll header h1 { font-family: var(--font-exception-display), sans-serif; color: var(--er-text); font-size: 38px; font-weight: 400; line-height: 0.95; margin-top: 10px; }
+.exception-about-scroll header > p:last-child { color: var(--er-muted); font-size: 13px; line-height: 1.55; margin-top: 12px; }
+.exception-about-section { background: var(--er-panel); border: 1px solid var(--er-border); border-radius: 14px; padding: 16px; margin-top: 12px; }
+.exception-about-section h2 { color: var(--er-cyan); font-size: 13px; font-weight: 800; }
+.exception-about-section p { color: #c8d1dd; font-size: 12px; line-height: 1.6; margin-top: 6px; }
+.exception-about-scroll > .exception-primary-button { margin-top: 20px; }
 
 @media (max-height: 760px) {
-  .exception-shell { min-height: 100dvh; }
-  .exception-run-header { padding-top: 12px; }
   .exception-hero-art { height: 112px; }
+}
+
+@media (max-width: 260px) {
+  .exception-start-scroll,
+  .exception-run-scroll { padding-inline: 8px; }
+
+  .exception-start-scroll { padding-bottom: 20px; }
+  .exception-hero { padding-top: 16px; }
+  .exception-hero h1 { font-size: 32px; }
+  .exception-hero-copy { margin-top: 12px; font-size: 12px; }
+  .exception-hero-art { height: 96px; margin-top: 12px; }
+  .exception-brief-grid { grid-template-columns: 1fr; }
+  .exception-mode-card { gap: 8px; padding: 12px 8px; }
+  .exception-mode-icon { width: 36px; height: 36px; }
+
+  .exception-capacity { padding: 8px; }
+  .exception-capacity-heading { gap: 8px; }
+  .exception-shift-progress { width: 72px; }
+  .exception-capacity-row { grid-template-columns: 1fr; }
+  .exception-due-alert { justify-content: flex-start; }
+
+  .exception-queue-card {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    gap: 4px 6px;
+  }
+  .exception-severity { grid-column: 1; grid-row: 1 / span 2; }
+  .exception-queue-number { display: none; }
+  .exception-queue-copy { grid-column: 2; grid-row: 1; }
+  .exception-queue-copy b { white-space: normal; }
+  .exception-due-tag { grid-column: 2; grid-row: 2; justify-self: start; }
+  .exception-queue-card > svg { grid-column: 3; grid-row: 1 / span 2; }
+
+  .exception-case-heading { flex-direction: column; align-items: flex-start; }
+  .exception-confidence { white-space: normal; }
+  .exception-ai-call { gap: 6px; }
+  .exception-evidence-item { gap: 6px; padding-inline: 6px; }
+  .exception-reason-line { font-size: 10px; line-height: 1.4; }
+  .exception-decision-buttons { grid-template-columns: 1fr; }
+  .exception-decision-button { min-height: 52px; }
+  .exception-run-footer { padding-inline: 8px; }
+
+  .exception-reveal,
+  .exception-debrief { padding: 20px 8px; }
+  .exception-reveal-status { align-items: flex-start; }
+  .exception-reveal-status h2 { font-size: 22px; }
+  .exception-score-grid { grid-template-columns: 1fr; }
 }

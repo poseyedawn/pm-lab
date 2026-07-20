@@ -2,6 +2,13 @@ import type { LiftReadout } from '@/lib/stats';
 
 export type Call = 'ship' | 'kill' | 'keep';
 
+export interface RoundResult {
+  call: Call;
+  correct: boolean;
+  crit: boolean;
+  xpEarned: number;
+}
+
 export type ArchetypeId =
   | 'clean-win'
   | 'clean-loss'
@@ -49,8 +56,10 @@ export interface Scenario {
   segments?: SegmentReadout[];
   truth: {
     trueLiftPct: number; // long-run true relative lift, in percent
+    /** The operational call supported by evidence available before the decision. */
     correctCall: Call;
-    explanation: string; // 2-3 sharp sentences, numbers already slotted in
+    /** Evidence-based review shown after the decision. */
+    explanation: string;
     trapName: string;    // e.g. "Peeking"
   };
 }

@@ -9,6 +9,7 @@ import { buildShareText, useDaily } from '@/hooks/useDaily';
 import { GameRound } from '@/components/significant/GameRound';
 import { ShareGrid } from '@/components/significant/ShareGrid';
 import { streakBand, track } from '@/services/analyticsService';
+import { GameEntryLoading } from '@/components/game/GameEntryLoading';
 
 export default function DailyPage() {
   const router = useRouter();
@@ -57,7 +58,15 @@ export default function DailyPage() {
     prevStreakRef.current = daily.streak;
   }, [daily.ready, daily.streak]);
 
-  if (!daily.ready || !daily.calibrated) return <main className="significant-daily" aria-busy="true" />;
+  if (!daily.ready || !daily.calibrated) {
+    return (
+      <GameEntryLoading
+        gameName="Significant Daily"
+        description="Checking today's local experiment and your saved result."
+        theme="significant"
+      />
+    );
+  }
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
@@ -74,7 +83,17 @@ export default function DailyPage() {
         </p>
       </header>
 
-      {daily.playedToday ? (
+      {daily.pendingReveal ? (
+        <GameRound
+          key={`${daily.scenario.seed}:${daily.pendingReveal.call}`}
+          scenario={daily.scenario}
+          combo={1}
+          mode="daily"
+          initialResult={daily.pendingReveal}
+          onDecision={() => undefined}
+          onContinue={() => daily.finishReveal()}
+        />
+      ) : daily.playedToday ? (
         <section className="significant-card flex flex-col gap-4 rounded-[var(--radius-card)] p-6 text-center">
           <p className="text-lg font-extrabold">
             {daily.lastCorrect ? 'Nailed it. See you tomorrow.' : 'Not this one. A new experiment arrives tomorrow.'}
@@ -89,10 +108,11 @@ export default function DailyPage() {
           scenario={daily.scenario}
           combo={1}
           mode="daily"
-          onComplete={({ correct, xpEarned }) => {
-            pendingCorrectRef.current = correct;
-            daily.complete(correct, xpEarned);
+          onDecision={(result) => {
+            pendingCorrectRef.current = result.correct;
+            daily.commitDecision(result);
           }}
+          onContinue={() => daily.finishReveal()}
         />
       )}
     </main>

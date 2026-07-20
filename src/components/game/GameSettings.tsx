@@ -1,6 +1,7 @@
 'use client';
 
 import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { GearSix } from '@phosphor-icons/react';
 import { usePreferences } from '@/hooks/lab/usePreferences';
@@ -13,7 +14,39 @@ interface GameSettingsProps {
 }
 
 export function GameSettings({ gameId }: GameSettingsProps) {
-  const { preferences, updatePreference } = usePreferences();
+  const { preferences, storageWarning, updatePreference } = usePreferences();
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+  const triggerRef = useRef<HTMLElement>(null);
+  const [expanded, setExpanded] = useState(false);
+
+  const closeSettings = useCallback(() => {
+    const details = detailsRef.current;
+    if (!details?.open) return;
+    details.open = false;
+    setExpanded(false);
+    triggerRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (!expanded) return;
+
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (detailsRef.current?.contains(event.target as Node)) return;
+      closeSettings();
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      closeSettings();
+    };
+
+    document.addEventListener('click', handleOutsideClick);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeSettings, expanded]);
 
   const handleSound = () => {
     const enabled = !preferences.sound;
@@ -35,12 +68,22 @@ export function GameSettings({ gameId }: GameSettingsProps) {
   };
 
   return (
-    <details className="relative">
-      <summary className="game-settings-trigger cursor-pointer" aria-label="Settings">
+    <details
+      ref={detailsRef}
+      className="relative"
+      onToggle={(event) => setExpanded(event.currentTarget.open)}
+    >
+      <summary
+        ref={triggerRef}
+        className="game-settings-trigger cursor-pointer"
+        aria-label="Settings"
+        aria-controls="game-settings-panel"
+        aria-expanded={expanded}
+      >
         <GearSix size={20} weight="fill" aria-hidden />
         <span className="sr-only">Settings</span>
       </summary>
-      <div className="game-settings-popover absolute right-0 z-20 mt-2 w-64 rounded-2xl border border-ink/10 bg-surface p-4 shadow-xl">
+      <div id="game-settings-panel" className="game-settings-popover absolute right-0 z-20 mt-2 rounded-2xl border border-ink/10 bg-surface p-4 shadow-xl">
         <div className="flex items-center justify-between gap-4">
           <span className="text-sm font-extrabold">Sound</span>
           <button type="button" role="switch" aria-label="Sound" aria-checked={preferences.sound} onClick={handleSound} className="settings-toggle">
@@ -61,6 +104,11 @@ export function GameSettings({ gameId }: GameSettingsProps) {
             <option value="full">Full</option>
           </select>
         </label>
+        {storageWarning && (
+          <p role="status" className="mt-4 rounded-xl bg-gold/15 px-3 py-2 text-xs font-bold text-ink">
+            Saved for this visit only. Browser storage is unavailable.
+          </p>
+        )}
         {gameId === 'significant' && (
           <Link
             href="/significant/calibration?replay=1"

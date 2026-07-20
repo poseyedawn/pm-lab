@@ -5,6 +5,7 @@ import type {
   ScheduledCaseTiming,
   ScheduledExceptionCase,
   ShiftNumber,
+  RunMode,
 } from '@/lib/exception-room/types';
 
 function shuffled<T>(values: readonly T[], seed: number): T[] {
@@ -17,7 +18,20 @@ function shuffled<T>(values: readonly T[], seed: number): T[] {
   return result;
 }
 
-export function buildSchedule(cases: readonly ExceptionCase[], seed: number): ScheduledCaseTiming[] {
+export function buildSchedule(
+  cases: readonly ExceptionCase[],
+  seed: number,
+  mode: RunMode = 'campaign',
+): ScheduledCaseTiming[] {
+  if (mode === 'practice') {
+    const ordered = shuffled(cases, hashString(`exception-room:${seed}:practice`));
+    return ordered.map((candidate, index) => ({
+      caseId: candidate.id,
+      shift: 1,
+      arrivesAtTick: index,
+      dueAtTick: index + candidate.dueOffsetTicks,
+    }));
+  }
   return SHIFT_CONFIGS.flatMap((config) => {
     const shiftCases = cases.filter((candidate) => candidate.shift === config.shift);
     if (shiftCases.length !== config.arrivalSlots.length) {

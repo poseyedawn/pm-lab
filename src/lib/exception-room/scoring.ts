@@ -18,6 +18,8 @@ export interface ProfileFacts {
   safety: number;
   service: number;
   capacity: number;
+  evidenceQuality: number;
+  evidenceDeficitDecisions: number;
   unsafeHighOrCriticalApproval: boolean;
   resolvedCount: number;
   escalatedCount: number;
@@ -36,9 +38,15 @@ export function profileForFacts(facts: ProfileFacts): OperatorProfile {
     facts.safety >= 80
     && facts.service >= 80
     && facts.capacity >= 80
+    && facts.evidenceQuality >= 80
+    && facts.evidenceDeficitDecisions === 0
     && !facts.unsafeHighOrCriticalApproval
   ) return 'Balanced Operator';
-  if ((facts.service >= 85 || facts.capacity >= 85) && facts.safety < 70 && !backlogBound) {
+  if (
+    (facts.service >= 85 || facts.capacity >= 85)
+    && (facts.safety < 70 || facts.evidenceQuality < 70)
+    && !backlogBound
+  ) {
     return 'Speed Over Evidence';
   }
   if (
@@ -79,14 +87,23 @@ export function scoreRun(
   let safeResolutionValue = 0;
   let capacitySpent = 0;
   let unsafeHighOrCriticalApproval = false;
+  let requiredEvidenceCount = 0;
+  let requiredEvidenceViewedCount = 0;
 
   for (const resolution of state.resolutions) {
     const candidate = caseById(cases, resolution.caseId);
     const timing = timingById(state.schedule, resolution.caseId);
     if (!candidate || !timing) continue;
+    const viewedRequiredEvidence = candidate.requiredEvidenceIds.filter((evidenceId) =>
+      resolution.evidenceViewedIds.includes(evidenceId));
+    const evidenceRatio = candidate.requiredEvidenceIds.length === 0
+      ? 1
+      : viewedRequiredEvidence.length / candidate.requiredEvidenceIds.length;
+    requiredEvidenceCount += candidate.requiredEvidenceIds.length;
+    requiredEvidenceViewedCount += viewedRequiredEvidence.length;
     const safe = resolution.outcome !== 'unsafe';
     const serviceEligible = resolution.outcome === 'preferred' || resolution.outcome === 'acceptable';
-    if (safe) safelyHandledWeight += CONSEQUENCE_WEIGHTS[candidate.consequence];
+    if (safe) safelyHandledWeight += CONSEQUENCE_WEIGHTS[candidate.consequence] * evidenceRatio;
     if (serviceEligible && resolution.resolvedAtTick <= timing.dueAtTick) {
       onTimeServiceWeight += Math.min(CONSEQUENCE_WEIGHTS[candidate.consequence], 8);
     }
@@ -122,10 +139,13 @@ export function scoreRun(
   const escalatedCount = state.resolutions.filter((resolution) => resolution.action === 'escalate').length;
   const serviceBreaches = new Set(state.history.flatMap((event) =>
     event.type === 'case-breached' ? [event.caseId] : [])).size;
-  const evidenceInspectionRate = roundPercent(
-    state.resolutions.filter((resolution) => resolution.evidenceViewedIds.length > 0).length,
-    state.resolutions.length,
-  );
+  const evidenceQuality = roundPercent(requiredEvidenceViewedCount, requiredEvidenceCount);
+  const evidenceCompleteCases = state.resolutions.filter(
+    (resolution) => resolution.missingRequiredEvidenceIds.length === 0,
+  ).length;
+  const evidenceDeficitDecisions = state.resolutions.filter(
+    (resolution) => resolution.acceptedEvidenceDeficit,
+  ).length;
 
   const safety = roundPercent(safelyHandledWeight, totalConsequenceWeight);
   const service = roundPercent(onTimeServiceWeight, totalServiceWeight);
@@ -134,6 +154,8 @@ export function scoreRun(
     safety,
     service,
     capacity,
+    evidenceQuality,
+    evidenceDeficitDecisions,
     unsafeHighOrCriticalApproval,
     resolvedCount: state.resolutions.length,
     escalatedCount,
@@ -155,7 +177,9 @@ export function scoreRun(
     serviceBreaches,
     unresolved,
     capacitySpent,
-    evidenceInspectionRate,
+    evidenceQuality,
+    evidenceCompleteCases,
+    evidenceDeficitDecisions,
     repeatedExceptionClasses: repeatedArchetypes(cases),
     profile,
   };

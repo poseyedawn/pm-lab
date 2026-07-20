@@ -1,7 +1,20 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
-  addXp, CALIBRATION_XP, completeCalibration, defaultState, loadState, recordCampaignResult,
-  recordDaily, saveState, xpForCall,
+  addXp,
+  advanceCalibration,
+  CALIBRATION_CORRECT_XP,
+  clearCampaignReveal,
+  clearDailyReveal,
+  commitCampaignDecision,
+  commitDailyDecision,
+  completeCalibration,
+  defaultState,
+  loadState,
+  recordCalibrationDecision,
+  recordCampaignResult,
+  recordDaily,
+  saveState,
+  xpForCall,
 } from '@/lib/progress';
 
 describe('campaign results', () => {
@@ -27,6 +40,21 @@ describe('campaign results', () => {
     s = recordCampaignResult(s, 3, true);
     expect(s.campaignStreak).toBe(1);
   });
+
+  it('commits one stable reveal with the attempt, stars, streak, and XP', () => {
+    const miss = { call: 'kill', correct: false, crit: false, xpEarned: 0 } as const;
+    const first = commitCampaignDecision(defaultState(), 1, 123, miss);
+
+    expect(first.campaign[1]).toEqual({ stars: 0, attempts: 1, correct: false });
+    expect(first.pendingCampaignReveal).toEqual({ levelId: 1, scenarioSeed: 123, ...miss });
+    expect(commitCampaignDecision(first, 1, 456, { ...miss, call: 'ship' })).toEqual(first);
+
+    const readyForRetry = clearCampaignReveal(first, 1);
+    const hit = { call: 'ship', correct: true, crit: true, xpEarned: 200 } as const;
+    const second = commitCampaignDecision(readyForRetry, 1, 456, hit);
+    expect(second.campaign[1]).toEqual({ stars: 1, attempts: 2, correct: true });
+    expect(second).toMatchObject({ xp: 200, campaignStreak: 1, pendingCampaignReveal: hit });
+  });
 });
 
 describe('daily streaks', () => {
@@ -37,6 +65,27 @@ describe('daily streaks', () => {
     expect(s.dailyStreak).toBe(2);
     const again = recordDaily(s, '2026-08-02', true);
     expect(again).toEqual(s);
+  });
+
+  it('commits and clears one daily reveal without duplicating XP', () => {
+    const hit = { call: 'ship', correct: true, crit: false, xpEarned: 100 } as const;
+    const committed = commitDailyDecision(defaultState(), '2026-08-01', 42, hit);
+
+    expect(committed).toMatchObject({
+      lastDailyDate: '2026-08-01',
+      lastDailyCorrect: true,
+      xp: 100,
+      pendingDailyReveal: { date: '2026-08-01', scenarioSeed: 42, ...hit },
+    });
+    expect(commitDailyDecision(committed, '2026-08-01', 42, hit)).toEqual(committed);
+    expect(clearDailyReveal(committed, '2026-08-01').pendingDailyReveal).toBeNull();
+
+    const nextDay = commitDailyDecision(committed, '2026-08-02', 43, { ...hit, xpEarned: 120 });
+    expect(nextDay).toMatchObject({
+      lastDailyDate: '2026-08-02',
+      xp: 220,
+      pendingDailyReveal: { date: '2026-08-02', scenarioSeed: 43, xpEarned: 120 },
+    });
   });
   it('a one-day gap spends a shield; without one, resets', () => {
     let s = { ...defaultState(), shields: 1 };
@@ -64,13 +113,33 @@ describe('xp', () => {
     expect(addXp(defaultState(), 250).xp).toBe(250);
   });
 
-  it('awards the baseline only after calibration and never awards it twice', () => {
+  it('completes calibration without adding a completion-only reward', () => {
     const fresh = defaultState();
     expect(fresh).toMatchObject({ warmupDone: false, xp: 0 });
 
     const completed = completeCalibration(fresh);
-    expect(completed).toMatchObject({ warmupDone: true, xp: CALIBRATION_XP });
+    expect(completed).toMatchObject({ warmupDone: true, xp: 0 });
     expect(completeCalibration(completed)).toEqual(completed);
+  });
+
+  it('awards each correct calibration call and gives review calls zero XP', () => {
+    let state = defaultState();
+    for (const [index, call] of (['ship', 'kill', 'keep'] as const).entries()) {
+      state = recordCalibrationDecision(state, call, index !== 1);
+      expect(state.pendingCalibrationCall).toBe(call);
+      state = advanceCalibration(state);
+    }
+
+    expect(state).toMatchObject({
+      warmupDone: true,
+      calibrationStep: 0,
+      pendingCalibrationCall: null,
+      xp: CALIBRATION_CORRECT_XP * 2,
+    });
+    expect(advanceCalibration(state)).toEqual(state);
+
+    const replay = recordCalibrationDecision(state, 'ship', true);
+    expect(replay.xp).toBe(CALIBRATION_CORRECT_XP * 2);
   });
 });
 

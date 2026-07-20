@@ -57,9 +57,18 @@ export function ShareControl({ text, surface, label, color, className = '' }: Sh
       <PressButton color={color} className={className} onClick={handleCopy}>
         {status === 'copied' ? 'Copied!' : label}
       </PressButton>
+      {status === 'failed' && (
+        <textarea
+          readOnly
+          value={text}
+          className="w-full rounded-2xl bg-surface p-3 text-sm"
+          rows={2}
+          aria-label="Share text"
+        />
+      )}
       <p className="min-h-4 text-xs text-ink-soft" aria-live="polite">
         {status === 'copied' ? 'Result copied.' : ''}
-        {status === 'failed' ? 'Couldn’t copy that. Check clipboard permission and try again.' : ''}
+        {status === 'failed' ? 'Copy did not work. Select the text above instead.' : ''}
       </p>
     </div>
   );

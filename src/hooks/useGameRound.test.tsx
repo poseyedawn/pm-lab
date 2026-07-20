@@ -45,16 +45,17 @@ describe('useGameRound', () => {
     expect(result.current.call).toBe('ship');
   });
 
-  it('starts revealed when a calibrated landing call is supplied', () => {
-    vi.spyOn(Math, 'random').mockReturnValue(0.99);
+  it('restores an already-scored result without rolling it again', () => {
     const s = generateScenario(7, 'clean-win');
-    const { result } = renderHook(() => useGameRound(s, 1, 'ship'));
+    const restored = { call: 'ship', correct: true, crit: true, xpEarned: 200 } as const;
+    const { result } = renderHook(() => useGameRound(s, 1, restored));
 
     expect(result.current).toMatchObject({
       phase: 'revealed',
       call: 'ship',
       correct: true,
-      xpEarned: 100,
+      crit: true,
+      xpEarned: 200,
     });
     expect(result.current.decide('kill')).toBeNull();
   });

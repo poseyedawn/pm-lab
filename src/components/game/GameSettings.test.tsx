@@ -25,11 +25,32 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  vi.restoreAllMocks();
   cleanup();
   document.documentElement.removeAttribute('data-motion');
 });
 
 describe('GameSettings', () => {
+  it('dismisses with Escape or an outside pointer and returns focus to the trigger', async () => {
+    render(<div><GameSettings /><button type="button">Outside</button></div>);
+    const trigger = screen.getByLabelText('Settings');
+
+    fireEvent.click(trigger);
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'true'));
+    fireEvent.keyDown(document, { key: 'Escape' });
+    await waitFor(() => {
+      expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      expect(trigger).toHaveFocus();
+    });
+
+    fireEvent.click(trigger);
+    fireEvent.click(screen.getByRole('button', { name: 'Outside' }));
+    await waitFor(() => {
+      expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      expect(trigger).toHaveFocus();
+    });
+  });
+
   it('persists independent sound and haptic switches', async () => {
     render(<GameSettings />);
     fireEvent.click(screen.getByText('Settings'));
@@ -42,6 +63,21 @@ describe('GameSettings', () => {
     });
     expect(track).toHaveBeenCalledWith('settings_changed', { setting: 'sound', enabled: false });
     expect(track).toHaveBeenCalledWith('settings_changed', { setting: 'haptics', enabled: false });
+  });
+
+  it('explains when a preference can only be kept for this visit', async () => {
+    const storagePrototype = Object.getPrototypeOf(window.localStorage) as Storage;
+    vi.spyOn(storagePrototype, 'setItem').mockImplementation(() => {
+      throw new Error('QuotaExceededError');
+    });
+
+    render(<GameSettings />);
+    fireEvent.click(screen.getByText('Settings'));
+    fireEvent.click(await screen.findByRole('switch', { name: 'Sound' }));
+
+    expect(await screen.findByRole('status')).toHaveTextContent(
+      'Saved for this visit only. Browser storage is unavailable.',
+    );
   });
 
   it('lets an explicit motion choice override the system preference', async () => {

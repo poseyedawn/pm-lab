@@ -1,17 +1,19 @@
 'use client';
 
-import { motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import type { Card, Dir } from '@/lib/ship-it/types';
+import { ShipAvatarIcon } from '@/components/ship-it/ShipIcon';
 
 const SWIPE_THRESHOLD = 100;
 
 interface DilemmaCardProps {
   card: Card;
   onChoose: (dir: Dir) => void;
+  reducedMotion?: boolean;
 }
 
-export function DilemmaCard({ card, onChoose }: DilemmaCardProps) {
-  const reduced = useReducedMotion() ?? false;
+export function DilemmaCard({ card, onChoose, reducedMotion = false }: DilemmaCardProps) {
+  const reduced = reducedMotion;
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-12, 12]);
   const leftOpacity = useTransform(x, [-SWIPE_THRESHOLD, -20], [1, 0]);
@@ -19,6 +21,7 @@ export function DilemmaCard({ card, onChoose }: DilemmaCardProps) {
 
   return (
     <motion.div
+      data-testid="ship-it-dilemma"
       key={card.id}
       drag={reduced ? false : 'x'}
       dragConstraints={{ left: 0, right: 0 }}
@@ -34,7 +37,9 @@ export function DilemmaCard({ card, onChoose }: DilemmaCardProps) {
       className="relative flex min-h-56 touch-pan-y flex-col gap-3 rounded-[var(--radius-card)] bg-surface p-6 shadow-lg"
     >
       <div className="flex items-center gap-2">
-        <span aria-hidden className="grid h-9 w-9 place-items-center rounded-full bg-bg text-lg">{card.avatar}</span>
+        <span aria-hidden className="grid h-9 w-9 place-items-center rounded-full bg-bg text-ink-soft">
+          <ShipAvatarIcon avatar={card.avatar} />
+        </span>
         <span className="text-sm font-extrabold text-ink-soft">{card.speaker}</span>
       </div>
       <p className="text-lg font-extrabold leading-snug">{card.text}</p>

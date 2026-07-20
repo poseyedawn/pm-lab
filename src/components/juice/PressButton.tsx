@@ -13,12 +13,22 @@ interface PressButtonProps {
   disabled?: boolean;
   ariaLabel?: string;
   className?: string;
+  buttonRef?: React.Ref<HTMLButtonElement>;
   children: React.ReactNode;
 }
 
-export function PressButton({ color, onClick, disabled, ariaLabel, className = '', children }: PressButtonProps) {
+export function PressButton({
+  color,
+  onClick,
+  disabled,
+  ariaLabel,
+  className = '',
+  buttonRef,
+  children,
+}: PressButtonProps) {
   return (
     <button
+      ref={buttonRef}
       type="button"
       aria-label={ariaLabel}
       disabled={disabled}

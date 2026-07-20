@@ -43,7 +43,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       trueLiftPct: lift * 100, correctCall: 'ship', trapName: 'Clean win',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.2), nPerArmDay: uniformInt(r, 3000, 8000), daysRun: 14, liftOnDay: () => lift }),
       accept: (v) => v.observed.significant && v.observed.relLift > 0,
-      explain: (v) => `No trap. The test ran its full two weeks, the lift held steady, and the CI (${pct(v.observed.ciLow)} to ${pct(v.observed.ciHigh)}) excludes zero. True lift was ${pct(lift)}. Ship it.`,
+      explain: (v) => `The test ran for its full two weeks, the lift held steady, and the confidence interval (${pct(v.observed.ciLow)} to ${pct(v.observed.ciHigh)}) stays above zero. The visible evidence supports release.`,
     };
   },
 
@@ -53,18 +53,18 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       daysPlanned: 14, daysRun: 14,
       trueLiftPct: lift * 100, correctCall: 'kill', trapName: 'Clean loss',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.2), nPerArmDay: uniformInt(r, 3000, 8000), daysRun: 14, liftOnDay: () => lift }),
-      accept: (v) => v.observed.relLift < 0,
-      explain: () => `No trick here. The feature hurt the metric, with a true lift of ${pct(lift)}. Kill it and document what the team learned.`,
+      accept: (v) => v.observed.significant && v.observed.relLift < 0,
+      explain: (v) => `The test ran for its full two weeks, and the confidence interval (${pct(v.observed.ciLow)} to ${pct(v.observed.ciHigh)}) stays below zero. Stop this version and document what the team learned.`,
     };
   },
 
-  'winners-curse': (rng) => {
+  'winners-curse': () => {
     return {
       daysPlanned: 14, daysRun: 3,
-      trueLiftPct: 0, correctCall: 'kill', trapName: "Winner's curse",
+      trueLiftPct: 0, correctCall: 'keep', trapName: "Winner's curse",
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.04, 0.08), nPerArmDay: uniformInt(r, 150, 300), daysRun: 3, liftOnDay: () => 0 }),
       accept: (v) => v.observed.significant && v.observed.relLift > 0.25,
-      explain: (v) => `A ${pct(v.observed.relLift)} lift on ${(v.totals.nA + v.totals.nB).toLocaleString()} users is a red flag. With a tiny sample, only extreme swings reach significance. That makes the apparent effect look larger than it is. True lift: 0%.`,
+      explain: (v) => `A ${pct(v.observed.relLift)} lift after only ${v.daysRun} of ${v.daysPlanned} planned days is not a release signal. The early sample can inflate an extreme result, but it does not show that the treatment should be abandoned. Follow the planned stopping rule and keep collecting valid evidence.`,
     };
   },
 
@@ -76,7 +76,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       note: 'Planned duration: 14 days.',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.15), nPerArmDay: uniformInt(r, 1500, 3000), daysRun, liftOnDay: () => 0 }),
       accept: (v) => v.observed.significant,
-      explain: (v) => `This is day ${v.daysRun} of a 14-day test. Stopping as soon as p falls below 0.05 raises the risk of a false positive. An A/A test checked daily can cross that threshold more than 25% of the time. True lift: 0%. Let it run.`,
+      explain: (v) => `This is day ${v.daysRun} of a 14-day test. Stopping as soon as p falls below 0.05 raises the risk of a false positive. Follow the planned stopping rule and keep collecting evidence.`,
     };
   },
 
@@ -92,7 +92,7 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
         const relDay = (i: number) => v.variant![i].c / v.variant![i].n - v.control![i].c / v.control![i].n;
         return relDay(0) > relDay(v.daysRun - 1);
       },
-      explain: () => `Look at the chart, not the average: the variant spiked at launch and decayed toward the control every day since. Users noticed the new thing, then stopped caring. The long-run lift converges to ~0%. The aggregate ${'"'}win${'"'} is front-loaded noise.`,
+      explain: () => `Look at the chart, not only the average. The variant spiked at launch and then decayed toward the control. The aggregate gain is carried by the early novelty spike, so this version should not ship.`,
     };
   },
 
@@ -103,18 +103,18 @@ export const ARCHETYPES: Record<ArchetypeId, (rng: RNG) => ArchetypeBuild> = {
       trueLiftPct: lift * 100, correctCall: 'keep', trapName: 'Underpowered',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.03, 0.06), nPerArmDay: uniformInt(r, 300, 600), daysRun: 14, liftOnDay: () => lift }),
       accept: (v) => !v.observed.significant,
-      explain: (v) => `The confidence interval (${pct(v.observed.ciLow)} to ${pct(v.observed.ciHigh)}) covers both harm and a worthwhile gain. At this traffic level, the test cannot separate them. The true effect is ${pct(lift)}. Run the test longer or send it more traffic.`,
+      explain: (v) => `The confidence interval (${pct(v.observed.ciLow)} to ${pct(v.observed.ciHigh)}) covers both harm and a worthwhile gain. At this traffic level, the test cannot separate them. Run the test longer or send it more traffic.`,
     };
   },
 
-  'multiple-comparisons': (rng) => {
+  'multiple-comparisons': () => {
     return {
       daysPlanned: 14, daysRun: 14,
-      trueLiftPct: 0, correctCall: 'kill', trapName: 'Multiple comparisons',
+      trueLiftPct: 0, correctCall: 'keep', trapName: 'Multiple comparisons',
       note: 'This is the only significant result among 12 metrics the team checked.',
       simulate: (r) => simulateArms(r, { baseRate: uniform(r, 0.05, 0.15), nPerArmDay: uniformInt(r, 2000, 4000), daysRun: 14, liftOnDay: () => 0 }),
       accept: (v) => v.observed.significant,
-      explain: () => `Testing 12 metrics at p<0.05 creates about 0.6 false positives per experiment. One significant metric without a preregistered hypothesis looks like noise. True lift: 0%.`,
+      explain: () => `Testing 12 metrics at p<0.05 creates about 0.6 false positives per experiment. One significant metric without a preregistered hypothesis does not justify release or abandonment. Register a primary metric and rerun the test.`,
     };
   },
 

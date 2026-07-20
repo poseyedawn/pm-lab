@@ -1,22 +1,22 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { METER_INFO, type MeterId } from '@/lib/ship-it/types';
+import { ShipMeterIcon } from '@/components/ship-it/ShipIcon';
 
 interface MeterBarProps {
   id: MeterId;
   value: number;
-  delta?: number;
 }
 
-export function MeterBar({ id, value, delta }: MeterBarProps) {
+export function MeterBar({ id, value }: MeterBarProps) {
   const info = METER_INFO[id];
   const reduced = useReducedMotion() ?? false;
   const critical = value < 20;
 
   return (
     <div className="relative flex flex-col items-center gap-1">
-      <span aria-hidden className="text-base leading-none">{info.emoji}</span>
+      <ShipMeterIcon id={id} />
       <div
         role="meter"
         aria-label={info.label}
@@ -33,20 +33,6 @@ export function MeterBar({ id, value, delta }: MeterBarProps) {
           transition={reduced ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 28 }}
         />
       </div>
-      <AnimatePresence>
-        {delta !== undefined && delta !== 0 && (
-          <motion.span
-            key={`${value}:${delta}`}
-            initial={reduced ? { opacity: 1 } : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: reduced ? 0 : -14 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: reduced ? 0 : 0.7 }}
-            className={`absolute -top-4 text-xs font-extrabold ${delta > 0 ? 'text-win-text' : 'text-lose-deep'}`}
-          >
-            {delta > 0 ? `+${delta}` : `−${Math.abs(delta)}`}
-          </motion.span>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

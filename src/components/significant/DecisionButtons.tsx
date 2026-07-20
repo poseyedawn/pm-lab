@@ -12,13 +12,31 @@ interface DecisionButtonsProps {
 export function DecisionButtons({ onCall, disabled }: DecisionButtonsProps) {
   return (
     <div className="significant-call-grid grid grid-cols-3">
-      <PressButton color="win" onClick={() => onCall('ship')} disabled={disabled} className="significant-call-button">
+      <PressButton
+        color="win"
+        onClick={() => onCall('ship')}
+        disabled={disabled}
+        ariaLabel="Ship: evidence supports release"
+        className="significant-call-button"
+      >
         <Check size={24} weight="bold" aria-hidden />Ship
       </PressButton>
-      <PressButton color="lose" onClick={() => onCall('kill')} disabled={disabled} className="significant-call-button">
+      <PressButton
+        color="lose"
+        onClick={() => onCall('kill')}
+        disabled={disabled}
+        ariaLabel="Kill: evidence supports stopping this version"
+        className="significant-call-button"
+      >
         <X size={24} weight="bold" aria-hidden />Kill
       </PressButton>
-      <PressButton color="sky" onClick={() => onCall('keep')} disabled={disabled} className="significant-call-button text-sm leading-tight">
+      <PressButton
+        color="sky"
+        onClick={() => onCall('keep')}
+        disabled={disabled}
+        ariaLabel="Keep Running: more valid evidence can change the decision"
+        className="significant-call-button text-sm leading-tight"
+      >
         <Pause size={24} weight="fill" aria-hidden />Keep Running
       </PressButton>
     </div>

@@ -17,6 +17,18 @@ describe('useShipRun', () => {
     act(() => result.current.chooseDir('left'));
     expect(result.current.run.week).toBe(2);
     expect(result.current.lastDeltas).toEqual(effects);
+    expect(result.current.lastFeedback?.choiceLabel).toBeDefined();
+    expect(result.current.lastFeedback?.guidance.why.length).toBeGreaterThan(30);
+  });
+
+  it('publishes the exact next run synchronously for persistence', () => {
+    const saved: number[] = [];
+    const { result } = renderHook(() => useShipRun(42, {
+      onRunChange: (run) => saved.push(run.week),
+    }));
+    act(() => result.current.chooseDir('left'));
+    expect(saved).toEqual([2]);
+    expect(result.current.run.week).toBe(2);
   });
 
   it('produces a review and XP when the run ends', () => {

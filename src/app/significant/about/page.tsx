@@ -15,27 +15,29 @@ export default function AboutPage() {
       <section>
         <h2 className="text-lg font-extrabold">Why this game exists</h2>
         <p className="mt-2 text-sm text-ink-soft">
-          The hardest judgment call in product work is deciding what an experiment actually told you.
-          Significant turns early peeking, tiny samples, and broken traffic splits into a game. Every readout
-          is simulated from a hidden ground truth, so the game can tell you whether you were actually right.
+          Product teams still have to decide what an experiment supports. Significant turns early peeking,
+          tiny samples, and broken traffic splits into short practice cases. The game scores the evidence shown
+          before the call. Hidden simulator values never turn an unsupported choice into the right answer.
         </p>
       </section>
 
       <section>
         <h2 className="text-lg font-extrabold">Key trade-offs</h2>
         <p className="mt-2 text-sm text-ink-soft">
-          Scenarios come from ten hand-designed trap archetypes with seeded random parameters. Two archetypes
-          are clean wins and losses. This keeps the game focused on judgment instead of reflexive cynicism.
-          Progress lives locally in your browser without an account.
+          Ten seeded scenario types cover clean results and common experiment failures. Ship means the visible
+          evidence supports release. Kill means it supports stopping the tested version. Keep Running means more
+          valid evidence can still change the decision and continued exposure is acceptable. Progress stays in
+          your browser without an account.
         </p>
       </section>
 
       <section>
         <h2 className="text-lg font-extrabold">The engagement system and its limits</h2>
         <p className="mt-2 text-sm text-ink-soft">
-          The game uses streaks, variable rewards, amplified feedback, and a daily puzzle. It also draws a line:
-          no fake scarcity, no guilt copy, and no notifications. Sound and motion respect your preferences, and
-          aggregate analytics exclude scenario text, seeds, clipboard contents, and your local progress profile.
+          The game uses streaks, variable rewards, and a daily puzzle. It does not use fake scarcity, guilt copy,
+          or notifications. Sound and motion follow your preferences. Analytics record coarse interaction events.
+          Exception Room start events include a random run seed for reproducibility. We do not send scenario text,
+          clipboard contents, or your local progress profile.
         </p>
       </section>
 

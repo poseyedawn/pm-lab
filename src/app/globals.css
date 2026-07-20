@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "./significant.css";
+@import "./lab-hub.css";
 
 @theme {
   --color-bg: #f4f5fb;
@@ -38,16 +38,29 @@ body {
 
 .lab-frame {
   position: relative;
-  width: min(100vw, 390px);
-  height: min(100dvh, 844px);
+  width: 100vw;
+  height: 100dvh;
   min-height: 0;
   margin-inline: auto;
   overflow-y: auto;
+  overflow-x: clip;
   scrollbar-width: none;
   -ms-overflow-style: none;
   overscroll-behavior: contain;
   background: var(--color-bg);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 6%, transparent);
+}
+
+#main-content {
+  min-height: 0;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .lab-frame {
+    width: 390px;
+    height: min(100dvh, 844px);
+  }
 }
 
 .lab-frame::-webkit-scrollbar {
@@ -56,28 +69,94 @@ body {
   height: 0;
 }
 
-.lab-frame:has(.significant-entry) > header,
-.lab-frame:has(.significant-entry) > footer,
-.lab-frame:has([data-game="significant"]) > header,
-.lab-frame:has([data-game="significant"]) > footer { display: none; }
+.lab-frame:has([data-lab-chrome]) > header,
+.lab-frame:has([data-lab-chrome]) > footer { display: none; }
 
-.lab-frame:has(.significant-entry) #main-content,
-.lab-frame:has(.significant-entry) #main-content > main {
-  height: 100%;
+.lab-frame:has([data-lab-chrome]) #main-content {
+  flex: 1 1 auto;
   min-height: 0;
 }
 
-/* Same, when the entry renders inside a GameShell (e.g. /significant for first-time visitors) */
-.lab-frame:has(.significant-entry) #main-content > section[data-game] {
+.game-shell {
   display: flex;
-  height: 100%;
-  min-height: 0;
+  width: 100%;
+  min-height: 100%;
   flex-direction: column;
 }
 
-.lab-frame:has(.significant-entry) #main-content > section[data-game] > main {
-  flex: 1;
+.game-shell > .game-header { flex: 0 0 auto; }
+.game-shell > main {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  min-width: 0;
+}
+
+.game-shell:has(.significant-entry),
+.game-shell[data-game="exception-room"] {
+  height: 100%;
   min-height: 0;
+}
+
+.game-entry-loading {
+  display: grid;
+  width: 100%;
+  min-height: 100%;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.game-entry-loading section {
+  display: flex;
+  width: min(100%, 320px);
+  flex-direction: column;
+  gap: 12px;
+  border: 2px solid rgb(49 20 61 / 10%);
+  border-radius: 24px;
+  background: rgb(255 255 255 / 88%);
+  padding: 24px;
+  box-shadow: 0 12px 28px rgb(49 20 61 / 14%);
+}
+
+.game-entry-loading section > p:first-child {
+  color: var(--color-coral-deep);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.game-entry-loading h1 {
+  color: var(--color-ink);
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.75rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.game-entry-loading section > p:not(:first-child) {
+  color: var(--color-ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.game-entry-loading [role="status"] {
+  color: var(--color-ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.game-entry-loading-significant {
+  background: linear-gradient(165deg, #ff9bad 0%, #f04469 56%, #ca2855 100%);
+}
+
+.game-entry-loading-ship-it {
+  background: radial-gradient(circle at 80% 12%, rgb(49 203 208 / 24%), transparent 34%), #f4f5fb;
+}
+
+.game-entry-loading-exception-room {
+  background: radial-gradient(circle at 50% 20%, #243fa4 0%, #100b42 48%, #07051e 100%);
 }
 
 .font-hand { font-family: var(--font-hand), cursive; }
@@ -120,6 +199,94 @@ textarea:focus-visible {
   font-weight: 800;
 }
 
+.game-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-color: rgb(111 52 105 / 12%);
+  background: rgb(255 250 250 / 90%);
+  box-shadow: 0 4px 18px rgb(153 72 100 / 9%);
+  backdrop-filter: blur(16px);
+}
+
+.game-header-home,
+.game-settings-trigger {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(240 68 105 / 24%);
+  border-radius: 14px;
+  background: var(--color-card-pastel);
+  color: var(--color-coral-deep);
+  box-shadow: 0 3px 0 rgb(111 52 105 / 14%);
+}
+
+.game-header-home:active,
+.game-settings-trigger:active {
+  transform: translateY(2px);
+}
+
+.game-settings-trigger {
+  list-style: none;
+  cursor: pointer;
+}
+
+.game-settings-trigger::-webkit-details-marker { display: none; }
+
+.game-settings-popover {
+  width: min(16rem, calc(100vw - 16px));
+  border: 2px solid rgb(240 68 105 / 16%);
+  background: var(--color-card-pastel);
+  color: var(--color-ink);
+}
+
+@media (max-width: 260px) {
+  .game-header-inner {
+    gap: 4px;
+    padding-inline: 8px;
+  }
+
+  .game-header-context,
+  .game-header-actions { gap: 4px; }
+
+  .game-header-kicker {
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  .game-header-title {
+    overflow: visible;
+    font-size: 0.5rem;
+    line-height: 1.15;
+    text-overflow: clip;
+    white-space: normal;
+  }
+  .lab-profile-compact { display: none; }
+
+  .ship-it-run-page {
+    padding: 12px;
+  }
+
+  .ship-it-decision-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ship-it-decision-effects {
+    justify-content: flex-start;
+  }
+
+  .ship-it-review-card {
+    padding: 12px;
+  }
+
+  .ship-it-choice-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* Tactile 3D-pressed button base: pair with a bg + shadow color per variant */
 .btn-3d {
   @apply focus-visible:outline-4 focus-visible:outline-brand/50;
@@ -129,6 +296,24 @@ textarea:focus-visible {
   transform: translateY(0);
 }
 .btn-3d:active { transform: translateY(4px); box-shadow: 0 0 0 0 !important; }
+
+.game-confetti-layer {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ship-it-review-card {
+  isolation: isolate;
+}
+
+.ship-it-review-card > :not(.game-confetti-layer) {
+  position: relative;
+  z-index: 1;
+}
 
 html[data-motion="reduced"] *,
 html[data-motion="reduced"] *::before,
@@ -148,97 +333,4 @@ html[data-motion="reduced"] *::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* Lab hub game tiles */
-.lab-hub-tile {
-  position: relative;
-  display: flex;
-  min-height: 128px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  overflow: hidden;
-  isolation: isolate;
-  border: 2px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
-  border-radius: var(--radius-card);
-  padding: 16px 18px;
-  color: #ffffff;
-  box-shadow: 0 8px 0 color-mix(in srgb, var(--color-ink) 12%, transparent), 0 16px 28px color-mix(in srgb, var(--color-ink) 10%, transparent);
-  transition: transform 80ms ease, box-shadow 80ms ease;
-}
-
-.lab-hub-tile:active {
-  transform: translateY(5px);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--color-ink) 12%, transparent);
-}
-
-.lab-hub-tile-art {
-  z-index: -2;
-  object-fit: cover;
-  object-position: center;
-  pointer-events: none;
-}
-
-.lab-hub-tile-scrim {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(90deg, rgb(20 8 24 / 62%) 0%, rgb(20 8 24 / 30%) 62%, rgb(20 8 24 / 8%) 100%);
-}
-
-/* Per-game fallback worlds (used until each game has its own tile art) */
-.lab-hub-tile[data-game-tile='ship-it'] {
-  background:
-    radial-gradient(120% 160% at 88% 0%, #ffd058 0%, #f59e0b 42%, #c2410c 100%);
-}
-
-.lab-hub-tile[data-game-tile='exception-room'] {
-  background: #0c1220;
-}
-
-.lab-hub-tile-body {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.lab-hub-tile-eyebrow {
-  font-size: 0.625rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgb(255 255 255 / 80%);
-}
-
-.lab-hub-tile-name {
-  font-family: var(--font-display), sans-serif;
-  font-size: 1.375rem;
-  line-height: 1.1;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  text-shadow: 0 2px 0 rgb(0 0 0 / 28%);
-}
-
-.lab-hub-tile-tagline {
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: rgb(255 255 255 / 88%);
-}
-
-.lab-hub-tile-side {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-}
-
-.lab-hub-tile-xp {
-  border-radius: 999px;
-  background: rgb(255 255 255 / 22%);
-  padding: 2px 10px;
-  font-size: 0.6875rem;
-  font-weight: 800;
 }

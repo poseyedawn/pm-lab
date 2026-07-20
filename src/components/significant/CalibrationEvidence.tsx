@@ -4,43 +4,54 @@ import type { Scenario } from '@/lib/engine/types';
 
 interface CalibrationEvidenceProps {
   scenario: Scenario;
+  prompt: string;
+  stepNumber: number;
+  totalSteps: number;
   coaching: boolean;
   revealed: boolean;
 }
 
 const percent = (value: number): string => `${value >= 0 ? '+' : ''}${(value * 100).toFixed(1)}%`;
 
-export function CalibrationEvidence({ scenario, coaching, revealed }: CalibrationEvidenceProps) {
+export function CalibrationEvidence({
+  scenario,
+  prompt,
+  stepNumber,
+  totalSteps,
+  coaching,
+  revealed,
+}: CalibrationEvidenceProps) {
   const variantUsers = scenario.totals.nB.toLocaleString();
   const controlUsers = scenario.totals.nA.toLocaleString();
 
   return (
     <>
       <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-coral-deep">
-        Round 1 · Calibration
+        Round {stepNumber} of {totalSteps} · Calibration
       </p>
       <h1 className="calibration-title mt-3 text-2xl font-extrabold leading-7 text-ink">
-        You&apos;re the PM in ship review.
+        {prompt}
       </h1>
 
       {coaching && (
         <div className="calibration-coach mt-3">
-          <div className="flex items-center gap-4" aria-label="Calibration step 1 of 3">
-            <p className="shrink-0 text-sm font-extrabold text-coral-deep">
-              Calibration <span className="text-ink-soft">· 1 of 3</span>
+          <div className="calibration-progress flex items-center gap-2 min-[360px]:gap-4" aria-label={`Calibration step ${stepNumber} of ${totalSteps}`}>
+            <p className="calibration-progress-label shrink-0 text-xs font-extrabold text-coral-deep min-[360px]:text-sm">
+              Calibration <span className="text-ink-soft">· {stepNumber} of {totalSteps}</span>
             </p>
-            <div className="flex flex-1 items-center" aria-hidden>
-              <span className="h-3 w-3 rounded-full bg-coral" />
-              <span className="h-px flex-1 bg-ink/20" />
-              <span className="h-3 w-3 rounded-full border-2 border-ink/25 bg-surface" />
-              <span className="h-px flex-1 bg-ink/20" />
-              <span className="h-3 w-3 rounded-full border-2 border-ink/25 bg-surface" />
+            <div className="calibration-progress-track flex min-w-0 flex-1 items-center" aria-hidden>
+              {Array.from({ length: totalSteps }, (_, index) => (
+                <span key={index} className="contents">
+                  {index > 0 && <span className="h-px flex-1 bg-ink/20" />}
+                  <span className={`h-3 w-3 rounded-full ${index < stepNumber ? 'bg-coral' : 'border-2 border-ink/25 bg-surface'}`} />
+                </span>
+              ))}
             </div>
           </div>
           <p className="mt-2 text-sm leading-5 text-ink-soft">
-            Use the evidence to <strong className="text-win-text">Ship</strong>,{' '}
-            <strong className="text-lose-deep">Kill</strong>, or{' '}
-            <strong className="text-ink">Keep Running</strong>.
+            <strong className="text-win-text">Ship</strong> when the evidence supports release.{' '}
+            <strong className="text-lose-deep">Kill</strong> when it supports stopping this version.{' '}
+            <strong className="text-ink">Keep Running</strong> when more valid evidence can change the call.
           </p>
         </div>
       )}
@@ -65,7 +76,7 @@ export function CalibrationEvidence({ scenario, coaching, revealed }: Calibratio
         </div>
 
         <div className="calibration-chart">
-          <Sparkline control={scenario.control} variant={scenario.variant} />
+          <Sparkline metricName={scenario.metricName} control={scenario.control} variant={scenario.variant} />
         </div>
         <div className="mt-1 flex gap-4 text-xs text-ink-soft" aria-hidden>
           <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-brand" />Variant</span>
@@ -85,7 +96,7 @@ export function CalibrationEvidence({ scenario, coaching, revealed }: Calibratio
           <div
             id="calibration-confidence"
             aria-describedby={coaching ? 'calibration-coaching-note' : undefined}
-            className={`ml-3 rounded-xl px-1 transition-colors ${revealed ? 'bg-win/15 ring-2 ring-win-deep/40' : ''}`}
+            className={`calibration-confidence ml-3 rounded-xl px-1 transition-colors ${revealed ? 'bg-win/15 ring-2 ring-win-deep/40' : ''}`}
           >
             <p className="text-[0.625rem] font-extrabold uppercase tracking-wide text-ink-soft">95% confidence interval</p>
             <p className="mt-1 text-base font-extrabold leading-5 text-brand-deep">
@@ -95,7 +106,7 @@ export function CalibrationEvidence({ scenario, coaching, revealed }: Calibratio
         </div>
 
         <p className="sr-only" id="calibration-chart-summary">
-          Variant and control session rates are shown across {scenario.daysRun} days. The observed lift is{' '}
+          Variant and control {scenario.metricName.toLowerCase()} are shown across {scenario.daysRun} days. The observed lift is{' '}
           {percent(scenario.observed.relLift)}, with a 95% confidence interval from{' '}
           {percent(scenario.observed.ciLow)} to {percent(scenario.observed.ciHigh)}.
         </p>

@@ -22,15 +22,21 @@ export default function ShipItAbout() {
 
       <Section title="What this game trains">
         <p>
-          Ship It is about prioritization under stakeholder pressure. Every card is a real trade-off with no
-          correct answer: the choice that grows Users starves Tech, the one that calms the board burns the team.
-          The game never lectures — the meters do the teaching.
+          Ship It is about prioritization under stakeholder pressure. Most cards are genuine tradeoffs: a choice can
+          support customers while delaying revenue, or protect delivery while frustrating an executive. After each
+          call, the game shows the meter change, its causal reasoning, and the assumption behind the model.
+        </p>
+        <p>
+          Some calls are not ordinary trades. Consent, accessibility, security, truthful marketing, privacy and legal
+          compliance are explicit integrity boundaries. A balanced portfolio cannot erase a breach or an unresolved
+          review requirement.
         </p>
       </Section>
 
       <Section title="The stakeholder-tension model">
         <p>
-          Four meters — Users, Business, Team, Tech — start at 50. Any meter at zero ends the run: the product is
+          Four meters start at 50: Customer, Business, Team, and Tech. Customer represents sustainable customer value,
+          adoption and trust, rather than raw growth alone. Any meter at zero ends the run because the product is
           shelved, the funding pulled, the engineers gone, or the platform down.
         </p>
         <p>
@@ -43,15 +49,16 @@ export default function ShipItAbout() {
       <Section title="Arcs and consequences">
         <p>
           Choices set flags that the deck remembers. Skip the postmortem in week two and the same outage returns in
-          week eight, twice as hard. Four authored arcs — an incident, a demanding enterprise customer, a burnout
-          spiral, and a launch gamble — can each be resolved or fumbled, and your review remembers which.
+          week eight, twice as hard. Four authored arcs cover an incident, a demanding enterprise customer, a burnout
+          spiral, and a launch gamble. Each can be resolved or fumbled, and your review remembers which.
         </p>
       </Section>
 
       <Section title="The performance review">
         <p>
-          Every run ends in a quarterly review, from PIP to CEO-in-waiting. It is template-generated from the run
-          state — your lowest meter, the arcs you closed or abandoned, the overshoots you triggered — and seeded, so
+          Every run ends in a quarterly review. The review separates operating balance from integrity and uses both
+          before awarding a leadership rating. It also considers your lowest meter, the arcs you closed or abandoned,
+          and the overshoots you triggered. It is seeded, so
           the same run always writes the same review. No AI, no server: the whole game is deterministic from its seed.
         </p>
       </Section>

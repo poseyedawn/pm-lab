@@ -1,11 +1,18 @@
-# Alvin's Lab
+# Alvin's Product Lab
 
-Small games about product craft, built with AI. First game: **Significant** —
-an A/B-testing intuition game where every readout is simulated from a hidden
-ground truth.
+Mobile-first games that make product judgment visible. The collection includes
+Significant, Ship It, and Exception Room.
 
 - Stack: Next.js (App Router), TypeScript, Tailwind, Vitest. Zero backend.
 - Run: `npm install && npm run dev`
-- Test: `npm test`
+- Unit tests: `npm test`
+- Browser regression suite: `npm run test:e2e`
+- Full local quality gate: `npm run test:all`
+- Open the last browser report: `npm run test:e2e:report`
 
-Design docs live in `docs/superpowers/specs/`.
+The browser suite builds and starts the production application automatically.
+Known audit defects run as expected failures, so they remain visible without
+blocking unrelated healthy contracts. Remove an expected-failure marker when
+the corresponding remediation passes with fresh browser evidence.
+
+Audit, research, and verification documents live in `docs/`.

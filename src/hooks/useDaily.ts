@@ -1,11 +1,18 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { dailyArchetype, dailySeed, dayNumber } from '@/lib/engine/daily';
 import { generateScenario } from '@/lib/engine/scenario';
-import { addXp, loadState, recordDaily, saveState, type SignificantState } from '@/lib/progress';
+import {
+  clearDailyReveal,
+  commitDailyDecision,
+  loadState,
+  saveState,
+  type SignificantState,
+} from '@/lib/progress';
 import { significantGameProgress } from '@/lib/labProgress';
 import { saveGameProgress } from '@/services/labProfileService';
+import type { RoundResult } from '@/lib/engine/types';
 
 export function localToday(now: Date): string {
   const y = now.getFullYear();
@@ -30,12 +37,15 @@ const fmt = (ms: number): string => {
 
 export function useDaily() {
   const [state, setState] = useState<SignificantState | null>(null);
+  const stateRef = useRef<SignificantState | null>(null);
   const [countdown, setCountdown] = useState('--:--:--');
   const [today, setToday] = useState(() => localToday(new Date()));
 
   useEffect(() => {
+    const saved = loadState();
+    stateRef.current = saved;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage on mount, not a derived-state loop
-    setState(loadState());
+    setState(saved);
     const tick = () => {
       setCountdown(fmt(msToLocalMidnight(new Date())));
       const current = localToday(new Date());
@@ -51,16 +61,28 @@ export function useDaily() {
     [today],
   );
 
-  const complete = useCallback((correct: boolean, xp: number) => {
-    const date = localToday(new Date());
-    setState((prev) => {
-      if (!prev) return prev;
-      const next = addXp(recordDaily(prev, date, correct), xp);
-      saveState(next);
-      saveGameProgress(significantGameProgress(next, new Date().toISOString()));
-      return next;
-    });
+  const mutate = useCallback((update: (current: SignificantState) => SignificantState) => {
+    if (!stateRef.current) return;
+    const next = update(stateRef.current);
+    stateRef.current = next;
+    saveState(next);
+    saveGameProgress(significantGameProgress(next, new Date().toISOString()));
+    setState(next);
   }, []);
+
+  const commitDecision = useCallback((result: RoundResult) => {
+    const date = localToday(new Date());
+    mutate((current) => commitDailyDecision(current, date, scenario.seed, result));
+  }, [mutate, scenario.seed]);
+
+  const finishReveal = useCallback(() => {
+    const date = localToday(new Date());
+    mutate((current) => clearDailyReveal(current, date));
+  }, [mutate]);
+
+  const pendingReveal = state?.pendingDailyReveal?.date === today
+    ? state.pendingDailyReveal
+    : null;
 
   return {
     ready: state !== null,
@@ -71,7 +93,9 @@ export function useDaily() {
     lastCorrect: state?.lastDailyCorrect ?? null,
     streak: state?.dailyStreak ?? 0,
     shields: state?.shields ?? 0,
-    complete,
+    pendingReveal,
+    commitDecision,
+    finishReveal,
     countdown,
   };
 }

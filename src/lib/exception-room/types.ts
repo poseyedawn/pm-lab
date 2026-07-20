@@ -14,7 +14,8 @@ export type ExceptionAction = (typeof EXCEPTION_ACTIONS)[number];
 export type ConsequenceTier = (typeof CONSEQUENCE_TIERS)[number];
 export type RouteReason = (typeof ROUTE_REASONS)[number];
 export type ShiftNumber = 1 | 2 | 3;
-export type RunMode = 'campaign' | 'daily';
+export type RunMode = 'campaign' | 'daily' | 'practice';
+export type ExceptionRunPhase = 'review' | 'reveal' | 'debrief';
 export type DecisionOutcome = 'preferred' | 'acceptable' | 'unsafe' | 'unnecessary';
 export type Reversibility = 'easy' | 'moderate' | 'difficult';
 export type EvidenceStatus = 'supports' | 'conflicts' | 'missing' | 'context';
@@ -102,6 +103,7 @@ export interface DecisionInput {
   caseId: string;
   action: ExceptionAction;
   detailId?: string;
+  acceptEvidenceDeficit?: boolean;
 }
 
 export interface CaseResolution {
@@ -109,6 +111,9 @@ export interface CaseResolution {
   action: ExceptionAction;
   detailId?: string;
   evidenceViewedIds: readonly string[];
+  requiredEvidenceIds: readonly string[];
+  missingRequiredEvidenceIds: readonly string[];
+  acceptedEvidenceDeficit: boolean;
   resolvedAtTick: number;
   capacityCost: number;
   outcome: DecisionOutcome;
@@ -149,6 +154,7 @@ export type EngineErrorCode =
   | 'case-unavailable'
   | 'unknown-evidence'
   | 'invalid-detail'
+  | 'evidence-required'
   | 'insufficient-capacity'
   | 'invalid-history';
 
@@ -173,7 +179,9 @@ export interface ScoreBreakdown {
   serviceBreaches: number;
   unresolved: number;
   capacitySpent: number;
-  evidenceInspectionRate: number;
+  evidenceQuality: number;
+  evidenceCompleteCases: number;
+  evidenceDeficitDecisions: number;
   repeatedExceptionClasses: readonly string[];
   profile: OperatorProfile;
 }

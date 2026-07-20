@@ -4,9 +4,10 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight, CalendarDots, Info } from '@phosphor-icons/react';
 import { useCampaign } from '@/hooks/useCampaign';
-import { LabLanding } from '@/components/lab/LabLanding';
+import { SignificantLanding } from '@/components/significant/SignificantLanding';
 import { LevelPath } from '@/components/significant/LevelPath';
 import { IQCard } from '@/components/significant/IQCard';
+import { GameEntryLoading } from '@/components/game/GameEntryLoading';
 import { campaignSeed, generateScenario } from '@/lib/engine/scenario';
 import { firstTryBand, track } from '@/services/analyticsService';
 
@@ -35,14 +36,20 @@ export default function SignificantHome() {
   }, [allDone, state, levels, markCampaignCompleteTracked]);
 
   if (!ready || !state) {
-    return <main className="significant-campaign" aria-busy="true" />;
+    return (
+      <GameEntryLoading
+        gameName="Significant"
+        description="Preparing the experiment evidence and your saved field notebook."
+        theme="significant"
+      />
+    );
   }
 
   // First-time visitors get the game's entry world; its CTA leads into calibration.
   if (visitor === 'first') {
     return (
-      <main className="h-full">
-        <LabLanding scenario={featuredScenario} />
+      <main className="significant-entry-page">
+        <SignificantLanding scenario={featuredScenario} />
       </main>
     );
   }

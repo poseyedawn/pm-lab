@@ -121,7 +121,12 @@ export function runPolicy(
       }
     }
 
-    const resolved = resolveCase(state, decisionFor(candidate, policy, cases, random), cases);
+    const decision = decisionFor(candidate, policy, cases, random);
+    const resolved = resolveCase(
+      state,
+      usesEvidence(policy) ? decision : { ...decision, acceptEvidenceDeficit: true },
+      cases,
+    );
     if (!resolved.ok && resolved.error.code === 'insufficient-capacity') {
       const ended = endShift(state, cases);
       if (!ended.ok) throw new Error(ended.error.message);

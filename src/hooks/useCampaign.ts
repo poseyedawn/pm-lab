@@ -4,9 +4,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { CAMPAIGN_LEVELS } from '@/lib/engine/scenario';
 import type { ArchetypeId } from '@/lib/engine/types';
 import {
-  addXp, completeCalibration as completeCalibrationState, loadState, recordCampaignResult, saveState,
+  advanceCalibration,
+  clearCampaignReveal,
+  commitCampaignDecision,
+  loadState,
+  recordCalibrationDecision,
+  saveState,
   type SignificantState,
 } from '@/lib/progress';
+import type { Call, RoundResult } from '@/lib/engine/types';
 import { significantGameProgress } from '@/lib/labProgress';
 import { saveGameProgress } from '@/services/labProfileService';
 
@@ -61,14 +67,24 @@ export function useCampaign() {
     setState(next);
   }, []);
 
-  const completeLevel = useCallback(
-    (id: number, correct: boolean, xp: number) =>
-      mutate((s) => addXp(recordCampaignResult(s, id, correct), xp)),
+  const commitLevelDecision = useCallback(
+    (id: number, scenarioSeed: number, result: RoundResult) =>
+      mutate((s) => commitCampaignDecision(s, id, scenarioSeed, result)),
     [mutate],
   );
 
-  const completeCalibration = useCallback(
-    () => mutate(completeCalibrationState),
+  const clearLevelReveal = useCallback(
+    (id: number) => mutate((s) => clearCampaignReveal(s, id)),
+    [mutate],
+  );
+
+  const commitCalibrationDecision = useCallback(
+    (call: Call, correct: boolean) => mutate((s) => recordCalibrationDecision(s, call, correct)),
+    [mutate],
+  );
+
+  const continueCalibration = useCallback(
+    () => mutate(advanceCalibration),
     [mutate],
   );
 
@@ -85,8 +101,10 @@ export function useCampaign() {
     levels,
     totalStars: levels.reduce((sum, l) => sum + l.stars, 0),
     allDone: levels.length > 0 && levels.every((l) => l.status === 'done'),
-    completeCalibration,
-    completeLevel,
+    commitCalibrationDecision,
+    continueCalibration,
+    commitLevelDecision,
+    clearLevelReveal,
     markCampaignCompleteTracked,
   };
 }

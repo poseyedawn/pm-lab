@@ -10,9 +10,9 @@ interface CalibrationDecisionControlsProps {
 }
 
 const CALLS = [
-  { id: 'ship', label: 'Ship', detail: 'Launch it to everyone', icon: Check, color: 'bg-win-deep' },
-  { id: 'kill', label: 'Kill', detail: 'Not enough evidence', icon: X, color: 'bg-coral' },
-  { id: 'keep', label: 'Keep Running', detail: 'More data could change it', icon: Pause, color: 'bg-cyan text-ink' },
+  { id: 'ship', label: 'Ship', detail: 'Evidence supports release', icon: Check, color: 'bg-win-deep' },
+  { id: 'kill', label: 'Kill', detail: 'Evidence supports stopping', icon: X, color: 'bg-coral' },
+  { id: 'keep', label: 'Keep Running', detail: 'More valid evidence can change it', icon: Pause, color: 'bg-cyan text-ink' },
 ] satisfies Array<{
   id: Call;
   label: string;
@@ -30,7 +30,7 @@ export function CalibrationDecisionControls({
     <>
       <fieldset className="calibration-decisions -mx-4 mt-3">
         <legend className="sr-only">Make your calibration call</legend>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="calibration-decision-grid grid grid-cols-3 gap-2">
           {CALLS.map(({ id, label, detail, icon: Icon, color }) => (
             <button
               key={id}

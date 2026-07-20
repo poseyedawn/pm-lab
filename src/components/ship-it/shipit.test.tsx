@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { DilemmaCard } from '@/components/ship-it/DilemmaCard';
+import { DecisionFeedback } from '@/components/ship-it/DecisionFeedback';
 import { ChoiceButtons } from '@/components/ship-it/ChoiceButtons';
 import { FailureScreen } from '@/components/ship-it/FailureScreen';
 import { ReviewCard } from '@/components/ship-it/ReviewCard';
@@ -13,28 +14,40 @@ import { HintDots } from '@/components/ship-it/HintDots';
 
 describe('MetersHud', () => {
   it('renders 4 labelled meters with accessible values and the week chip', () => {
-    render(<MetersHud meters={{ users: 62, business: 18, team: 50, tech: 45 }} week={5} deltas={{}} />);
-    expect(screen.getByRole('meter', { name: /users/i })).toHaveAttribute('aria-valuenow', '62');
+    render(<MetersHud meters={{ users: 62, business: 18, team: 50, tech: 45 }} week={5} />);
+    expect(screen.getByRole('meter', { name: /customer/i })).toHaveAttribute('aria-valuenow', '62');
     expect(screen.getByRole('meter', { name: /business/i })).toHaveAttribute('aria-valuenow', '18');
     expect(screen.getByText('Week 5')).toBeInTheDocument();
   });
 
   it('marks a critical meter (< 20) for the danger pulse', () => {
-    render(<MetersHud meters={{ users: 50, business: 12, team: 50, tech: 50 }} week={2} deltas={{}} />);
+    render(<MetersHud meters={{ users: 50, business: 12, team: 50, tech: 50 }} week={2} />);
     expect(screen.getByRole('meter', { name: /business/i })).toHaveAttribute('data-critical', 'true');
+    expect(screen.getByRole('status')).toHaveTextContent('Business is 12');
   });
 
-  it('floats the applied deltas', () => {
-    render(<MetersHud meters={{ users: 56, business: 50, team: 50, tech: 42 }} week={3} deltas={{ users: 6, tech: -8 }} />);
-    expect(screen.getByText('+6')).toBeInTheDocument();
-    expect(screen.getByText('−8')).toBeInTheDocument();
+  it('puts meter changes, causal reasoning, and the model assumption in one live decision receipt', () => {
+    render(<DecisionFeedback feedback={{
+      cardId: 'test-card',
+      choiceLabel: 'Fix it now',
+      effects: { users: 6, tech: -8 },
+      guidance: {
+        why: 'Customers recover while the team pauses roadmap work.',
+        assumption: 'The incident is more urgent than the planned release.',
+      },
+    }} />);
+    expect(screen.getByRole('region', { name: /decision receipt/i })).toHaveAttribute('aria-live', 'polite');
+    expect(screen.getByText(/Customer \+6/)).toBeInTheDocument();
+    expect(screen.getByText(/Tech −8/)).toBeInTheDocument();
+    expect(screen.getByText(/Customers recover/)).toBeInTheDocument();
+    expect(screen.getByText(/incident is more urgent/)).toBeInTheDocument();
   });
 });
 
 describe('HintDots', () => {
   it('renders one dot per affected meter with an accessible description', () => {
     render(<HintDots effects={{ users: 10, tech: -5 }} />);
-    expect(screen.getByLabelText('Affects Users, Tech')).toBeInTheDocument();
+    expect(screen.getByLabelText('Affects Customer, Tech')).toBeInTheDocument();
   });
 });
 
@@ -46,9 +59,11 @@ const CARD: Card = {
 };
 
 describe('DilemmaCard', () => {
-  it('renders speaker, avatar and dilemma text', () => {
+  it('renders speaker, authored avatar icon and dilemma text', () => {
     render(<DilemmaCard card={CARD} onChoose={() => {}} />);
     expect(screen.getByText('Maya, Eng Lead')).toBeInTheDocument();
+    expect(screen.getByTestId('ship-avatar-icon')).toBeInTheDocument();
+    expect(screen.queryByText('👩‍💻')).not.toBeInTheDocument();
     expect(screen.getByText(/staging environment/)).toBeInTheDocument();
   });
 });
@@ -74,13 +89,25 @@ describe('FailureScreen', () => {
     let continued = false;
     render(<FailureScreen meter="team" onContinue={() => { continued = true; }} />);
     expect(screen.getByText('Your senior engineers quit in one week.')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: /see your review/i }));
+    expect(screen.getByTestId('ship-meter-icon-team')).toBeInTheDocument();
+    const action = screen.getByRole('button', { name: /see your review/i });
+    expect(screen.getByRole('alertdialog')).toHaveAttribute('aria-modal', 'true');
+    expect(action).toHaveFocus();
+    fireEvent.click(action);
     expect(continued).toBe(true);
   });
 });
 
 describe('ReviewCard', () => {
-  const review = { rating: 'Exceeds Expectations' as const, prose: 'A balanced quarter under pressure.', arcsDrawn: [], arcsResolved: [] };
+  const review = {
+    rating: 'Exceeds Expectations' as const,
+    prose: 'A balanced quarter under pressure.',
+    arcsDrawn: [],
+    arcsResolved: [],
+    balanced: true,
+    integrityIssues: [],
+    integrityProtectedCount: 2,
+  };
   const run = {
     seed: 1, product: 'Plumage, a B2B invoicing tool', week: 13,
     meters: { users: 62, business: 48, team: 55, tech: 41 },
@@ -92,6 +119,7 @@ describe('ReviewCard', () => {
     render(<ReviewCard review={review} run={run} xpEarned={230} totalXp={500} onRunBack={() => { ranBack = true; }} />);
     expect(screen.getByText('Exceeds Expectations')).toBeInTheDocument();
     expect(screen.getByText(/balanced quarter/)).toBeInTheDocument();
+    expect(screen.getAllByTestId(/ship-meter-icon-/)).toHaveLength(4);
     expect(screen.getByText(/\+230 XP/)).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /run it back/i }));
     expect(ranBack).toBe(true);
@@ -101,7 +129,17 @@ describe('ReviewCard', () => {
 describe('RunScreen', () => {
   it('plays a full run via buttons and lands on the review exactly once', () => {
     const ends: string[] = [];
-    render(<RunScreen seed={42} mode="free" soundOn={false} onRunEnd={(r) => ends.push(r.rating)} onRunBack={() => {}} />);
+    render(
+      <RunScreen
+        seed={42}
+        mode="free"
+        soundOn={false}
+        hapticsOn={false}
+        reducedMotion={false}
+        onRunEnd={(r) => ends.push(r.rating)}
+        onRunBack={() => {}}
+      />,
+    );
     for (let i = 0; i < 40; i++) {
       const btn = screen.queryAllByRole('button').find((b) => b.textContent && !/sound|review|run it back|share/i.test(b.textContent));
       if (!btn) break;

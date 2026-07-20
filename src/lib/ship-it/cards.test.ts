@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { mulberry32 } from '@/lib/prng';
 import { choose, isEligible, startRun } from '@/lib/ship-it/engine';
 import { ARCS, DECK, PRODUCTS } from '@/lib/ship-it/cards';
+import { CARD_CAUSAL_CONTEXT, getDecisionFeedback } from '@/lib/ship-it/decision-guidance';
 import { METERS, type MeterId, type RunState } from '@/lib/ship-it/types';
 
 const simulate = (seed: number): RunState[] => {
@@ -34,6 +35,36 @@ describe('deck shape', () => {
   it('no single choice moves a meter more than ±25', () => {
     for (const c of DECK) for (const choice of [c.left, c.right])
       for (const v of Object.values(choice.effects)) expect(Math.abs(v), c.id).toBeLessThanOrEqual(25);
+  });
+
+  it('authors causal guidance for both choices on every card', () => {
+    for (const card of DECK) {
+      for (const dir of ['left', 'right'] as const) {
+        const feedback = getDecisionFeedback(card, dir);
+        expect(feedback.guidance.why.length, `${card.id}:${dir} why`).toBeGreaterThan(30);
+        expect(feedback.guidance.assumption.length, `${card.id}:${dir} assumption`).toBeGreaterThan(20);
+      }
+    }
+  });
+
+  it('names the earlier state for every conditional consequence and overshoot card', () => {
+    for (const card of DECK.filter((candidate) => candidate.requires?.flags || candidate.overshoot)) {
+      expect(CARD_CAUSAL_CONTEXT[card.id], card.id).toBeTruthy();
+    }
+  });
+
+  it('marks the audited integrity-risk choices and does not reward dark-pattern growth as customer health', () => {
+    const risks = [
+      ['founder-livestream', 'left'],
+      ['dark-pattern-growth', 'left'],
+      ['gdpr-list', 'right'],
+      ['a11y-audit', 'right'],
+    ] as const;
+    for (const [cardId, dir] of risks) {
+      const card = DECK.find((candidate) => candidate.id === cardId)!;
+      expect(getDecisionFeedback(card, dir).guidance.integrity?.outcome, `${cardId}:${dir}`).not.toBe('protected');
+    }
+    expect(DECK.find((card) => card.id === 'dark-pattern-growth')?.left.effects.users).toBeLessThan(0);
   });
 
   it('has at least 45 cards, ~30 core, exactly 2 overshoot cards per meter', () => {

@@ -1,13 +1,20 @@
+'use client';
+
 import Image from 'next/image';
 import { ArrowRight } from '@phosphor-icons/react';
+import { useEffect, useRef } from 'react';
 import type { Call, Scenario } from '@/lib/engine/types';
 
 interface CalibrationRevealProps {
   scenario: Scenario;
   call: Call;
   correct: boolean;
-  earnedBaseline: boolean;
-  baselineXp: number;
+  reason: string;
+  stepNumber: number;
+  totalSteps: number;
+  isFinalRound: boolean;
+  xpEarned: number;
+  isReplay: boolean;
   onContinue: () => void;
 }
 
@@ -21,11 +28,20 @@ export function CalibrationReveal({
   scenario,
   call,
   correct,
-  earnedBaseline,
-  baselineXp,
+  reason,
+  stepNumber,
+  totalSteps,
+  isFinalRound,
+  xpEarned,
+  isReplay,
   onContinue,
 }: CalibrationRevealProps) {
   const rightCall = CALL_LABELS[scenario.truth.correctCall];
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    titleRef.current?.focus();
+  }, []);
 
   return (
     <section role="status" aria-live="polite" className="flex w-full flex-col items-center">
@@ -37,14 +53,16 @@ export function CalibrationReveal({
         sizes="240px"
         className={`significant-result-art ${correct ? '' : 'significant-result-art-review'}`}
       />
-      <p className="significant-result-kicker">{correct ? 'Calibration complete' : 'Calibration review'}</p>
-      <h1 className="significant-result-title">
+      <p className="significant-result-kicker">
+        {correct ? 'Calibration' : 'Review'} {stepNumber} of {totalSteps}
+      </p>
+      <h1 ref={titleRef} tabIndex={-1} className="significant-result-title">
         {correct ? 'You found the signal.' : 'That call missed the signal.'}
       </h1>
 
       {correct ? (
         <p className="significant-result-copy">
-          You called <strong>{CALL_LABELS[call]}</strong>. Correct. The whole confidence interval stays above zero.
+          You called <strong>{CALL_LABELS[call]}</strong>. {reason}
         </p>
       ) : (
         <>
@@ -55,19 +73,23 @@ export function CalibrationReveal({
           </div>
           <div className="significant-result-explanation">
             <p>What to notice</p>
-            <p>The whole confidence interval stays above zero. That makes Ship the stronger call.</p>
+            <p>{reason}</p>
           </div>
         </>
       )}
 
       {correct ? (
         <div className="significant-result-score">
-          <span>Clean signal</span>
-          <span>{earnedBaseline ? `+${baselineXp} baseline XP` : 'Calibration replayed'}</span>
+          <span>{isFinalRound ? 'Three rounds complete' : 'Definition locked'}</span>
+          <span>
+            {isReplay
+              ? 'Calibration replayed'
+              : `+${xpEarned} calibration XP`}
+          </span>
         </div>
       ) : (
         <p className="significant-result-practice-note">
-          {earnedBaseline ? `${baselineXp} practice XP added. ` : ''}The campaign is ready when you are.
+          {isFinalRound ? 'Review the definition, then enter the campaign.' : 'Review the definition, then try the next signal.'}
         </p>
       )}
       <button
@@ -75,7 +97,7 @@ export function CalibrationReveal({
         onClick={onContinue}
         className={correct ? 'significant-sun-button' : 'significant-review-button'}
       >
-        {correct ? 'Enter the campaign' : 'Practice in the campaign'} <ArrowRight size={20} weight="bold" aria-hidden />
+        {isFinalRound ? 'Enter the campaign' : 'Next calibration round'} <ArrowRight size={20} weight="bold" aria-hidden />
       </button>
     </section>
   );

@@ -24,9 +24,34 @@ describe('scoreRun', () => {
       service: 100,
       capacity: 100,
       unresolved: 0,
-      evidenceInspectionRate: 100,
+      evidenceQuality: 100,
+      evidenceDeficitDecisions: 0,
       profile: 'Balanced Operator',
     });
+  });
+
+  it('cannot certify an evidence-free run as safe or Balanced', () => {
+    const score = scoreRun(runPolicy(6240, 'random'), CAMPAIGN_CASES);
+    expect(score.evidenceQuality).toBe(0);
+    expect(score.safety).not.toBe(100);
+    expect(score.profile).not.toBe('Balanced Operator');
+  });
+
+  it('does not award complete evidence quality for opening only one item per case', () => {
+    const preferredState = runPolicy(12, 'preferred');
+    const oneItemState = {
+      ...preferredState,
+      resolutions: preferredState.resolutions.map((resolution) => {
+        const candidate = CAMPAIGN_CASES.find((item) => item.id === resolution.caseId);
+        return {
+          ...resolution,
+          evidenceViewedIds: candidate?.evidence[0] ? [candidate.evidence[0].id] : [],
+          missingRequiredEvidenceIds: candidate?.requiredEvidenceIds.slice(1) ?? [],
+          acceptedEvidenceDeficit: (candidate?.requiredEvidenceIds.length ?? 0) > 1,
+        };
+      }),
+    };
+    expect(scoreRun(oneItemState, CAMPAIGN_CASES).evidenceQuality).toBeLessThan(100);
   });
 
   it('keeps cautious unnecessary escalation Safety-neutral while reducing Service and Capacity', () => {
@@ -71,6 +96,8 @@ describe('profileForFacts', () => {
     safety: 75,
     service: 75,
     capacity: 75,
+    evidenceQuality: 100,
+    evidenceDeficitDecisions: 0,
     unsafeHighOrCriticalApproval: false,
     resolvedCount: 12,
     escalatedCount: 4,
