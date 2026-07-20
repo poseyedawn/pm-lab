@@ -7,7 +7,7 @@ interface LabShellProps {
 
 export function LabShell({ children }: LabShellProps) {
   return (
-    <div className="lab-frame flex min-h-screen flex-col">
+    <div className="lab-frame flex flex-col">
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <PreferenceRuntime />
       <LabHeader />
@@ -15,7 +15,7 @@ export function LabShell({ children }: LabShellProps) {
         {children}
       </div>
       <footer className="border-t border-ink/10 px-6 py-5 text-center text-xs leading-relaxed text-ink-soft">
-        Progress stays in your browser. We use aggregate analytics to improve the games.
+        Saved progress stays in your browser. Analytics record coarse interaction events.
       </footer>
     </div>
   );

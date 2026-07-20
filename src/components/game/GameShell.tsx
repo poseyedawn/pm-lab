@@ -9,12 +9,15 @@ interface GameShellProps {
 
 export function GameShell({ gameId, children }: GameShellProps) {
   const game = gameDefinition(gameId);
+  const className = gameId === 'significant'
+    ? 'game-shell significant-world'
+    : 'game-shell';
 
   return (
     <section
       data-game={gameId}
       data-lab-chrome={game.chrome}
-      className={gameId === 'significant' ? 'significant-world' : undefined}
+      className={className}
     >
       <GameHeader gameId={gameId} />
       {children}

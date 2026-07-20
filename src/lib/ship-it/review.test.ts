@@ -48,6 +48,24 @@ describe('rating tiers: every tier reachable', () => {
     });
     expect(generateReview(s, DECK).rating).not.toBe('CEO-in-waiting');
   });
+
+  it('an integrity-risk path cannot earn a leadership rating even with balanced meters and resolved arcs', () => {
+    const s = run({
+      flags: [`arc:${arcA}:resolved`, `arc:${arcB}:resolved`],
+      history: [
+        ...arcCards(arcA),
+        ...arcCards(arcB),
+        { cardId: 'founder-livestream', dir: 'left' },
+        { cardId: 'dark-pattern-growth', dir: 'left' },
+        { cardId: 'gdpr-list', dir: 'right' },
+        { cardId: 'a11y-audit', dir: 'right' },
+      ],
+    });
+    const review = generateReview(s, DECK);
+    expect(review.rating).toBe('Needs Review');
+    expect(review.integrityIssues).toHaveLength(4);
+    expect(review.balanced).toBe(true);
+  });
 });
 
 describe('prose', () => {
@@ -58,7 +76,7 @@ describe('prose', () => {
     const sentences = a.prose.match(/[.!?](\s|$)/g) ?? [];
     expect(sentences.length).toBeGreaterThanOrEqual(2);
     expect(sentences.length).toBeLessThanOrEqual(3);
-    expect(a.prose.toLowerCase()).toContain('users');
+    expect(a.prose.toLowerCase()).toContain('customer');
   });
   it('different seeds give different prose (pools actually vary)', () => {
     const texts = new Set(
@@ -72,7 +90,7 @@ describe('share text', () => {
     const s = run({ meters: { users: 62, business: 48, team: 55, tech: 41 }, week: 13 });
     const review = generateReview(s, DECK);
     expect(buildShareText(review, s, 'https://lab.example')).toBe(
-      `Ship It · Exceeds Expectations · survived 13w · U62 B48 T55 P41\nhttps://lab.example/ship-it`,
+      `Ship It · Exceeds Expectations · 13 weeks · Customer 62 · Business 48 · Team 55 · Tech 41 · Integrity clear\nhttps://lab.example/ship-it`,
     );
   });
 });
@@ -80,6 +98,7 @@ describe('share text', () => {
 describe('xpForRun', () => {
   it('weeks * 10 + rating bonus', () => {
     expect(xpForRun('PIP', 5)).toBe(50);
+    expect(xpForRun('Needs Review', 12)).toBe(120);
     expect(xpForRun('Meets Expectations', 12)).toBe(170);
     expect(xpForRun('CEO-in-waiting', 14)).toBe(540);
   });

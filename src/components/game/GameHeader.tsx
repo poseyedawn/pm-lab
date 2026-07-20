@@ -22,17 +22,17 @@ export function GameHeader({ gameId }: GameHeaderProps) {
 
   return (
     <header className={`game-header border-b ${ACCENT_STYLES[game.theme.accent]}`}>
-      <div className="mx-auto flex max-w-md items-center justify-between gap-3 px-4 py-2">
-        <div className="flex min-w-0 items-center gap-3">
+      <div className="game-header-inner mx-auto flex max-w-md items-center justify-between gap-3 px-4 py-2">
+        <div className="game-header-context flex min-w-0 items-center gap-3">
           <Link href="/" className="game-header-home" aria-label="Back to Product Lab">
             <House size={20} weight="fill" aria-hidden />
           </Link>
           <div className="min-w-0">
-            <p className="text-[0.625rem] font-extrabold uppercase tracking-[0.16em] text-coral">Field test</p>
-            <p className="font-display truncate text-sm uppercase text-ink">{game.name}</p>
+            <p className="game-header-kicker text-[0.625rem] font-extrabold uppercase tracking-[0.16em] text-coral-deep">Field test</p>
+            <p className="game-header-title font-display truncate text-sm uppercase text-ink">{game.name}</p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="game-header-actions flex items-center gap-3">
           <LabProfileSummary variant="compact" gameId={gameId} />
           <GameSettings gameId={gameId} />
         </div>

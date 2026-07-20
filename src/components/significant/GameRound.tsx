@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import type { Call, Scenario } from '@/lib/engine/types';
+import type { Call, RoundResult, Scenario } from '@/lib/engine/types';
 import { useGameRound } from '@/hooks/useGameRound';
 import { ReadoutCard } from '@/components/significant/ReadoutCard';
 import { DecisionButtons } from '@/components/significant/DecisionButtons';
@@ -15,8 +15,9 @@ import { usePreferences } from '@/hooks/lab/usePreferences';
 interface GameRoundBaseProps {
   scenario: Scenario;
   combo: number;
-  initialCall?: Call | null;
-  onComplete: (r: { correct: boolean; xpEarned: number }) => void;
+  initialResult?: RoundResult | null;
+  onDecision: (result: RoundResult) => void;
+  onContinue: (result: RoundResult) => void;
 }
 
 type GameRoundProps = GameRoundBaseProps & (
@@ -24,34 +25,29 @@ type GameRoundProps = GameRoundBaseProps & (
   | { mode: 'daily'; level?: never }
 );
 
-export function GameRound({ scenario, combo, initialCall = null, mode, level, onComplete }: GameRoundProps) {
-  const round = useGameRound(scenario, combo, initialCall);
+export function GameRound({
+  scenario,
+  combo,
+  initialResult = null,
+  mode,
+  level,
+  onDecision,
+  onContinue,
+}: GameRoundProps) {
+  const round = useGameRound(scenario, combo, initialResult);
   const { preferences, reducedMotion } = usePreferences();
-  // Guards against a double-tap on "Next" double-granting XP: onComplete
-  // must fire at most once per round, even if the button is tapped twice
-  // before the parent navigates away.
   const nextCalledRef = useRef(false);
-  const initialCallTrackedRef = useRef(false);
+  const resultHostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!initialCall || initialCallTrackedRef.current || round.phase !== 'revealed') return;
-    initialCallTrackedRef.current = true;
-    if (mode === 'campaign') {
-      track('decision_made', { gameId: 'significant', mode, level, call: initialCall });
-    } else {
-      track('decision_made', { gameId: 'significant', mode, level: 'daily', call: initialCall });
-    }
-    track('reveal_viewed', {
-      gameId: 'significant',
-      mode,
-      correct: round.correct!,
-      archetype: scenario.archetype,
-    });
-  }, [initialCall, level, mode, round.correct, round.phase, scenario.archetype]);
+    if (round.phase !== 'revealed' || !round.correct || !resultHostRef.current) return;
+    return fireConfetti({ reducedMotion, container: resultHostRef.current });
+  }, [reducedMotion, round.correct, round.phase]);
 
   const handleCall = (call: Call) => {
     const result = round.decide(call);
     if (!result) return; // A duplicate tap has already revealed the result.
+    onDecision(result);
     if (mode === 'campaign') {
       track('decision_made', { gameId: 'significant', mode, level, call });
     } else {
@@ -62,7 +58,6 @@ export function GameRound({ scenario, combo, initialCall = null, mode, level, on
     if (result.correct) {
       sfx.win(preferences.sound);
       vibrate(30, preferences.haptics);
-      fireConfetti({ reducedMotion });
     } else {
       sfx.lose(preferences.sound);
       vibrate([60, 40, 60], preferences.haptics);
@@ -77,28 +72,33 @@ export function GameRound({ scenario, combo, initialCall = null, mode, level, on
           <DecisionButtons onCall={handleCall} />
         </>
       ) : (
-        <RevealPanel
-          scenario={scenario}
-          call={round.call!}
-          correct={round.correct!}
-          xpEarned={round.xpEarned}
-          crit={round.crit}
-          nextLabel={mode === 'daily'
-            ? "See today's result"
-            : round.correct
-              ? 'Next experiment'
-              : 'Try this case again'}
-          onNext={() => {
-            if (nextCalledRef.current) return;
-            nextCalledRef.current = true;
-            track('round_continued', {
-              gameId: 'significant',
-              mode,
-              nextAction: mode === 'daily' ? 'daily_result' : 'campaign_path',
-            });
-            onComplete({ correct: round.correct!, xpEarned: round.xpEarned });
-          }}
-        />
+        <div ref={resultHostRef} className="significant-result-host">
+          <RevealPanel
+            scenario={scenario}
+            call={round.call!}
+            correct={round.correct!}
+            xpEarned={round.xpEarned}
+            crit={round.crit}
+            nextLabel={mode === 'daily'
+              ? "See today's result"
+              : 'Return to campaign'}
+            onNext={() => {
+              if (nextCalledRef.current) return;
+              nextCalledRef.current = true;
+              track('round_continued', {
+                gameId: 'significant',
+                mode,
+                nextAction: mode === 'daily' ? 'daily_result' : 'campaign_path',
+              });
+              onContinue({
+                call: round.call!,
+                correct: round.correct!,
+                crit: round.crit,
+                xpEarned: round.xpEarned,
+              });
+            }}
+          />
+        </div>
       )}
     </div>
   );

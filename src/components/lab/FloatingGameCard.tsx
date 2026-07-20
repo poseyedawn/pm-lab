@@ -77,6 +77,7 @@ export function FloatingGameCard({
     >
       <motion.div
         className="lab-hub-card-drag"
+        tabIndex={-1}
         style={{ x, y, rotateX, rotateY }}
         drag={reducedMotion ? false : true}
         dragConstraints={{ top: -12, right: 16, bottom: 12, left: -16 }}
@@ -93,7 +94,7 @@ export function FloatingGameCard({
           data-game-tile={game.gameId}
           className="lab-hub-card"
           onClick={handleClick}
-          aria-label={`${game.name}. ${game.tagline}`}
+          aria-label={`${game.name}. ${game.tagline} ${game.duration}. ${game.modeLabel}.`}
         >
           {game.art && (
             <Image
@@ -111,6 +112,11 @@ export function FloatingGameCard({
             <span className="lab-hub-card-eyebrow">Field test {game.fieldTest}</span>
             <span className="lab-hub-card-name">{game.name}</span>
             <span className="lab-hub-card-tagline">{game.tagline}</span>
+            <span className="lab-hub-card-meta">
+              <span>{game.duration}</span>
+              <span aria-hidden="true">·</span>
+              <span>{game.modeLabel}</span>
+            </span>
             {xp > 0 && (
               <span className="lab-hub-card-progress">
                 <Star size={13} weight="fill" aria-hidden="true" />

@@ -1,4 +1,5 @@
 import { dayNumber } from '@/lib/engine/daily';
+import type { Call, RoundResult } from '@/lib/engine/types';
 
 export interface CampaignLevelResult {
   stars: 0 | 1 | 3;
@@ -6,9 +7,25 @@ export interface CampaignLevelResult {
   correct: boolean;
 }
 
+export type CalibrationStep = 0 | 1 | 2;
+
+export interface PendingCampaignReveal extends RoundResult {
+  levelId: number;
+  scenarioSeed: number;
+}
+
+export interface PendingDailyReveal extends RoundResult {
+  date: string;
+  scenarioSeed: number;
+}
+
 export interface SignificantState {
   campaign: Record<number, CampaignLevelResult>;
   warmupDone: boolean;
+  calibrationStep: CalibrationStep;
+  pendingCalibrationCall: Call | null;
+  pendingCampaignReveal: PendingCampaignReveal | null;
+  pendingDailyReveal: PendingDailyReveal | null;
   dailyStreak: number;
   lastDailyDate: string | null;
   lastDailyCorrect: boolean | null;
@@ -22,6 +39,10 @@ export interface SignificantState {
 export const defaultState = (): SignificantState => ({
   campaign: {},
   warmupDone: false,
+  calibrationStep: 0,
+  pendingCalibrationCall: null,
+  pendingCampaignReveal: null,
+  pendingDailyReveal: null,
   dailyStreak: 0,
   lastDailyDate: null,
   lastDailyCorrect: null,
@@ -35,7 +56,7 @@ export const defaultState = (): SignificantState => ({
 export const xpForCall = (correct: boolean, combo: number): number =>
   correct ? 100 * Math.min(combo, 3) : 0;
 
-export const CALIBRATION_XP = 50;
+export const CALIBRATION_CORRECT_XP = 20;
 
 export const addXp = (s: SignificantState, amount: number): SignificantState => ({
   ...s,
@@ -44,9 +65,36 @@ export const addXp = (s: SignificantState, amount: number): SignificantState => 
 
 export const completeCalibration = (s: SignificantState): SignificantState => (
   s.warmupDone
-    ? s
-    : { ...s, warmupDone: true, xp: s.xp + CALIBRATION_XP }
+    ? { ...s, calibrationStep: 0, pendingCalibrationCall: null }
+    : {
+        ...s,
+        warmupDone: true,
+        calibrationStep: 0,
+        pendingCalibrationCall: null,
+      }
 );
+
+export function recordCalibrationDecision(
+  s: SignificantState,
+  call: Call,
+  correct: boolean,
+): SignificantState {
+  if (s.pendingCalibrationCall) return s;
+  const next = { ...s, pendingCalibrationCall: call };
+  return !s.warmupDone && correct ? addXp(next, CALIBRATION_CORRECT_XP) : next;
+}
+
+export function advanceCalibration(s: SignificantState): SignificantState {
+  if (!s.pendingCalibrationCall) return s;
+  if (s.calibrationStep < 2) {
+    return {
+      ...s,
+      calibrationStep: (s.calibrationStep + 1) as CalibrationStep,
+      pendingCalibrationCall: null,
+    };
+  }
+  return completeCalibration(s);
+}
 
 export function recordCampaignResult(
   s: SignificantState,
@@ -64,6 +112,25 @@ export function recordCampaignResult(
   };
 }
 
+export function commitCampaignDecision(
+  s: SignificantState,
+  levelId: number,
+  scenarioSeed: number,
+  result: RoundResult,
+): SignificantState {
+  if (s.pendingCampaignReveal) return s;
+  const next = addXp(recordCampaignResult(s, levelId, result.correct), result.xpEarned);
+  return {
+    ...next,
+    pendingCampaignReveal: { levelId, scenarioSeed, ...result },
+  };
+}
+
+export function clearCampaignReveal(s: SignificantState, levelId: number): SignificantState {
+  if (s.pendingCampaignReveal?.levelId !== levelId) return s;
+  return { ...s, pendingCampaignReveal: null };
+}
+
 export function recordDaily(s: SignificantState, date: string, correct: boolean): SignificantState {
   if (s.lastDailyDate === date) return s;
   const gap = s.lastDailyDate === null ? Infinity : dayNumber(date) - dayNumber(s.lastDailyDate);
@@ -76,6 +143,26 @@ export function recordDaily(s: SignificantState, date: string, correct: boolean)
   } else streak = 1;
   if (streak > 0 && streak % 7 === 0) shields = Math.min(2, shields + 1);
   return { ...s, dailyStreak: streak, lastDailyDate: date, lastDailyCorrect: correct, shields };
+}
+
+export function commitDailyDecision(
+  s: SignificantState,
+  date: string,
+  scenarioSeed: number,
+  result: RoundResult,
+): SignificantState {
+  if (s.lastDailyDate === date) return s;
+  const current = s.pendingDailyReveal ? { ...s, pendingDailyReveal: null } : s;
+  const next = addXp(recordDaily(current, date, result.correct), result.xpEarned);
+  return {
+    ...next,
+    pendingDailyReveal: { date, scenarioSeed, ...result },
+  };
+}
+
+export function clearDailyReveal(s: SignificantState, date: string): SignificantState {
+  if (s.pendingDailyReveal?.date !== date) return s;
+  return { ...s, pendingDailyReveal: null };
 }
 
 // ---- storage (browser-safe) ----

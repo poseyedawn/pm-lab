@@ -1,7 +1,14 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
-  defaultShipItState, loadShipItState, recordBestRating, recordShipItDaily, saveShipItState,
+  defaultShipItState,
+  loadShipItState,
+  recordBestRating,
+  recordFreeRunReward,
+  recordShipItDaily,
+  saveShipItState,
 } from '@/lib/ship-it/state';
+import { DECK, PRODUCTS } from '@/lib/ship-it/cards';
+import { startRun } from '@/lib/ship-it/engine';
 
 beforeEach(() => window.localStorage.clear());
 
@@ -12,6 +19,20 @@ describe('storage round-trip', () => {
     expect(loadShipItState().xp).toBe(340);
     window.localStorage.setItem('pmlab:shipit:v1', '{nope');
     expect(loadShipItState()).toEqual(defaultShipItState());
+  });
+
+  it('rejects valid JSON with an invalid active-run shape', () => {
+    window.localStorage.setItem('pmlab:shipit:v1', JSON.stringify({
+      ...defaultShipItState(),
+      activeFreeRun: { run: { seed: 'wrong' }, failureSeen: false },
+    }));
+    expect(loadShipItState()).toEqual(defaultShipItState());
+  });
+
+  it('round-trips an active run and its failure acknowledgement', () => {
+    const run = startRun(42, DECK, PRODUCTS);
+    saveShipItState({ ...defaultShipItState(), activeFreeRun: { run, failureSeen: true } });
+    expect(loadShipItState().activeFreeRun).toEqual({ run, failureSeen: true });
   });
 
   it('records ship-it progress in the lab profile (v2)', () => {
@@ -55,5 +76,13 @@ describe('recordBestRating', () => {
     s = recordBestRating(s, 'free', 'PIP');
     expect(s.bestRatingFree).toBe('Promoted');
     expect(s.bestRatingDaily).toBeNull();
+  });
+
+  it('records free-run XP once for a stable run key', () => {
+    const run = { ...startRun(42, DECK, PRODUCTS), status: 'complete' as const, currentCardId: null };
+    const first = recordFreeRunReward(defaultShipItState(), run, 'Exceeds Expectations', 220);
+    const second = recordFreeRunReward(first, run, 'CEO-in-waiting', 520);
+    expect(first.xp).toBe(220);
+    expect(second).toEqual(first);
   });
 });

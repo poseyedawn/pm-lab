@@ -14,7 +14,7 @@ export function LabProfileSummary({ variant, gameId }: LabProfileSummaryProps) {
 
   if (variant === 'compact') {
     return (
-      <p className="text-sm font-extrabold text-ink-soft" aria-live="polite" aria-busy={!ready}>
+      <p className="lab-profile-compact text-sm font-extrabold text-ink-soft" aria-live="polite" aria-busy={!ready}>
         {gameId ? selectedProgress?.xp ?? 0 : totalXp} XP
       </p>
     );

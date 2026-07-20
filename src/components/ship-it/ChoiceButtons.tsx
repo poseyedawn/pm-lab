@@ -12,7 +12,7 @@ interface ChoiceButtonsProps {
 
 export function ChoiceButtons({ card, onChoose, disabled }: ChoiceButtonsProps) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="ship-it-choice-grid grid grid-cols-2 gap-3">
       {(['left', 'right'] as const).map((dir) => {
         const choice = card[dir];
         return (

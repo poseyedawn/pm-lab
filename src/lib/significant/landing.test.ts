@@ -7,8 +7,7 @@ describe('Significant landing progress', () => {
     const progress = significantLandingProgress(defaultState());
 
     expect(progress).toEqual({ completedCases: 0, isReturning: false, nextLevel: 1 });
-    expect(significantLandingHref(progress, 'ship')).toBe('/significant/calibration?call=ship');
-    expect(significantLandingHref(progress, null)).toBe('/significant/calibration');
+    expect(significantLandingHref(progress)).toBe('/significant/calibration');
   });
 
   it('continues returning visitors at the first incomplete level', () => {
@@ -16,8 +15,7 @@ describe('Significant landing progress', () => {
     const progress = significantLandingProgress(state);
 
     expect(progress).toEqual({ completedCases: 1, isReturning: true, nextLevel: 2 });
-    expect(significantLandingHref(progress, null)).toBe('/significant/play?level=2');
-    expect(significantLandingHref(progress, 'ship')).toBe('/significant/play?level=2');
+    expect(significantLandingHref(progress)).toBe('/significant/play?level=2');
   });
 
   it('keeps completed players on the final replayable level', () => {

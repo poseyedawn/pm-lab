@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { CAMPAIGN_CASES } from '@/lib/exception-room/content/campaign';
+import { PRACTICE_CASES } from '@/lib/exception-room/content/practice';
 import {
   availableCases,
   endShift,
@@ -13,93 +14,131 @@ import {
 import { scoreRun } from '@/lib/exception-room/scoring';
 import type {
   DecisionInput,
+  ExceptionRunPhase,
   ExceptionRunState,
   RunMode,
 } from '@/lib/exception-room/types';
-
-export type ExceptionRunPhase = 'review' | 'reveal' | 'debrief';
 
 interface UseExceptionRunOptions {
   seed: number;
   mode?: RunMode;
   initialState?: ExceptionRunState;
+  initialPhase?: ExceptionRunPhase;
+  initialDecision?: DecisionInput | null;
 }
 
-export function useExceptionRun({ seed, mode = 'campaign', initialState }: UseExceptionRunOptions) {
+export function useExceptionRun({
+  seed,
+  mode = 'campaign',
+  initialState,
+  initialPhase = 'review',
+  initialDecision = null,
+}: UseExceptionRunOptions) {
+  const cases = mode === 'practice' ? PRACTICE_CASES : CAMPAIGN_CASES;
+  const startingRun = initialState ?? startExceptionRun(seed, mode, cases);
   const [run, setRun] = useState<ExceptionRunState>(
-    () => initialState ?? startExceptionRun(seed, mode, CAMPAIGN_CASES),
+    startingRun,
   );
-  const [phase, setPhase] = useState<ExceptionRunPhase>('review');
-  const [lastDecision, setLastDecision] = useState<DecisionInput | null>(null);
+  const [phase, setPhase] = useState<ExceptionRunPhase>(initialPhase);
+  const [lastDecision, setLastDecision] = useState<DecisionInput | null>(initialDecision);
   const [error, setError] = useState<string | null>(null);
+  const runRef = useRef(startingRun);
+  const phaseRef = useRef<ExceptionRunPhase>(initialPhase);
+  const decisionLocked = useRef(initialPhase !== 'review');
 
-  const queue = useMemo(() => availableCases(run, CAMPAIGN_CASES), [run]);
+  const queue = useMemo(() => availableCases(run, cases), [cases, run]);
   const selectedCase = useMemo(
-    () => CAMPAIGN_CASES.find((candidate) => candidate.id === run.selectedCaseId) ?? null,
-    [run.selectedCaseId],
+    () => queue.find((candidate) => candidate.id === run.selectedCaseId) ?? null,
+    [queue, run.selectedCaseId],
   );
   const lastResolution = useMemo(
     () => run.resolutions.findLast((resolution) => resolution.caseId === lastDecision?.caseId) ?? null,
     [lastDecision, run.resolutions],
   );
   const score = useMemo(
-    () => (run.status === 'complete' ? scoreRun(run, CAMPAIGN_CASES) : null),
-    [run],
+    () => (run.status === 'complete' ? scoreRun(run, cases) : null),
+    [cases, run],
   );
 
   const openCase = useCallback((caseId: string) => {
-    setRun((current) => {
-      const result = selectCase(current, caseId);
-      if (!result.ok) setError(result.error.message);
-      else setError(null);
-      return result.state;
-    });
+    if (phaseRef.current !== 'review') return false;
+    const result = selectCase(runRef.current, caseId);
+    if (!result.ok) {
+      setError(result.error.message);
+      return false;
+    }
+    runRef.current = result.state;
+    setRun(result.state);
+    setError(null);
+    return true;
   }, []);
 
   const inspectEvidence = useCallback((caseId: string, evidenceId: string) => {
-    setRun((current) => {
-      const result = viewEvidence(current, caseId, evidenceId, CAMPAIGN_CASES);
-      if (!result.ok) setError(result.error.message);
-      else setError(null);
-      return result.state;
-    });
-  }, []);
+    if (phaseRef.current !== 'review') return false;
+    const result = viewEvidence(runRef.current, caseId, evidenceId, cases);
+    if (!result.ok) {
+      setError(result.error.message);
+      return false;
+    }
+    runRef.current = result.state;
+    setRun(result.state);
+    setError(null);
+    return true;
+  }, [cases]);
 
   const submitDecision = useCallback((decision: DecisionInput) => {
-    setRun((current) => {
-      if (phase !== 'review') return current;
-      const result = resolveCase(current, decision, CAMPAIGN_CASES);
-      if (!result.ok) {
-        setError(result.error.message);
-        return result.state;
-      }
-      setError(null);
-      setLastDecision(decision);
-      setPhase('reveal');
-      return result.state;
-    });
-  }, [phase]);
+    if (phaseRef.current !== 'review' || decisionLocked.current) return false;
+    decisionLocked.current = true;
+    const result = resolveCase(runRef.current, decision, cases);
+    if (!result.ok) {
+      decisionLocked.current = false;
+      setError(result.error.message);
+      return false;
+    }
+    runRef.current = result.state;
+    phaseRef.current = 'reveal';
+    setRun(result.state);
+    setError(null);
+    setLastDecision(decision);
+    setPhase('reveal');
+    return true;
+  }, [cases]);
 
   const continueRun = useCallback(() => {
-    setPhase(run.status === 'complete' ? 'debrief' : 'review');
-  }, [run.status]);
-
-  const finishShift = useCallback(() => {
-    setRun((current) => {
-      const result = endShift(current, CAMPAIGN_CASES);
-      if (!result.ok) setError(result.error.message);
-      else setError(null);
-      if (result.state.status === 'complete') setPhase('debrief');
-      return result.state;
-    });
+    const nextPhase = runRef.current.status === 'complete' ? 'debrief' : 'review';
+    phaseRef.current = nextPhase;
+    decisionLocked.current = nextPhase !== 'review';
+    setPhase(nextPhase);
   }, []);
 
+  const finishShift = useCallback(() => {
+    if (phaseRef.current !== 'review') return false;
+    const result = endShift(runRef.current, cases);
+    if (!result.ok) {
+      setError(result.error.message);
+      return false;
+    }
+    runRef.current = result.state;
+    setRun(result.state);
+    setError(null);
+    if (result.state.status === 'complete') {
+      phaseRef.current = 'debrief';
+      decisionLocked.current = true;
+      setPhase('debrief');
+    }
+    return true;
+  }, [cases]);
+
   const restart = useCallback((nextSeed = seed) => {
-    setRun(startExceptionRun(nextSeed, mode, CAMPAIGN_CASES));
+    const nextRun = startExceptionRun(nextSeed, mode, cases);
+    runRef.current = nextRun;
+    phaseRef.current = 'review';
+    decisionLocked.current = false;
+    setRun(nextRun);
     setPhase('review');
     setLastDecision(null);
     setError(null);
-  }, [mode, seed]);
+  }, [cases, mode, seed]);
 
   return {
     run,
@@ -110,6 +149,7 @@ export function useExceptionRun({ seed, mode = 'campaign', initialState }: UseEx
     lastResolution,
     score,
     error,
+    cases,
     openCase,
     inspectEvidence,
     submitDecision,

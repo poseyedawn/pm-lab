@@ -13,6 +13,7 @@ export function usePreferences() {
   const [preferences, setPreferences] = useState(defaultPreferences);
   const [ready, setReady] = useState(false);
   const [systemReducedMotion, setSystemReducedMotion] = useState(false);
+  const [storageWarning, setStorageWarning] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate browser-only versioned storage after mount
@@ -34,15 +35,14 @@ export function usePreferences() {
     key: Key,
     value: LabPreferences[Key],
   ) => {
-    setPreferences((current) => {
-      const next = { ...current, [key]: value };
-      savePreferences(next);
-      return next;
-    });
+    const next = { ...loadPreferences(), [key]: value };
+    const persisted = savePreferences(next);
+    setStorageWarning(!persisted);
+    if (!persisted) setPreferences(next);
   }, []);
 
   const reducedMotion = preferences.motion === 'reduced'
     || (preferences.motion === 'system' && systemReducedMotion);
 
-  return { ready, preferences, reducedMotion, updatePreference };
+  return { ready, preferences, reducedMotion, storageWarning, updatePreference };
 }

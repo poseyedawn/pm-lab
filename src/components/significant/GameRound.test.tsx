@@ -7,7 +7,7 @@ import { fireConfetti } from '@/components/juice/confetti';
 import { sfx } from '@/components/juice/sound';
 
 vi.mock('@/hooks/lab/usePreferences', () => ({ usePreferences: vi.fn() }));
-vi.mock('@/components/juice/confetti', () => ({ fireConfetti: vi.fn() }));
+vi.mock('@/components/juice/confetti', () => ({ fireConfetti: vi.fn(() => vi.fn()) }));
 vi.mock('@/components/juice/sound', () => ({
   sfx: { click: vi.fn(), win: vi.fn(), lose: vi.fn() },
 }));
@@ -31,26 +31,48 @@ beforeEach(() => {
 
 describe('GameRound feedback', () => {
   it('uses corrective feedback without confetti or reward chips after a missed call', () => {
-    render(<GameRound scenario={scenario} combo={1} mode="campaign" level={1} onComplete={vi.fn()} />);
+    const onDecision = vi.fn();
+    render(
+      <GameRound
+        scenario={scenario}
+        combo={1}
+        mode="campaign"
+        level={1}
+        onDecision={onDecision}
+        onContinue={vi.fn()}
+      />,
+    );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Kill' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Kill:/ }));
 
     expect(screen.getByRole('heading', { name: 'That call missed the signal.' })).toBeInTheDocument();
     expect(screen.getByText('Better call')).toBeInTheDocument();
     expect(screen.queryByText('+0 XP')).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /try this case again/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /return to campaign/i })).toBeInTheDocument();
+    expect(onDecision).toHaveBeenCalledWith(expect.objectContaining({ call: 'kill', correct: false, xpEarned: 0 }));
     expect(fireConfetti).not.toHaveBeenCalled();
     expect(sfx.lose).toHaveBeenCalledWith(true);
   });
 
   it('keeps confetti and the XP reward exclusive to a correct call', () => {
-    render(<GameRound scenario={scenario} combo={1} mode="campaign" level={1} onComplete={vi.fn()} />);
+    const onDecision = vi.fn();
+    render(
+      <GameRound
+        scenario={scenario}
+        combo={1}
+        mode="campaign"
+        level={1}
+        onDecision={onDecision}
+        onContinue={vi.fn()}
+      />,
+    );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Ship' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Ship:/ }));
 
     expect(screen.getByRole('heading', { name: 'You found the signal.' })).toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent(/\+\d+ XP/);
     expect(fireConfetti).toHaveBeenCalledTimes(1);
+    expect(onDecision).toHaveBeenCalledWith(expect.objectContaining({ call: 'ship', correct: true }));
     expect(sfx.win).toHaveBeenCalledWith(true);
   });
 });

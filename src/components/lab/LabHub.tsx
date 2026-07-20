@@ -108,7 +108,7 @@ export function LabHub() {
               priority
             />
           </h1>
-          <p>Small games that make product judgment visible.</p>
+          <p>Playable proof of product and AI judgment.</p>
         </div>
       </header>
 

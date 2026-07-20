@@ -1,11 +1,13 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ShareControl } from '@/components/significant/ShareControl';
 import { track } from '@/services/analyticsService';
 import { canCopyText, copyText } from '@/services/shareService';
 
 vi.mock('@/services/analyticsService', () => ({ track: vi.fn() }));
 vi.mock('@/services/shareService', () => ({ canCopyText: vi.fn(), copyText: vi.fn() }));
+
+afterEach(cleanup);
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -28,7 +30,8 @@ describe('ShareControl', () => {
     render(<ShareControl text="result" surface="profile" label="Copy result" color="sky" />);
     fireEvent.click(await screen.findByRole('button', { name: 'Copy result' }));
 
-    expect(await screen.findByText(/Couldn’t copy that/)).toBeInTheDocument();
+    expect(await screen.findByText(/Copy did not work/)).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Share text' })).toHaveValue('result');
     expect(track).toHaveBeenLastCalledWith('share_failed', {
       surface: 'profile',
       method: 'clipboard',

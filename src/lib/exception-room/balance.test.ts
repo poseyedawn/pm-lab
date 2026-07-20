@@ -49,8 +49,8 @@ describe('policy balance across 1,000 seeds', () => {
 
   it('keeps cue-only and recommendation-only policies evidence-free', () => {
     for (let seed = 0; seed < SEEDS; seed += 1) {
-      expect(scorePolicy(seed, 'cue-only').evidenceInspectionRate).toBe(0);
-      expect(scorePolicy(seed, 'recommendation-only').evidenceInspectionRate).toBe(0);
+      expect(scorePolicy(seed, 'cue-only').evidenceQuality).toBe(0);
+      expect(scorePolicy(seed, 'recommendation-only').evidenceQuality).toBe(0);
     }
   });
 });

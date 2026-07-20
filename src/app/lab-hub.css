@@ -217,7 +217,7 @@
 
 .lab-hub-card-drag {
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -302,7 +302,7 @@
 
 .lab-hub-card-tagline {
   max-width: 138px;
-  margin-top: 8px;
+  margin-top: 6px;
   color: rgb(255 255 255 / 94%);
   font-size: 0.6875rem;
   font-weight: 800;
@@ -311,8 +311,20 @@
 }
 
 .lab-hub-card[data-game-tile='significant'] .lab-hub-card-tagline {
-  max-width: 170px;
-  white-space: nowrap;
+  max-width: 144px;
+}
+
+.lab-hub-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 7px;
+  color: rgb(255 255 255 / 88%);
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 2px rgb(27 3 17 / 50%);
 }
 
 .lab-hub-card[data-game-tile='ship-it'] .lab-hub-card-name {
@@ -402,7 +414,54 @@
   }
 }
 
-@media (max-height: 760px) {
+@media (max-width: 260px) {
+  .lab-hub {
+    padding-inline: 8px;
+  }
+
+  .lab-hub-nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 4px;
+  }
+
+  .lab-hub-brand-wordmark { width: 108px; }
+  .lab-hub-nav-actions { justify-content: center; }
+  .lab-hub-title-lockup { margin-top: 8px; }
+  .lab-hub-title-lockup > p:last-child { margin-top: 8px; font-size: 0.625rem; }
+  .lab-hub-games { padding-top: 4px; }
+  .lab-hub-games ol { gap: 8px; }
+
+  .lab-hub-card { height: 104px; }
+  .lab-hub-card-scrim { inset-block: 8px; left: 4px; }
+  .lab-hub-card-copy {
+    width: 62%;
+    padding: 12px 0 10px 10px;
+  }
+  .lab-hub-card-eyebrow { margin-bottom: 2px; font-size: 0.5rem; }
+  .lab-hub-card-name { font-size: 0.875rem; }
+  .lab-hub-card[data-game-tile='ship-it'] .lab-hub-card-name { font-size: 1rem; }
+  .lab-hub-card-tagline {
+    max-width: 86px;
+    margin-top: 4px;
+    font-size: 0.5rem;
+  }
+  .lab-hub-card[data-game-tile='significant'] .lab-hub-card-tagline {
+    max-width: 86px;
+    white-space: normal;
+  }
+  .lab-hub-card-progress { display: none; }
+  .lab-hub-card-meta { display: none; }
+  .lab-hub-card-action {
+    right: 8px;
+    bottom: 12px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 261px) {
   .lab-hub-title-lockup {
     margin-block: 8px 12px;
   }

@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, ChartBar, Clock } from '@phosphor-icons/react';
-import { SignificantEntryControls } from '@/components/significant/SignificantEntryControls';
 import { useSignificantLanding } from '@/hooks/significant/useSignificantLanding';
 import { significantLandingHref } from '@/lib/significant/landing';
 import type { Scenario } from '@/lib/engine/types';
@@ -15,7 +14,7 @@ interface SignificantLandingProps {
 
 export function SignificantLanding({ scenario }: SignificantLandingProps) {
   const { ready, totalXp, completedCases, isReturning, nextLevel } = useSignificantLanding();
-  const href = significantLandingHref({ completedCases, isReturning, nextLevel }, null);
+  const href = significantLandingHref({ completedCases, isReturning, nextLevel });
   const totalUsers = scenario.totals.nA + scenario.totals.nB;
   const ctaLabel = ready && isReturning ? `Resume level ${nextLevel}` : 'Start the field test';
 
@@ -35,8 +34,6 @@ export function SignificantLanding({ scenario }: SignificantLandingProps) {
       />
 
       <div className="significant-entry-content">
-        <SignificantEntryControls />
-
         <header className="significant-entry-heading">
           <p className="significant-entry-eyebrow">Product Lab <span aria-hidden>{'//'}</span> Field Test 01</p>
           <h1 id="significant-entry-title" className="significant-entry-title">Significant</h1>

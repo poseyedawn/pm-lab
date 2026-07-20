@@ -32,7 +32,7 @@ export function buildDebrief(
     improvement = 'Protect capacity for high-consequence work before the queue becomes backlog-bound.';
   } else if (score.unnecessaryEscalations > 0) {
     improvement = 'Use escalation when authority or evidence is missing, not as a default safe-looking exit.';
-  } else if (score.evidenceInspectionRate < 50) {
+  } else if (score.evidenceQuality < 50) {
     improvement = 'Replay and inspect the evidence behind each recommendation before relying on visible queue cues.';
   } else if (score.service < 80) {
     improvement = 'Review due state earlier so safe decisions also reach the service on time.';

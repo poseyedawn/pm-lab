@@ -1,31 +1,29 @@
 'use client';
-
-import { useRef } from 'react';
 import { CalibrationDecisionControls } from '@/components/significant/CalibrationDecisionControls';
 import { CalibrationEvidence } from '@/components/significant/CalibrationEvidence';
 import { CalibrationReveal } from '@/components/significant/CalibrationReveal';
 import { useCalibration } from '@/hooks/significant/useCalibration';
-import type { Call, Scenario } from '@/lib/engine/types';
+import { GameEntryLoading } from '@/components/game/GameEntryLoading';
 
 interface CalibrationRoundProps {
-  scenario: Scenario;
-  initialCall: Call | null;
   onContinue: () => void;
 }
 
-export function CalibrationRound({ scenario, initialCall, onContinue }: CalibrationRoundProps) {
-  const calibration = useCalibration({ scenario, initialCall });
-  const continuedRef = useRef(false);
+export function CalibrationRound({ onContinue }: CalibrationRoundProps) {
+  const calibration = useCalibration();
 
   const handleContinue = () => {
-    if (continuedRef.current) return;
-    continuedRef.current = true;
-    calibration.continueToCampaign();
-    onContinue();
+    if (calibration.continueRound()) onContinue();
   };
 
   if (!calibration.ready) {
-    return <main className="calibration-screen px-5 py-4" aria-busy="true" />;
+    return (
+      <GameEntryLoading
+        gameName="Significant Calibration"
+        description="Preparing a guided experiment call."
+        theme="significant"
+      />
+    );
   }
 
   if (calibration.phase === 'revealed') {
@@ -35,11 +33,15 @@ export function CalibrationRound({ scenario, initialCall, onContinue }: Calibrat
         data-outcome={calibration.correct ? 'correct' : 'review'}
       >
         <CalibrationReveal
-          scenario={scenario}
+          scenario={calibration.scenario}
           call={calibration.call!}
           correct={calibration.correct!}
-          earnedBaseline={calibration.earnedBaseline}
-          baselineXp={calibration.baselineXp}
+          reason={calibration.reason}
+          stepNumber={calibration.stepNumber}
+          totalSteps={calibration.totalSteps}
+          isFinalRound={calibration.isFinalRound}
+          xpEarned={calibration.xpEarned}
+          isReplay={calibration.isReplay}
           onContinue={handleContinue}
         />
       </main>
@@ -49,7 +51,10 @@ export function CalibrationRound({ scenario, initialCall, onContinue }: Calibrat
   return (
     <main className="calibration-screen px-5 pb-0 pt-4 min-[360px]:px-7">
       <CalibrationEvidence
-        scenario={scenario}
+        scenario={calibration.scenario}
+        prompt={calibration.prompt}
+        stepNumber={calibration.stepNumber}
+        totalSteps={calibration.totalSteps}
         coaching={calibration.coaching}
         revealed={false}
       />

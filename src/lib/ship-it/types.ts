@@ -2,8 +2,39 @@ export type MeterId = 'users' | 'business' | 'team' | 'tech';
 export type Dir = 'left' | 'right';
 export type Meters = Record<MeterId, number>;
 
+export type IntegrityDomain =
+  | 'accessibility'
+  | 'customer-trust'
+  | 'evidence'
+  | 'legal'
+  | 'privacy'
+  | 'security'
+  | 'truthfulness';
+
+export type IntegrityOutcome = 'protected' | 'review-required' | 'breach';
+
+export interface IntegrityGuidance {
+  domain: IntegrityDomain;
+  outcome: IntegrityOutcome;
+  boundary: string;
+}
+
+export interface ChoiceGuidance {
+  why: string;
+  assumption: string;
+  integrity?: IntegrityGuidance;
+}
+
+export interface DecisionFeedback {
+  cardId: string;
+  choiceLabel: string;
+  effects: Partial<Record<MeterId, number>>;
+  guidance: ChoiceGuidance;
+}
+
 export type Rating =
   | 'PIP'
+  | 'Needs Review'
   | 'Meets Expectations'
   | 'Exceeds Expectations'
   | 'Promoted'
@@ -19,7 +50,7 @@ export interface Choice {
 export interface Card {
   id: string;                                 // kebab-case, unique
   speaker: string;                            // "Maya, Eng Lead" / "The CEO"
-  avatar: string;                             // emoji portrait chip
+  avatar: string;                             // legacy role token mapped to a source-controlled icon
   text: string;                               // <= 220 chars
   left: Choice;
   right: Choice;
@@ -49,11 +80,16 @@ export interface RunState {
   exhausted: boolean;                         // true only if deck truly ran dry (tested unreachable)
 }
 
+export interface SavedShipRun {
+  run: RunState;
+  failureSeen: boolean;
+}
+
 export const METERS: MeterId[] = ['users', 'business', 'team', 'tech'];
 
-export const METER_INFO: Record<MeterId, { label: string; emoji: string; bar: string; deep: string }> = {
-  users:    { label: 'Users',    emoji: '📈', bar: 'bg-sky',   deep: 'bg-sky-deep' },
-  business: { label: 'Business', emoji: '💰', bar: 'bg-gold',  deep: 'bg-gold' },
-  team:     { label: 'Team',     emoji: '🧡', bar: 'bg-lose',  deep: 'bg-lose-deep' },
-  tech:     { label: 'Tech',     emoji: '⚙️', bar: 'bg-brand', deep: 'bg-brand-deep' },
+export const METER_INFO: Record<MeterId, { label: string; bar: string; deep: string }> = {
+  users:    { label: 'Customer', bar: 'bg-sky',   deep: 'bg-sky-deep' },
+  business: { label: 'Business', bar: 'bg-gold',  deep: 'bg-gold' },
+  team:     { label: 'Team',     bar: 'bg-lose',  deep: 'bg-lose-deep' },
+  tech:     { label: 'Tech',     bar: 'bg-brand', deep: 'bg-brand-deep' },
 };

@@ -11,7 +11,10 @@ describe('ReadoutCard', () => {
     expect(screen.getByText(s.hypothesis)).toBeInTheDocument();
     expect(screen.getByText(s.metricName)).toBeInTheDocument();
     expect(screen.getByText(`Day ${s.daysRun} of ${s.daysPlanned}`)).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /daily conversion rate, control vs variant/i })).toBeInTheDocument();
+    const chart = screen.getByRole('img', { name: new RegExp(`daily ${s.metricName}`, 'i') });
+    expect(chart).toHaveAccessibleName(/variant (rose|fell|stayed)/i);
+    expect(chart).toHaveAccessibleName(/95% confidence bands overlap/i);
+    expect(chart).toHaveAccessibleName(/sample:/i);
   });
   it('shows the note chip and segment table when present', () => {
     const s = generateScenario(42, 'simpson');
@@ -24,9 +27,9 @@ describe('DecisionButtons', () => {
   it('emits the chosen call', () => {
     const onCall = vi.fn();
     render(<DecisionButtons onCall={onCall} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Ship' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Ship:/ }));
     expect(onCall).toHaveBeenCalledWith('ship');
-    fireEvent.click(screen.getByRole('button', { name: 'Keep Running' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Keep Running:/ }));
     expect(onCall).toHaveBeenCalledWith('keep');
   });
 });

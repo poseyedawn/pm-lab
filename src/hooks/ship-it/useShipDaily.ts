@@ -4,9 +4,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { localToday, msToLocalMidnight } from '@/hooks/useDaily';
 import { shipitDailySeed } from '@/lib/ship-it/daily';
 import {
-  loadShipItState, recordBestRating, recordShipItDaily, saveShipItState, type ShipItState,
+  dailyRunKey,
+  loadShipItState,
+  recordDailyRunReward,
+  saveShipItState,
+  type ShipItState,
 } from '@/lib/ship-it/state';
-import type { Rating } from '@/lib/ship-it/types';
+import type { Rating, RunState, SavedShipRun } from '@/lib/ship-it/types';
 
 const fmt = (ms: number): string => {
   const s = Math.max(0, Math.floor(ms / 1000));
@@ -32,21 +36,30 @@ export function useShipDaily() {
     return () => clearInterval(id);
   }, []);
 
-  const complete = useCallback((rating: Rating, xp: number) => {
+  const persistSnapshot = useCallback((snapshot: SavedShipRun) => {
     const date = localToday(new Date());
     setState((prev) => {
-      // recordShipItDaily is idempotent for the streak, but the XP add must be
-      // Guarded here too because this is the same double-grant bug class as Significant (3c43256).
-      if (!prev || prev.lastDailyDate === date) return prev;
-      const next = recordBestRating(
-        { ...recordShipItDaily(prev, date, rating), xp: prev.xp + xp },
-        'daily',
-        rating,
-      );
+      if (!prev) return prev;
+      const next = { ...prev, activeDailyRun: { date, snapshot } };
       saveShipItState(next);
       return next;
     });
   }, []);
+
+  const complete = useCallback((rating: Rating, run: RunState, xp: number) => {
+    const date = localToday(new Date());
+    setState((prev) => {
+      if (!prev) return prev;
+      const next = recordDailyRunReward(prev, date, run, rating, xp);
+      saveShipItState(next);
+      return next;
+    });
+  }, []);
+
+  const activeSnapshot = state?.activeDailyRun?.date === today
+    ? state.activeDailyRun.snapshot
+    : undefined;
+  const activeRunKey = activeSnapshot ? dailyRunKey(today, activeSnapshot.run) : null;
 
   return {
     ready: state !== null,
@@ -58,6 +71,9 @@ export function useShipDaily() {
     shields: state?.shields ?? 0,
     bestRatingDaily: state?.bestRatingDaily ?? null,
     xp: state?.xp ?? 0,
+    activeSnapshot,
+    rewardAlreadyRecorded: activeRunKey !== null && (state?.rewardedRunKeys.includes(activeRunKey) ?? false),
+    persistSnapshot,
     complete,
     countdown,
   };

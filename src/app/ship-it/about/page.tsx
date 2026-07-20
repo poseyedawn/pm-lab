@@ -22,15 +22,21 @@ export default function ShipItAbout() {
 
       <Section title="What this game trains">
         <p>
-          Ship It is about prioritization under stakeholder pressure. Every card is a real trade-off with no
-          correct answer: the choice that grows Users starves Tech, the one that calms the board burns the team.
-          The game never lectures. The meters do the teaching.
+          Ship It is about prioritization under stakeholder pressure. Most cards are genuine tradeoffs: a choice can
+          support customers while delaying revenue, or protect delivery while frustrating an executive. After each
+          call, the game shows the meter change, its causal reasoning, and the assumption behind the model.
+        </p>
+        <p>
+          Some calls are not ordinary trades. Consent, accessibility, security, truthful marketing, privacy and legal
+          compliance are explicit integrity boundaries. A balanced portfolio cannot erase a breach or an unresolved
+          review requirement.
         </p>
       </Section>
 
       <Section title="The stakeholder-tension model">
         <p>
-          Four meters start at 50: Users, Business, Team, and Tech. Any meter at zero ends the run because the product is
+          Four meters start at 50: Customer, Business, Team, and Tech. Customer represents sustainable customer value,
+          adoption and trust, rather than raw growth alone. Any meter at zero ends the run because the product is
           shelved, the funding pulled, the engineers gone, or the platform down.
         </p>
         <p>
@@ -50,8 +56,9 @@ export default function ShipItAbout() {
 
       <Section title="The performance review">
         <p>
-          Every run ends in a quarterly review, from PIP to CEO-in-waiting. It is template-generated from the run
-          state, including your lowest meter, the arcs you closed or abandoned, and the overshoots you triggered. It is seeded, so
+          Every run ends in a quarterly review. The review separates operating balance from integrity and uses both
+          before awarding a leadership rating. It also considers your lowest meter, the arcs you closed or abandoned,
+          and the overshoots you triggered. It is seeded, so
           the same run always writes the same review. No AI, no server: the whole game is deterministic from its seed.
         </p>
       </Section>

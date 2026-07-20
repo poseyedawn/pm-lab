@@ -6,12 +6,13 @@ const gameIdSchema = z.enum(['significant', 'ship-it', 'exception-room']);
 const shipitModeSchema = z.enum(['free', 'daily']);
 const shipitRatingSchema = z.enum([
   'PIP',
+  'Needs Review',
   'Meets Expectations',
   'Exceeds Expectations',
   'Promoted',
   'CEO-in-waiting',
 ]);
-const exceptionModeSchema = z.enum(['campaign', 'daily']);
+const exceptionModeSchema = z.enum(['campaign', 'daily', 'practice']);
 const modeSchema = z.enum(['calibration', 'campaign', 'daily']);
 const archetypeSchema = z.enum([
   'clean-win',

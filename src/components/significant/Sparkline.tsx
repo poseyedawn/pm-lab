@@ -1,6 +1,7 @@
 import type { ArmDay } from '@/lib/engine/types';
 
 interface SparklineProps {
+  metricName: string;
   control: ArmDay[];
   variant: ArmDay[];
 }
@@ -17,8 +18,40 @@ const confidencePoint = ({ c, n }: ArmDay): RatePoint => {
   return { rate, low: Math.max(0, rate - margin), high: Math.min(1, rate + margin) };
 };
 
+const rateLabel = (rate: number): string => `${(rate * 100).toFixed(1)}%`;
+
+const trendLabel = (name: string, points: RatePoint[]): string => {
+  const first = points[0].rate;
+  const last = points.at(-1)!.rate;
+  const change = last - first;
+  if (Math.abs(change) < 0.0005) {
+    return `${name} stayed near ${rateLabel(first)}, ending at ${rateLabel(last)}`;
+  }
+  return `${name} ${change > 0 ? 'rose' : 'fell'} from ${rateLabel(first)} to ${rateLabel(last)}`;
+};
+
+export function sparklineDescription(metricName: string, control: ArmDay[], variant: ArmDay[]): string {
+  const controlPoints = control.map(confidencePoint);
+  const variantPoints = variant.map(confidencePoint);
+  const dayCount = Math.min(controlPoints.length, variantPoints.length);
+  const overlapDays = Array.from({ length: dayCount }, (_, index) => (
+    controlPoints[index].low <= variantPoints[index].high
+    && variantPoints[index].low <= controlPoints[index].high
+  )).filter(Boolean).length;
+  const controlUsers = control.reduce((total, day) => total + day.n, 0);
+  const variantUsers = variant.reduce((total, day) => total + day.n, 0);
+
+  return [
+    `Daily ${metricName.toLowerCase()} across ${dayCount} days.`,
+    `${trendLabel('Variant', variantPoints)}.`,
+    `${trendLabel('Control', controlPoints)}.`,
+    `The daily 95% confidence bands overlap on ${overlapDays} of ${dayCount} days.`,
+    `Sample: ${variantUsers.toLocaleString()} variant and ${controlUsers.toLocaleString()} control users.`,
+  ].join(' ');
+}
+
 /** Dual-line daily conversion-rate chart with real binomial confidence bands. */
-export function Sparkline({ control, variant }: SparklineProps) {
+export function Sparkline({ metricName, control, variant }: SparklineProps) {
   const W = 300;
   const H = 104;
   const PAD_X = 8;
@@ -26,6 +59,7 @@ export function Sparkline({ control, variant }: SparklineProps) {
   const PLOT_BOTTOM = 84;
   const controlPoints = control.map(confidencePoint);
   const variantPoints = variant.map(confidencePoint);
+  const description = sparklineDescription(metricName, control, variant);
   const bounds = [...controlPoints, ...variantPoints].flatMap(({ low, high }) => [low, high]);
   const min = Math.min(...bounds);
   const max = Math.max(...bounds);
@@ -46,7 +80,8 @@ export function Sparkline({ control, variant }: SparklineProps) {
   const labelIndexes = [...new Set([0, Math.floor((variant.length - 1) / 2), variant.length - 1])];
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Daily conversion rate, control vs variant">
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={description}>
+      <title>{description}</title>
       {[0.25, 0.5, 0.75].map((fraction) => (
         <line
           key={fraction}

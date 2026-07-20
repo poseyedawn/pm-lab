@@ -34,7 +34,7 @@ export const DECK: Card[] = [
     speaker: 'Sam, Marketing',
     avatar: '📣',
     text: 'Growth found a trick: pre-checked "invite your contacts" during signup. Conversion on invites triples. The designers are calling it a dark pattern in Slack.',
-    left: { label: 'Ship the pre-check', effects: { users: 12, business: 4, team: -8 } },
+    left: { label: 'Ship the pre-check', effects: { users: -10, business: 4, team: -8 } },
     right: { label: 'Keep invites opt-in', effects: { users: -4, team: 6 } },
   },
   {
@@ -210,7 +210,7 @@ export const DECK: Card[] = [
     speaker: 'Sam, Marketing',
     avatar: '📣',
     text: 'An agency will write 200 SEO articles about our category. The traffic projections are real. The articles will read like a robot ate a thesaurus.',
-    left: { label: 'Sign the agency', effects: { users: 8, business: 4, tech: -4 } },
+    left: { label: 'Sign the agency', effects: { users: -6, business: 4, tech: -4 } },
     right: { label: 'Protect the brand voice', effects: { users: -4, team: 4 } },
   },
   {

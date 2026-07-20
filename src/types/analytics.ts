@@ -5,11 +5,12 @@ export type GameMode = 'calibration' | 'campaign' | 'daily';
 export type ShipItMode = 'free' | 'daily';
 export type ShipItRating =
   | 'PIP'
+  | 'Needs Review'
   | 'Meets Expectations'
   | 'Exceeds Expectations'
   | 'Promoted'
   | 'CEO-in-waiting';
-export type ExceptionMode = 'campaign' | 'daily';
+export type ExceptionMode = 'campaign' | 'daily' | 'practice';
 export type ExceptionActionName = 'approve' | 'correct' | 'escalate';
 export type ExperimentCall = 'ship' | 'kill' | 'keep';
 export type ExperimentArchetype =

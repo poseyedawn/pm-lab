@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ARCHETYPE_IDS, ARCHETYPES } from '@/lib/engine/archetypes';
+import { ARCHETYPE_IDS } from '@/lib/engine/archetypes';
 import { generateScenario } from '@/lib/engine/scenario';
 import { srmPValue } from '@/lib/stats';
 
@@ -39,12 +39,12 @@ describe('archetype invariants', () => {
       expect(s.truth.correctCall).toBe('keep');
     }
   });
-  it('winners-curse: tiny n, huge significant lift, true lift 0', () => {
+  it('winners-curse: tiny n and a huge early lift require more evidence', () => {
     for (const seed of SEEDS) {
       const s = generateScenario(seed, 'winners-curse');
       expect(s.totals.nA + s.totals.nB).toBeLessThan(4000);
       expect(s.observed.relLift).toBeGreaterThan(0.25);
-      expect(s.truth.correctCall).toBe('kill');
+      expect(s.truth.correctCall).toBe('keep');
     }
   });
   it('underpowered: not significant, real small effect, keep', () => {

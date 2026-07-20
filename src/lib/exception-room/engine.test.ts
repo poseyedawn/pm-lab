@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { CAMPAIGN_CASES } from '@/lib/exception-room/cases';
+import { PRACTICE_CASES } from '@/lib/exception-room/content/practice';
 import {
   availableCases,
   completeShiftIfNeeded,
@@ -77,6 +78,37 @@ describe('startExceptionRun', () => {
     expect(startExceptionRun(1, 'campaign', CAMPAIGN_CASES).schedule)
       .not.toEqual(startExceptionRun(2, 'campaign', CAMPAIGN_CASES).schedule);
   });
+
+  it('runs the three guided practice cases in sequence and completes after Shift 1', () => {
+    let state = startExceptionRun(42, 'practice', PRACTICE_CASES);
+    const actions: string[] = [];
+    while (state.status === 'active') {
+      const candidate = availableCases(state, PRACTICE_CASES)[0];
+      expect(candidate).toBeDefined();
+      if (!candidate) return;
+      actions.push(candidate.preferredAction);
+      let result = selectCase(state, candidate.id);
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+      for (const evidenceId of candidate.requiredEvidenceIds) {
+        result = viewEvidence(result.state, candidate.id, evidenceId, PRACTICE_CASES);
+        expect(result.ok).toBe(true);
+        if (!result.ok) return;
+      }
+      const detailId = detailFor(candidate, candidate.preferredAction);
+      result = resolveCase(result.state, {
+        caseId: candidate.id,
+        action: candidate.preferredAction,
+        ...(detailId ? { detailId } : {}),
+      }, PRACTICE_CASES);
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+      state = result.state;
+    }
+    expect(new Set(actions)).toEqual(new Set(['approve', 'correct', 'escalate']));
+    expect(state.shift).toBe(1);
+    expect(state.resolutions).toHaveLength(3);
+  });
 });
 
 describe('selection and evidence', () => {
@@ -107,6 +139,35 @@ describe('selection and evidence', () => {
 });
 
 describe('resolution and time', () => {
+  it('requires the declared evidence or an explicit evidence-deficit decision', () => {
+    const initial = startExceptionRun(9, 'campaign', CAMPAIGN_CASES);
+    const candidate = availableCases(initial, CAMPAIGN_CASES)[0];
+    const detailId = detailFor(candidate, candidate.preferredAction);
+    const decision = {
+      caseId: candidate.id,
+      action: candidate.preferredAction,
+      ...(detailId ? { detailId } : {}),
+    } as const;
+
+    expect(resolveCase(initial, decision, CAMPAIGN_CASES)).toMatchObject({
+      ok: false,
+      error: { code: 'evidence-required' },
+    });
+
+    const accepted = resolveCase(
+      initial,
+      { ...decision, acceptEvidenceDeficit: true },
+      CAMPAIGN_CASES,
+    );
+    expect(accepted.ok).toBe(true);
+    if (!accepted.ok) return;
+    expect(accepted.state.resolutions[0]).toMatchObject({
+      acceptedEvidenceDeficit: true,
+      evidenceViewedIds: [],
+      missingRequiredEvidenceIds: candidate.requiredEvidenceIds,
+    });
+  });
+
   it('records the pre-advance tick and advances exactly once', () => {
     const initial = startExceptionRun(9, 'campaign', CAMPAIGN_CASES);
     const candidate = availableCases(initial, CAMPAIGN_CASES)[0];
@@ -128,6 +189,7 @@ describe('resolution and time', () => {
       caseId: candidate.id,
       action: candidate.preferredAction,
       detailId: detailFor(candidate, candidate.preferredAction),
+      acceptEvidenceDeficit: true,
     }, CAMPAIGN_CASES)).toMatchObject({ ok: false, error: { code: 'insufficient-capacity' } });
 
     const resolved = resolvePreferred(initial, candidate);
@@ -135,6 +197,7 @@ describe('resolution and time', () => {
       caseId: candidate.id,
       action: candidate.preferredAction,
       detailId: detailFor(candidate, candidate.preferredAction),
+      acceptEvidenceDeficit: true,
     }, CAMPAIGN_CASES)).toMatchObject({ ok: false, error: { code: 'case-unavailable' } });
   });
 

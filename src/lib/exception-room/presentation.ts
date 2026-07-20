@@ -1,4 +1,10 @@
-import type { ExceptionCase, RouteReason } from '@/lib/exception-room/types';
+import { caseById, isTerminal } from '@/lib/exception-room/engine-helpers';
+import type {
+  ExceptionCase,
+  ExceptionRunState,
+  RouteReason,
+  ScheduledExceptionCase,
+} from '@/lib/exception-room/types';
 
 const TITLES: Readonly<Record<string, string>> = {
   'effective-date-conflict': 'Effective date conflict',
@@ -34,3 +40,42 @@ export const dueLabel = (dueAtTick: number, tick: number): string => {
   if (remaining === 1) return 'Due next tick';
   return `Due in ${remaining} ticks`;
 };
+
+export interface DueSummary {
+  remaining: number;
+  count: number;
+}
+
+export function nextDueSummary(
+  queue: readonly ScheduledExceptionCase[],
+  tick: number,
+): DueSummary | null {
+  if (queue.length === 0) return null;
+  const remaining = Math.min(...queue.map((candidate) => candidate.dueAtTick - tick));
+  return {
+    remaining,
+    count: queue.filter((candidate) => candidate.dueAtTick - tick === remaining).length,
+  };
+}
+
+export interface ShiftEndForecast {
+  unresolved: number;
+  expires: number;
+  carries: number;
+}
+
+export function shiftEndForecast(
+  state: ExceptionRunState,
+  cases: readonly ExceptionCase[],
+): ShiftEndForecast {
+  let expires = 0;
+  let carries = 0;
+  for (const timing of state.schedule.filter((entry) => entry.shift <= state.shift)) {
+    const runtime = state.caseStates[timing.caseId];
+    const candidate = caseById(cases, timing.caseId);
+    if (!runtime || !candidate || isTerminal(runtime)) continue;
+    if (state.shift < 3 && candidate.carryover) carries += 1;
+    else expires += 1;
+  }
+  return { unresolved: expires + carries, expires, carries };
+}

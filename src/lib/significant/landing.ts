@@ -1,5 +1,4 @@
 import { CAMPAIGN_LEVELS } from '@/lib/engine/scenario';
-import type { Call } from '@/lib/engine/types';
 import type { SignificantState } from '@/lib/progress';
 
 export interface SignificantLandingProgress {
@@ -10,7 +9,8 @@ export interface SignificantLandingProgress {
 
 export function significantLandingProgress(state: SignificantState): SignificantLandingProgress {
   const completedCases = CAMPAIGN_LEVELS.filter(({ id }) => state.campaign[id]?.correct).length;
-  const nextLevel = CAMPAIGN_LEVELS.find(({ id }) => !state.campaign[id]?.correct)?.id
+  const nextLevel = state.pendingCampaignReveal?.levelId
+    ?? CAMPAIGN_LEVELS.find(({ id }) => !state.campaign[id]?.correct)?.id
     ?? CAMPAIGN_LEVELS[CAMPAIGN_LEVELS.length - 1].id;
   const isReturning = state.warmupDone
     || Object.keys(state.campaign).length > 0
@@ -20,13 +20,8 @@ export function significantLandingProgress(state: SignificantState): Significant
   return { completedCases, isReturning, nextLevel };
 }
 
-export function significantLandingHref(progress: SignificantLandingProgress, call: Call | null): string {
-  if (!progress.isReturning) {
-    const params = new URLSearchParams();
-    if (call) params.set('call', call);
-    const query = params.toString();
-    return `/significant/calibration${query ? `?${query}` : ''}`;
-  }
+export function significantLandingHref(progress: SignificantLandingProgress): string {
+  if (!progress.isReturning) return '/significant/calibration';
 
   return `/significant/play?level=${progress.nextLevel}`;
 }

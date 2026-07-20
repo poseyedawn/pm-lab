@@ -35,6 +35,7 @@ beforeEach(() => {
     ready: true,
     preferences: { sound: true, haptics: true, motion: 'full' },
     reducedMotion: false,
+    storageWarning: false,
     updatePreference: vi.fn(),
   });
 });
@@ -51,12 +52,16 @@ describe('Lab hub', () => {
       '/exception-room',
     ]);
     expect(screen.getByLabelText('120 experience points')).toBeInTheDocument();
+    expect(screen.getByText('Playable proof of product and AI judgment.')).toBeInTheDocument();
     expect(container.querySelectorAll('.lab-hub-card-action svg')).toHaveLength(3);
     expect(container.querySelectorAll('.lab-hub-ambient img')).toHaveLength(5);
     expect(container.querySelector('.lab-hub-title-logo img'))
       .toHaveAttribute('src', expect.stringContaining('/lab/pick-field-test-logo.svg'));
     expect(container.querySelector('.lab-hub-brand-wordmark'))
       .toHaveAttribute('src', expect.stringContaining('/lab/product-lab-wordmark.svg'));
+    expect(screen.getByRole('link', { name: /Significant.*experiment evidence.*30 sec.*Solo case/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Ship It.*integrity lines.*3 min.*12 decisions/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Exception Room.*capacity runs out.*8 min.*12 cases/i })).toBeInTheDocument();
   });
 
   it('keeps ambient motion still when reduced motion is enabled', () => {
@@ -64,6 +69,7 @@ describe('Lab hub', () => {
       ready: true,
       preferences: { sound: true, haptics: true, motion: 'reduced' },
       reducedMotion: true,
+      storageWarning: false,
       updatePreference: vi.fn(),
     });
 

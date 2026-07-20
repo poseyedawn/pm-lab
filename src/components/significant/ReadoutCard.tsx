@@ -15,7 +15,7 @@ export function ReadoutCard({ scenario: s }: { scenario: Scenario }) {
         <span className="rounded-full bg-[#fff0f3] px-3 py-1 text-sm font-extrabold">{`Day ${s.daysRun} of ${s.daysPlanned}`}</span>
       </div>
 
-      <div className="mt-2"><Sparkline control={s.control} variant={s.variant} /></div>
+      <div className="mt-2"><Sparkline metricName={s.metricName} control={s.control} variant={s.variant} /></div>
       <div className="mt-1 flex gap-4 text-xs text-ink-soft">
         <span><span className="mr-1 inline-block h-2 w-2 rounded-full bg-brand" />Variant</span>
         <span><span className="mr-1 inline-block h-2 w-2 rounded-full bg-ink-soft" />Control</span>

@@ -42,7 +42,7 @@ export function startExceptionRun(
   cases: readonly ExceptionCase[],
 ): ExceptionRunState {
   const config = shiftConfig(1);
-  const schedule = buildSchedule(cases, seed);
+  const schedule = buildSchedule(cases, seed, mode);
   const caseStates = Object.fromEntries(cases.map((candidate) => [candidate.id, initialCaseState()]));
   return admitDueCases({
     seed,
@@ -158,7 +158,7 @@ function finishShift(
   reason: ExpirationReason,
 ): ExceptionRunState {
   const completedShift = state.shift;
-  const followingShift = nextShift(completedShift);
+  const followingShift = state.mode === 'practice' ? null : nextShift(completedShift);
   let nextState = expireCases(state, cases, completedShift, reason, followingShift !== null);
   const events: RunEvent[] = [...nextState.history];
   if (reason === 'capacity-constrained') {
@@ -238,6 +238,16 @@ export function resolveCase(
   }
   const outcome = outcomeFor(candidate, decision);
   if (!outcome) return failure(state, 'invalid-detail', 'The selected action detail is not valid for this case.');
+  const missingRequiredEvidenceIds = candidate.requiredEvidenceIds.filter(
+    (evidenceId) => !runtime.evidenceViewedIds.includes(evidenceId),
+  );
+  if (missingRequiredEvidenceIds.length > 0 && !decision.acceptEvidenceDeficit) {
+    return failure(
+      state,
+      'evidence-required',
+      `Review ${missingRequiredEvidenceIds.length} required evidence ${missingRequiredEvidenceIds.length === 1 ? 'item' : 'items'} or explicitly continue without them.`,
+    );
+  }
   const capacityCost = candidate.actionCosts[decision.action];
   if (capacityCost > state.capacityRemaining) {
     return failure(state, 'insufficient-capacity', 'The selected action costs more than the remaining capacity.');
@@ -248,6 +258,9 @@ export function resolveCase(
     action: decision.action,
     ...(decision.detailId ? { detailId: decision.detailId } : {}),
     evidenceViewedIds: [...runtime.evidenceViewedIds],
+    requiredEvidenceIds: [...candidate.requiredEvidenceIds],
+    missingRequiredEvidenceIds,
+    acceptedEvidenceDeficit: missingRequiredEvidenceIds.length > 0,
     resolvedAtTick: state.tick,
     capacityCost,
     outcome,

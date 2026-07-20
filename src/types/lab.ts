@@ -12,6 +12,8 @@ export interface GameCatalogEntry {
   fieldTest: string;
   name: string;
   tagline: string;
+  duration: string;
+  modeLabel: string;
   href: `/${string}`;
   art: string | null;
   theme: GameTheme;

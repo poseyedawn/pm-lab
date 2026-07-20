@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { ArrowRight } from '@phosphor-icons/react';
+import { useEffect, useRef } from 'react';
 import type { Call, Scenario } from '@/lib/engine/types';
 import { CountUp } from '@/components/juice/CountUp';
 
@@ -20,6 +21,11 @@ interface RevealPanelProps {
 export function RevealPanel({ scenario: s, call, correct, xpEarned, crit, nextLabel, onNext }: RevealPanelProps) {
   const chosenCall = CALL_LABEL[call];
   const betterCall = CALL_LABEL[s.truth.correctCall];
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    titleRef.current?.focus();
+  }, []);
 
   return (
     <section
@@ -37,7 +43,7 @@ export function RevealPanel({ scenario: s, call, correct, xpEarned, crit, nextLa
         className={`significant-result-art ${correct ? '' : 'significant-result-art-review'}`}
       />
       <p className="significant-result-kicker">{correct ? s.truth.trapName : `Review: ${s.truth.trapName}`}</p>
-      <h2 className="significant-result-title">
+      <h2 ref={titleRef} tabIndex={-1} className="significant-result-title">
         {correct ? 'You found the signal.' : 'That call missed the signal.'}
       </h2>
 

@@ -20,6 +20,7 @@ function inputEvent(
       caseId: event.resolution.caseId,
       action: event.resolution.action,
       ...(event.resolution.detailId ? { detailId: event.resolution.detailId } : {}),
+      ...(event.resolution.acceptedEvidenceDeficit ? { acceptEvidenceDeficit: true } : {}),
     }, cases);
   }
   return { ok: true, state };
